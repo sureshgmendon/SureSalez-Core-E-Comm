@@ -22,7 +22,7 @@ class Database {
     /**
      * Database version.
      */
-    public const DB_VERSION = '1.2.0';
+    public const DB_VERSION = '1.3.0';
 
     /**
      * Option key storing current schema version.
@@ -255,6 +255,89 @@ class Database {
         ) {$charset_collate};";
         dbDelta($sql_tax);
 
+        // 12. CRM Customer Profiles Table (Sprint 04)
+        $table_crm_profiles = $wpdb->prefix . 'suresalez_customer_profiles';
+        $sql_crm_profiles = "CREATE TABLE {$table_crm_profiles} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            user_id bigint(20) unsigned DEFAULT 0 NOT NULL,
+            email varchar(191) NOT NULL,
+            phone varchar(32) DEFAULT '' NOT NULL,
+            total_spend decimal(14,2) DEFAULT 0.00 NOT NULL,
+            order_count int(11) unsigned DEFAULT 0 NOT NULL,
+            aov decimal(12,2) DEFAULT 0.00 NOT NULL,
+            first_order_at datetime DEFAULT NULL,
+            last_order_at datetime DEFAULT NULL,
+            tags longtext DEFAULT NULL,
+            updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_email (email),
+            KEY idx_user_id (user_id),
+            KEY idx_spend_orders (total_spend, order_count),
+            KEY idx_last_order (last_order_at)
+        ) {$charset_collate};";
+        dbDelta($sql_crm_profiles);
+
+        // 13. CRM Customer Timeline Table (Sprint 04)
+        $table_crm_timeline = $wpdb->prefix . 'suresalez_customer_timeline';
+        $sql_crm_timeline = "CREATE TABLE {$table_crm_timeline} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            customer_id bigint(20) unsigned NOT NULL,
+            event_type varchar(50) NOT NULL,
+            event_payload longtext DEFAULT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_customer_event (customer_id, event_type),
+            KEY idx_created_at (created_at)
+        ) {$charset_collate};";
+        dbDelta($sql_crm_timeline);
+
+        // 14. CRM Behavioral Segments Table (Sprint 04)
+        $table_crm_segments = $wpdb->prefix . 'suresalez_segments';
+        $sql_crm_segments = "CREATE TABLE {$table_crm_segments} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            name varchar(191) NOT NULL,
+            slug varchar(100) NOT NULL,
+            conditions longtext NOT NULL,
+            member_count int(11) unsigned DEFAULT 0 NOT NULL,
+            is_dynamic tinyint(1) DEFAULT 1 NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_slug (slug),
+            KEY idx_is_dynamic (is_dynamic)
+        ) {$charset_collate};";
+        dbDelta($sql_crm_segments);
+
+        // 15. Flow Automation Workflows Table (Sprint 04)
+        $table_flow_workflows = $wpdb->prefix . 'suresalez_flow_workflows';
+        $sql_flow_workflows = "CREATE TABLE {$table_flow_workflows} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            title varchar(191) NOT NULL,
+            trigger_event varchar(100) NOT NULL,
+            conditions longtext DEFAULT NULL,
+            actions longtext NOT NULL,
+            status varchar(20) DEFAULT 'active' NOT NULL,
+            execution_count int(11) unsigned DEFAULT 0 NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_trigger_status (trigger_event, status)
+        ) {$charset_collate};";
+        dbDelta($sql_flow_workflows);
+
+        // 16. Flow Automation Execution Logs Table (Sprint 04)
+        $table_flow_logs = $wpdb->prefix . 'suresalez_flow_logs';
+        $sql_flow_logs = "CREATE TABLE {$table_flow_logs} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            workflow_id bigint(20) unsigned NOT NULL,
+            trigger_payload longtext DEFAULT NULL,
+            execution_status varchar(20) NOT NULL,
+            log_message text DEFAULT NULL,
+            executed_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_workflow_status (workflow_id, execution_status),
+            KEY idx_executed_at (executed_at)
+        ) {$charset_collate};";
+        dbDelta($sql_flow_logs);
+
         update_option(self::DB_VERSION_KEY, self::DB_VERSION);
 
         // Seed 10 warehouse fulfillment locations
@@ -266,6 +349,10 @@ class Database {
         // Seed multi-currency rates & tax jurisdictions (Sprint 03)
         self::seed_currencies();
         self::seed_tax_jurisdictions();
+
+        // Seed default CRM segments & Flow workflows (Sprint 04)
+        self::seed_default_segments();
+        self::seed_default_flows();
     }
 
     /**
@@ -574,6 +661,158 @@ class Database {
                 $table,
                 $item,
                 ['%s', '%s', '%s', '%f', '%f', '%s', '%d', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed default behavioral customer segments (Sprint 04).
+     *
+     * @return void
+     */
+    public static function seed_default_segments(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_segments';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $segments = [
+            [
+                'name'         => 'VIP High Spenders',
+                'slug'         => 'vip-high-spenders',
+                'conditions'   => json_encode([
+                    'operator' => 'OR',
+                    'rules'    => [
+                        ['field' => 'total_spend', 'operator' => 'greater_than_or_equal', 'value' => 1000.00],
+                        ['field' => 'order_count', 'operator' => 'greater_than_or_equal', 'value' => 5],
+                    ],
+                ]),
+                'member_count' => 0,
+                'is_dynamic'   => 1,
+                'created_at'   => current_time('mysql'),
+            ],
+            [
+                'name'         => 'At-Risk 60+ Days Inactive',
+                'slug'         => 'at-risk-inactive',
+                'conditions'   => json_encode([
+                    'operator' => 'AND',
+                    'rules'    => [
+                        ['field' => 'order_count', 'operator' => 'greater_than_or_equal', 'value' => 1],
+                        ['field' => 'days_since_last_order', 'operator' => 'greater_than_or_equal', 'value' => 60],
+                    ],
+                ]),
+                'member_count' => 0,
+                'is_dynamic'   => 1,
+                'created_at'   => current_time('mysql'),
+            ],
+            [
+                'name'         => 'First-Time Buyers',
+                'slug'         => 'first-time-buyers',
+                'conditions'   => json_encode([
+                    'operator' => 'AND',
+                    'rules'    => [
+                        ['field' => 'order_count', 'operator' => 'equals', 'value' => 1],
+                    ],
+                ]),
+                'member_count' => 0,
+                'is_dynamic'   => 1,
+                'created_at'   => current_time('mysql'),
+            ],
+            [
+                'name'         => 'Repeat Jewelry Collectors',
+                'slug'         => 'repeat-jewelry-collectors',
+                'conditions'   => json_encode([
+                    'operator' => 'OR',
+                    'rules'    => [
+                        ['field' => 'tags', 'operator' => 'contains', 'value' => 'jewelry'],
+                        ['field' => 'tags', 'operator' => 'contains', 'value' => 'collector'],
+                        ['field' => 'order_count', 'operator' => 'greater_than_or_equal', 'value' => 3],
+                    ],
+                ]),
+                'member_count' => 0,
+                'is_dynamic'   => 1,
+                'created_at'   => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($segments as $item) {
+            $wpdb->insert(
+                $table,
+                $item,
+                ['%s', '%s', '%s', '%d', '%d', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed default Flow automation workflows (Sprint 04).
+     *
+     * @return void
+     */
+    public static function seed_default_flows(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_flow_workflows';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $flows = [
+            [
+                'title'           => 'VIP Tagging & Exclusive Welcome',
+                'trigger_event'   => 'order.completed',
+                'conditions'      => json_encode([
+                    ['field' => 'order_total', 'operator' => 'greater_than_or_equal', 'value' => 1000.00],
+                ]),
+                'actions'         => json_encode([
+                    ['action' => 'customer.add_tag', 'params' => ['tag' => 'vip']],
+                    ['action' => 'notification.send_email', 'params' => ['template' => 'vip_welcome', 'subject' => 'Welcome to the SureSalez VIP Inner Circle']],
+                ]),
+                'status'          => 'active',
+                'execution_count' => 0,
+                'created_at'      => current_time('mysql'),
+            ],
+            [
+                'title'           => 'High-Value Fraud Review Hold',
+                'trigger_event'   => 'order.completed',
+                'conditions'      => json_encode([
+                    ['field' => 'order_total', 'operator' => 'greater_than_or_equal', 'value' => 5000.00],
+                ]),
+                'actions'         => json_encode([
+                    ['action' => 'order.hold_fulfillment', 'params' => ['reason' => 'High-value threshold review']],
+                    ['action' => 'webhook.dispatch', 'params' => ['url' => 'https://api.suresalez.internal/risk-review', 'channel' => 'security']],
+                ]),
+                'status'          => 'active',
+                'execution_count' => 0,
+                'created_at'      => current_time('mysql'),
+            ],
+            [
+                'title'           => 'Abandoned Cart 1-Hour Recovery Alert',
+                'trigger_event'   => 'cart.abandoned',
+                'conditions'      => json_encode([
+                    ['field' => 'cart_total', 'operator' => 'greater_than_or_equal', 'value' => 75.00],
+                ]),
+                'actions'         => json_encode([
+                    ['action' => 'notification.send_email', 'params' => ['template' => 'cart_recovery', 'subject' => 'Complete your order before reserve expires']],
+                    ['action' => 'notification.send_sms', 'params' => ['message' => 'Your SureSalez bag is reserved. Complete checkout now with your saved credit.']],
+                ]),
+                'status'          => 'active',
+                'execution_count' => 0,
+                'created_at'      => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($flows as $flow) {
+            $wpdb->insert(
+                $table,
+                $flow,
+                ['%s', '%s', '%s', '%s', '%s', '%d', '%s']
             );
         }
     }

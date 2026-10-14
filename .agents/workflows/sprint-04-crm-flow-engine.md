@@ -1,7 +1,7 @@
 ---
 title: "Sprint 04: CRM, Customer Segments, Email/SMS & Visual Workflow Engine (Flow)"
 sprint: 4
-status: "planned"
+status: "completed"
 tags: ["crm", "segments", "marketing", "flow", "automation"]
 ---
 

@@ -105,6 +105,15 @@ const requiredFiles = [
     'plugins/suresalez-core/modules/localization/assets/js/currency-switcher.js',
     'plugins/suresalez-core/modules/localization/assets/css/tax-compliance.css',
     'plugins/suresalez-core/modules/localization/assets/js/tax-compliance.js',
+    // Sprint 04 Modules
+    'plugins/suresalez-core/modules/crm-automations/class-crm-automations-module.php',
+    'plugins/suresalez-core/modules/crm-automations/class-customer-segments.php',
+    'plugins/suresalez-core/modules/crm-automations/class-flow-engine.php',
+    'plugins/suresalez-core/modules/crm-automations/class-chat-lead-capture.php',
+    'plugins/suresalez-core/modules/crm-automations/assets/css/chat-widget.css',
+    'plugins/suresalez-core/modules/crm-automations/assets/js/chat-widget.js',
+    'plugins/suresalez-core/modules/crm-automations/assets/css/lead-capture.css',
+    'plugins/suresalez-core/modules/crm-automations/assets/js/lead-capture.js',
 ];
 
 const rootDir = path.resolve(__dirname, '..');
@@ -230,6 +239,12 @@ const expectedTables = [
     // Sprint 03
     'suresalez_currencies',
     'suresalez_tax_jurisdictions',
+    // Sprint 04
+    'suresalez_customer_profiles',
+    'suresalez_customer_timeline',
+    'suresalez_segments',
+    'suresalez_flow_workflows',
+    'suresalez_flow_logs',
 ];
 
 expectedTables.forEach(tbl => {
@@ -286,6 +301,7 @@ assert(coreBootstrapContent.includes('Multi_Location_Inventory_Module'), 'Core b
 assert(coreBootstrapContent.includes('Visual_Swatches_Module'), 'Core bootstrap instantiates Visual_Swatches_Module');
 assert(coreBootstrapContent.includes('Reviews_QA_Module'), 'Core bootstrap instantiates Reviews_QA_Module');
 assert(coreBootstrapContent.includes('Localization_Module'), 'Core bootstrap instantiates Localization_Module');
+assert(coreBootstrapContent.includes('CRM_Automations_Module'), 'Core bootstrap instantiates CRM_Automations_Module');
 
 // Check that localization module loads currency switcher, gateway router, tax compliance, and market routing
 const localizationModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/localization/class-localization-module.php'), 'utf8');
@@ -293,6 +309,15 @@ assert(localizationModuleContent.includes('Currency_Switcher'), 'Localization Mo
 assert(localizationModuleContent.includes('Gateway_Router'), 'Localization Module loads Gateway Router engine');
 assert(localizationModuleContent.includes('Tax_Compliance'), 'Localization Module loads Tax Compliance engine');
 assert(localizationModuleContent.includes('Market_Routing'), 'Localization Module loads Market Routing engine');
+
+// Check that CRM Automations module loads Customer_Segments, Flow_Engine, and Chat_Lead_Capture
+const crmModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/crm-automations/class-crm-automations-module.php'), 'utf8');
+assert(crmModuleContent.includes('Customer_Segments'), 'CRM Automations Module loads Customer Segments engine');
+assert(crmModuleContent.includes('Flow_Engine'), 'CRM Automations Module loads Flow Engine');
+assert(crmModuleContent.includes('Chat_Lead_Capture'), 'CRM Automations Module loads Chat & Lead Capture engine');
+
+assert(dbFileContent.includes('seed_default_segments'), 'Database seeds default behavioral segments');
+assert(dbFileContent.includes('seed_default_flows'), 'Database seeds default Flow workflows');
 
 // Check that checkout-engine has cart-drawer, checkout-customizer, post-purchase-upsell, and abandoned-cart-recovery
 const checkoutModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/checkout-engine/class-checkout-engine-module.php'), 'utf8');

@@ -104,7 +104,11 @@ final class Core {
         require_once SURESALEZ_PATH . 'modules/localization/class-localization-module.php';
         $manager->register_module(new \SureSalez\Modules\Localization\Localization_Module());
 
-        // Sprint 04-10 module placeholders (scaffolded for architectural completion)
+        // Sprint 04 Modules
+        require_once SURESALEZ_PATH . 'modules/crm-automations/class-crm-automations-module.php';
+        $manager->register_module(new \SureSalez\Modules\CRMAutomations\CRM_Automations_Module());
+
+        // Sprint 05-10 module placeholders (scaffolded for architectural completion)
         $this->register_roadmap_modules($manager);
     }
 
@@ -116,12 +120,6 @@ final class Core {
      */
     private function register_roadmap_modules(Module_Manager $manager): void {
         $roadmap_defs = [
-            'crm-flow' => [
-                'name'     => 'Customer CRM & Visual Flow Engine',
-                'desc'     => 'RFM dynamic segmentation, multi-channel SMS/Email triggers, and visual node-based workflow automation.',
-                'category' => 'Marketing & CRM',
-                'default'  => false,
-            ],
             'omnichannel-reels' => [
                 'name'     => 'Omnichannel Feeds, AI Chat & Shoppable Reels',
                 'desc'     => 'Google/Meta/TikTok merchant catalog feeds, conversational AI sales assistant, and shoppable video reels.',

@@ -1,0 +1,106 @@
+/**
+ * SureSalez Core — Multi-Store Organization Switcher Stylesheet
+ * Sprint 10: Multi-Store Organization Admin & High-Scale APIs
+ */
+
+.suresalez-org-switcher-bar {
+    max-width: 1040px;
+    margin: 24px auto;
+    background: #090d16;
+    border: 1px solid #1e293b;
+    border-radius: 14px;
+    padding: 18px 24px;
+    color: #f8fafc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.6);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+@media (max-width: 768px) {
+    .suresalez-org-switcher-bar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.suresalez-org-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.suresalez-org-icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.suresalez-org-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+}
+
+.suresalez-org-subtitle {
+    font-size: 12px;
+    color: #94a3b8;
+    margin: 0;
+}
+
+.suresalez-tenant-select-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.suresalez-tenant-dropdown {
+    background: #1e293b;
+    color: #ffffff;
+    border: 1px solid #334155;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    font-weight: 600;
+    outline: none;
+    cursor: pointer;
+}
+
+.suresalez-tenant-dropdown:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+}
+
+.suresalez-env-badge {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.suresalez-kpi-pill {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #cbd5e1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}

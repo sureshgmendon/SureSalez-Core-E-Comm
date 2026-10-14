@@ -39,6 +39,9 @@
   <!-- Sprint 09 CSS -->
   <link rel="stylesheet" href="../plugins/suresalez-core/modules/loyalty-mobile-api/assets/css/loyalty-portal.css">
   <link rel="stylesheet" href="../plugins/suresalez-core/modules/loyalty-mobile-api/assets/css/referral-banner.css">
+  <!-- Sprint 10 CSS -->
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/enterprise-scale/assets/css/organization-switcher.css">
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/enterprise-scale/assets/css/tenant-billing.css">
 
   <style>
     body {
@@ -194,6 +197,7 @@
       <button class="tab-pill-btn" data-target="view-b2b-wholesale">B2B Wholesale &amp; RFQ</button>
       <button class="tab-pill-btn" data-target="view-pos-subscriptions">POS &amp; Subscriptions</button>
       <button class="tab-pill-btn" data-target="view-loyalty-mobile">Loyalty &amp; Mobile APIs</button>
+      <button class="tab-pill-btn" data-target="view-enterprise-scale">Enterprise &amp; Multi-Store</button>
       <button class="tab-pill-btn" data-target="view-admin">Module Manager Admin</button>
       <button class="tab-pill-btn" data-target="view-schema">Schema.org JSON-LD</button>
     </div>
@@ -1140,6 +1144,37 @@
       </div>
     </div>
 
+    <!-- TAB: SPRINT 10 MULTI-STORE ORGANIZATION & TENANT BILLING -->
+    <div id="view-enterprise-scale" class="harness-tab-pane" style="display:none;">
+      <div style="background: #ffffff; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h2 style="margin: 0 0 6px 0; font-size: 20px; font-weight: 800; color: #0f172a;">
+            Sprint 10: Multi-Store Organization Admin, Reseller Tenant Billing &amp; High-Scale APIs
+          </h2>
+          <p style="margin: 0; font-size: 14px; color: #64748b;">
+            Central multi-store organization switcher, reseller white-label billing meters, enterprise SSO, immutable audit trails, and high-concurrency checkout job queuing.
+          </p>
+        </div>
+        <span class="harness-badge" style="background: #e11d48;">Sprint 10 Final Milestone</span>
+      </div>
+
+      <!-- Multi-Store Organization Switcher Mount -->
+      <div class="product-view-card" style="margin-bottom: 24px; padding: 24px;">
+        <h3 style="font-size: 16px; font-weight: 700; margin-top: 0; color: #0f172a;">
+          🏢 Multi-Store Organization Switcher &amp; Consolidated GMV Strip
+        </h3>
+        <div id="suresalez-organization-switcher-mount"></div>
+      </div>
+
+      <!-- Reseller Tenant Billing & Usage Meter Mount -->
+      <div class="product-view-card" style="padding: 24px;">
+        <h3 style="font-size: 16px; font-weight: 700; margin-top: 0; color: #0f172a;">
+          💳 Reseller &amp; Tenant Usage-Based Billing Meter
+        </h3>
+        <div id="suresalez-tenant-billing-mount"></div>
+      </div>
+    </div>
+
   </main>
 
   <!-- Global Anchors -->
@@ -1993,9 +2028,55 @@ SS-201,"Milanese Magnetic Mesh Strap - Grade 5 Titanium","Titanium woven band wi
       min_points: 200,
       max_percent: 50.0
     };
+
+    window.suresalezEnterpriseData = {
+      rest_url: '/wp-json/suresalez/v1/',
+      nonce: 'wp_rest_nonce_sprint10',
+      current_tenant: {
+        id: 1,
+        store_name: 'SureSalez US Flagship Atelier',
+        domain: 'us.suresalez.io',
+        environment: 'production',
+        plan_tier: 'enterprise'
+      },
+      overview: {
+        organization_name: 'SureSalez Global Luxury Brands Holding Corp',
+        active_tenants_count: 3,
+        tenants: [
+          { id: 1, store_name: 'SureSalez US Flagship Atelier', domain: 'us.suresalez.io' },
+          { id: 2, store_name: 'SureSalez India Atelier', domain: 'in.suresalez.io' },
+          { id: 3, store_name: 'SureSalez Global B2B Outlet', domain: 'b2b.suresalez.io' }
+        ],
+        consolidated_kpis: {
+          total_gmv_monthly: 170000.00,
+          total_invoiced_fees: 3548.00,
+          total_orders_volume: 3840
+        }
+      },
+      billing: {
+        billing: {
+          tenant_id: 1,
+          billing_cycle: 'monthly',
+          base_fee: 499.00,
+          rev_share_percentage: 1.50,
+          current_month_gmv: 125000.00,
+          invoiced_total: 2374.00,
+          payment_status: 'paid',
+          next_billing_date: '2026-11-04'
+        },
+        whitelabel: {
+          agency_name: 'Aura Commerce Agency Suite',
+          support_email: 'concierge@auracommerce.io'
+        },
+        dunning: {
+          payment_status: 'paid',
+          dunning_stage: 'normal'
+        }
+      }
+    };
   </script>
 
-  <!-- Load Module Scripts (Sprint 01 + Sprint 02 + Sprint 03 + Sprint 04 + Sprint 05 + Sprint 06 + Sprint 07 + Sprint 08 + Sprint 09) -->
+  <!-- Load Module Scripts (Sprint 01 + Sprint 02 + Sprint 03 + Sprint 04 + Sprint 05 + Sprint 06 + Sprint 07 + Sprint 08 + Sprint 09 + Sprint 10) -->
   <script src="../plugins/suresalez-core/modules/catalog-pim/assets/js/catalog-pim.js"></script>
   <script src="../plugins/suresalez-core/modules/multi-location-inventory/assets/js/multi-location-inventory.js"></script>
   <script src="../plugins/suresalez-core/modules/visual-swatches/assets/js/visual-swatches.js"></script>
@@ -2018,6 +2099,8 @@ SS-201,"Milanese Magnetic Mesh Strap - Grade 5 Titanium","Titanium woven band wi
   <script src="../plugins/suresalez-core/modules/pos-subscriptions/assets/js/subscription-portal.js"></script>
   <script src="../plugins/suresalez-core/modules/loyalty-mobile-api/assets/js/loyalty-portal.js"></script>
   <script src="../plugins/suresalez-core/modules/loyalty-mobile-api/assets/js/referral-banner.js"></script>
+  <script src="../plugins/suresalez-core/modules/enterprise-scale/assets/js/organization-switcher.js"></script>
+  <script src="../plugins/suresalez-core/modules/enterprise-scale/assets/js/tenant-billing.js"></script>
 
 </body>
 </html>

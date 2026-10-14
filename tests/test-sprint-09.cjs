@@ -373,7 +373,7 @@ requiredFiles.forEach(file => {
 // Database schema v1.8.0 check
 const dbFile = fs.readFileSync(path.join(baseDir, 'plugins/suresalez-core/includes/class-database.php'), 'utf8');
 it('Database schema version is at least 1.8.0', () => {
-  assert(dbFile.includes('1.8.0'), 'Database schema version is not 1.8.0');
+  assert(dbFile.includes('1.8.0') || dbFile.includes('1.9.0'), 'Database schema version is not 1.8.0+');
 });
 
 const requiredTables = [

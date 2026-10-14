@@ -20,6 +20,8 @@ try {
         'suresalez-subscriptions-mount',
         'suresalez-loyalty-rewards-mount',
         'suresalez-referral-banner-mount',
+        'suresalez-organization-switcher-mount',
+        'suresalez-tenant-billing-mount',
         'suresalez-b2b-bulk-order-mount',
         'suresalez-rfq-form-mount',
         'suresalez-rma-portal-mount',

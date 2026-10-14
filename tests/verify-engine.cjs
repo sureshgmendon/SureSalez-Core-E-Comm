@@ -165,6 +165,16 @@ const requiredFiles = [
     'plugins/suresalez-core/modules/loyalty-mobile-api/assets/js/loyalty-portal.js',
     'plugins/suresalez-core/modules/loyalty-mobile-api/assets/css/referral-banner.css',
     'plugins/suresalez-core/modules/loyalty-mobile-api/assets/js/referral-banner.js',
+    // Sprint 10 Modules (Final Milestone)
+    'plugins/suresalez-core/modules/enterprise-scale/class-enterprise-scale-module.php',
+    'plugins/suresalez-core/modules/enterprise-scale/class-organization-admin.php',
+    'plugins/suresalez-core/modules/enterprise-scale/class-tenant-billing.php',
+    'plugins/suresalez-core/modules/enterprise-scale/class-enterprise-security.php',
+    'plugins/suresalez-core/modules/enterprise-scale/class-scale-engine.php',
+    'plugins/suresalez-core/modules/enterprise-scale/assets/css/organization-switcher.css',
+    'plugins/suresalez-core/modules/enterprise-scale/assets/js/organization-switcher.js',
+    'plugins/suresalez-core/modules/enterprise-scale/assets/css/tenant-billing.css',
+    'plugins/suresalez-core/modules/enterprise-scale/assets/js/tenant-billing.js',
 ];
 
 const rootDir = path.resolve(__dirname, '..');
@@ -326,6 +336,12 @@ const expectedTables = [
     'suresalez_referrals',
     'suresalez_seo_redirects',
     'suresalez_mobile_devices',
+    // Sprint 10 (Final Milestone)
+    'suresalez_tenants',
+    'suresalez_tenant_billing',
+    'suresalez_audit_logs',
+    'suresalez_api_keys',
+    'suresalez_webhooks',
 ];
 
 expectedTables.forEach(tbl => {
@@ -388,6 +404,20 @@ assert(coreBootstrapContent.includes('Fulfillment_RMA_Module'), 'Core bootstrap 
 assert(coreBootstrapContent.includes('B2B_Wholesale_Module'), 'Core bootstrap instantiates B2B_Wholesale_Module');
 assert(coreBootstrapContent.includes('POS_Subscriptions_Module'), 'Core bootstrap instantiates POS_Subscriptions_Module');
 assert(coreBootstrapContent.includes('Loyalty_Mobile_API_Module'), 'Core bootstrap instantiates Loyalty_Mobile_API_Module');
+assert(coreBootstrapContent.includes('Enterprise_Scale_Module'), 'Core bootstrap instantiates Enterprise_Scale_Module');
+
+// Check that Enterprise Scale module loads sub-components
+const scaleModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/enterprise-scale/class-enterprise-scale-module.php'), 'utf8');
+assert(scaleModuleContent.includes('Organization_Admin'), 'Enterprise Scale Module loads Organization Admin');
+assert(scaleModuleContent.includes('Tenant_Billing'), 'Enterprise Scale Module loads Tenant Billing');
+assert(scaleModuleContent.includes('Enterprise_Security'), 'Enterprise Scale Module loads Enterprise Security');
+assert(scaleModuleContent.includes('Scale_Engine'), 'Enterprise Scale Module loads Scale Engine');
+
+assert(dbFileContent.includes('seed_tenants'), 'Database seeds sample multi-store tenants');
+assert(dbFileContent.includes('seed_tenant_billing'), 'Database seeds reseller tenant billing records');
+assert(dbFileContent.includes('seed_audit_logs'), 'Database seeds immutable audit logs');
+assert(dbFileContent.includes('seed_api_keys'), 'Database seeds high-scale API keys');
+assert(dbFileContent.includes('seed_webhooks'), 'Database seeds outbound webhooks');
 
 // Check that Loyalty Mobile API module loads sub-components
 const loyaltyModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/loyalty-mobile-api/class-loyalty-mobile-api-module.php'), 'utf8');

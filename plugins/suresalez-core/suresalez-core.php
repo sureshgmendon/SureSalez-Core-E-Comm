@@ -128,7 +128,11 @@ final class Core {
         require_once SURESALEZ_PATH . 'modules/loyalty-mobile-api/class-loyalty-mobile-api-module.php';
         $manager->register_module(new \SureSalez\Modules\LoyaltyMobileAPI\Loyalty_Mobile_API_Module());
 
-        // Sprint 10 module placeholder (scaffolded for architectural completion)
+        // Sprint 10 Modules (Final Milestone)
+        require_once SURESALEZ_PATH . 'modules/enterprise-scale/class-enterprise-scale-module.php';
+        $manager->register_module(new \SureSalez\Modules\EnterpriseScale\Enterprise_Scale_Module());
+
+        // All 10 roadmap sprints are fully implemented
         $this->register_roadmap_modules($manager);
     }
 
@@ -139,14 +143,7 @@ final class Core {
      * @return void
      */
     private function register_roadmap_modules(Module_Manager $manager): void {
-        $roadmap_defs = [
-            'multistore-billing' => [
-                'name'     => 'Multi-Store Organization Admin & Tenant Billing',
-                'desc'     => 'Multi-store tenant orchestration, reseller white-label billing, and Redis edge caching for extreme scale.',
-                'category' => 'Enterprise & Scale',
-                'default'  => false,
-            ],
-        ];
+        $roadmap_defs = [];
 
         foreach ($roadmap_defs as $id => $info) {
             $manager->register_module(new class($id, $info['name'], $info['desc'], $info['category'], $info['default']) extends Module_Base {

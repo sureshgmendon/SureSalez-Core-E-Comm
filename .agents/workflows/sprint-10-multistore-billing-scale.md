@@ -1,7 +1,7 @@
 ---
 title: "Sprint 10: Multi-Store Organization Admin, Reseller Tenant Billing & High-Scale APIs"
 sprint: 10
-status: "planned"
+status: "completed"
 tags: ["multistore", "tenant-billing", "reseller", "scale", "redis"]
 ---
 

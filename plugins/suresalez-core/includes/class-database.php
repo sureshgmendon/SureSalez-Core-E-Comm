@@ -22,7 +22,7 @@ class Database {
     /**
      * Database version.
      */
-    public const DB_VERSION = '1.8.0';
+    public const DB_VERSION = '1.9.0';
 
     /**
      * Option key storing current schema version.
@@ -779,6 +779,97 @@ class Database {
         ) {$charset_collate};";
         dbDelta($sql_mobile_devices);
 
+        // 42. Multi-Store Tenants Table (Sprint 10)
+        $table_tenants = $wpdb->prefix . 'suresalez_tenants';
+        $sql_tenants = "CREATE TABLE {$table_tenants} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            org_id bigint(20) unsigned NOT NULL,
+            store_name varchar(191) NOT NULL,
+            domain varchar(191) NOT NULL,
+            subfolder_path varchar(100) DEFAULT '' NOT NULL,
+            environment varchar(30) DEFAULT 'production' NOT NULL,
+            plan_tier varchar(30) DEFAULT 'enterprise' NOT NULL,
+            status varchar(30) DEFAULT 'active' NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_domain (domain),
+            KEY idx_org_status (org_id, status)
+        ) {$charset_collate};";
+        dbDelta($sql_tenants);
+
+        // 43. Reseller & Tenant Billing Table (Sprint 10)
+        $table_billing = $wpdb->prefix . 'suresalez_tenant_billing';
+        $sql_billing = "CREATE TABLE {$table_billing} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            tenant_id bigint(20) unsigned NOT NULL,
+            billing_cycle varchar(20) DEFAULT 'monthly' NOT NULL,
+            base_fee decimal(14,2) DEFAULT 499.00 NOT NULL,
+            rev_share_percentage decimal(5,2) DEFAULT 1.50 NOT NULL,
+            current_month_gmv decimal(14,2) DEFAULT 0.00 NOT NULL,
+            invoiced_total decimal(14,2) DEFAULT 0.00 NOT NULL,
+            payment_status varchar(30) DEFAULT 'paid' NOT NULL,
+            next_billing_date date NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_tenant_status (tenant_id, payment_status)
+        ) {$charset_collate};";
+        dbDelta($sql_billing);
+
+        // 44. Enterprise Immutable Audit Logs Table (Sprint 10)
+        $table_audit = $wpdb->prefix . 'suresalez_audit_logs';
+        $sql_audit = "CREATE TABLE {$table_audit} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            tenant_id bigint(20) unsigned NOT NULL,
+            user_id bigint(20) unsigned NOT NULL,
+            user_role varchar(50) DEFAULT 'administrator' NOT NULL,
+            action_type varchar(50) NOT NULL,
+            entity_type varchar(50) NOT NULL,
+            entity_id varchar(64) NOT NULL,
+            before_state longtext DEFAULT NULL,
+            after_state longtext DEFAULT NULL,
+            ip_address varchar(45) DEFAULT '127.0.0.1' NOT NULL,
+            audit_hash varchar(64) NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_tenant_action (tenant_id, action_type),
+            KEY idx_audit_hash (audit_hash)
+        ) {$charset_collate};";
+        dbDelta($sql_audit);
+
+        // 45. High-Scale API Keys & Rate Limiting Table (Sprint 10)
+        $table_keys = $wpdb->prefix . 'suresalez_api_keys';
+        $sql_keys = "CREATE TABLE {$table_keys} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            tenant_id bigint(20) unsigned NOT NULL,
+            key_name varchar(100) NOT NULL,
+            api_key_hash varchar(64) NOT NULL,
+            rate_limit_per_minute int(11) DEFAULT 600 NOT NULL,
+            burst_limit int(11) DEFAULT 3000 NOT NULL,
+            permissions longtext DEFAULT NULL,
+            status varchar(30) DEFAULT 'active' NOT NULL,
+            last_used_at datetime DEFAULT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_api_key_hash (api_key_hash),
+            KEY idx_tenant_status (tenant_id, status)
+        ) {$charset_collate};";
+        dbDelta($sql_keys);
+
+        // 46. Outbound Webhooks & Event Mesh Table (Sprint 10)
+        $table_webhooks = $wpdb->prefix . 'suresalez_webhooks';
+        $sql_webhooks = "CREATE TABLE {$table_webhooks} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            tenant_id bigint(20) unsigned NOT NULL,
+            event_topic varchar(100) NOT NULL,
+            target_url varchar(255) NOT NULL,
+            secret_hash varchar(64) NOT NULL,
+            failure_count int(11) DEFAULT 0 NOT NULL,
+            status varchar(30) DEFAULT 'active' NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_tenant_topic (tenant_id, event_topic)
+        ) {$charset_collate};";
+        dbDelta($sql_webhooks);
+
         update_option(self::DB_VERSION_KEY, self::DB_VERSION);
 
         // Seed 10 warehouse fulfillment locations
@@ -821,6 +912,13 @@ class Database {
         self::seed_loyalty_points();
         self::seed_referrals();
         self::seed_seo_redirects();
+
+        // Seed Multi-Store Tenants, Billing, Audit Logs, API Keys & Webhooks (Sprint 10)
+        self::seed_tenants();
+        self::seed_tenant_billing();
+        self::seed_audit_logs();
+        self::seed_api_keys();
+        self::seed_webhooks();
     }
 
     /**
@@ -2386,6 +2484,257 @@ class Database {
                 $table,
                 $rd,
                 ['%s', '%s', '%d', '%d', '%s', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed Multi-Store Tenant Stores (Sprint 10).
+     *
+     * @return void
+     */
+    public static function seed_tenants(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_tenants';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $tenants = [
+            [
+                'org_id'         => 1,
+                'store_name'     => 'SureSalez US Flagship Atelier',
+                'domain'         => 'us.suresalez.io',
+                'subfolder_path' => '',
+                'environment'    => 'production',
+                'plan_tier'      => 'enterprise',
+                'status'         => 'active',
+                'created_at'     => current_time('mysql'),
+            ],
+            [
+                'org_id'         => 1,
+                'store_name'     => 'SureSalez India Atelier',
+                'domain'         => 'in.suresalez.io',
+                'subfolder_path' => '',
+                'environment'    => 'production',
+                'plan_tier'      => 'enterprise',
+                'status'         => 'active',
+                'created_at'     => current_time('mysql'),
+            ],
+            [
+                'org_id'         => 1,
+                'store_name'     => 'SureSalez Global B2B Outlet',
+                'domain'         => 'b2b.suresalez.io',
+                'subfolder_path' => '',
+                'environment'    => 'production',
+                'plan_tier'      => 'growth',
+                'status'         => 'active',
+                'created_at'     => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($tenants as $t) {
+            $wpdb->insert(
+                $table,
+                $t,
+                ['%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed Reseller & Tenant Billing Retainers (Sprint 10).
+     *
+     * @return void
+     */
+    public static function seed_tenant_billing(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_tenant_billing';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $billing = [
+            [
+                'tenant_id'            => 1,
+                'billing_cycle'        => 'monthly',
+                'base_fee'             => 499.00,
+                'rev_share_percentage' => 1.50,
+                'current_month_gmv'    => 125000.00,
+                'invoiced_total'       => 2374.00,
+                'payment_status'       => 'paid',
+                'next_billing_date'    => date('Y-m-d', strtotime('+20 days')),
+            ],
+            [
+                'tenant_id'            => 2,
+                'billing_cycle'        => 'monthly',
+                'base_fee'             => 499.00,
+                'rev_share_percentage' => 1.50,
+                'current_month_gmv'    => 45000.00,
+                'invoiced_total'       => 1174.00,
+                'payment_status'       => 'paid',
+                'next_billing_date'    => date('Y-m-d', strtotime('+20 days')),
+            ],
+        ];
+
+        foreach ($billing as $b) {
+            $wpdb->insert(
+                $table,
+                $b,
+                ['%d', '%s', '%f', '%f', '%f', '%f', '%s', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed Enterprise Immutable Audit Logs (Sprint 10).
+     *
+     * @return void
+     */
+    public static function seed_audit_logs(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_audit_logs';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $logs = [
+            [
+                'tenant_id'    => 1,
+                'user_id'      => 1,
+                'user_role'    => 'administrator',
+                'action_type'  => 'price_change',
+                'entity_type'  => 'product',
+                'entity_id'    => '101',
+                'before_state' => wp_json_encode(['regular_price' => 999.00]),
+                'after_state'  => wp_json_encode(['regular_price' => 899.00]),
+                'ip_address'   => '192.168.1.10',
+                'audit_hash'   => hash('sha256', 'price_change_101_init'),
+                'created_at'   => current_time('mysql'),
+            ],
+            [
+                'tenant_id'    => 1,
+                'user_id'      => 1,
+                'user_role'    => 'administrator',
+                'action_type'  => 'user_role_update',
+                'entity_type'  => 'user',
+                'entity_id'    => '12',
+                'before_state' => wp_json_encode(['role' => 'subscriber']),
+                'after_state'  => wp_json_encode(['role' => 'b2b_purchaser']),
+                'ip_address'   => '192.168.1.10',
+                'audit_hash'   => hash('sha256', 'user_role_12_init'),
+                'created_at'   => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($logs as $l) {
+            $wpdb->insert(
+                $table,
+                $l,
+                ['%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed High-Scale Enterprise API Keys (Sprint 10).
+     *
+     * @return void
+     */
+    public static function seed_api_keys(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_api_keys';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $keys = [
+            [
+                'tenant_id'             => 1,
+                'key_name'              => 'Production ERP Ingestion Key',
+                'api_key_hash'          => hash('sha256', 'ss_live_erp_key_9901'),
+                'rate_limit_per_minute' => 1200,
+                'burst_limit'           => 6000,
+                'permissions'           => wp_json_encode(['catalog.write', 'orders.read', 'inventory.write']),
+                'status'                => 'active',
+                'last_used_at'          => current_time('mysql'),
+                'created_at'            => current_time('mysql'),
+            ],
+            [
+                'tenant_id'             => 1,
+                'key_name'              => 'Analytics BI Warehouse Feed',
+                'api_key_hash'          => hash('sha256', 'ss_live_bi_key_8802'),
+                'rate_limit_per_minute' => 600,
+                'burst_limit'           => 3000,
+                'permissions'           => wp_json_encode(['analytics.read', 'orders.read']),
+                'status'                => 'active',
+                'last_used_at'          => current_time('mysql'),
+                'created_at'            => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($keys as $k) {
+            $wpdb->insert(
+                $table,
+                $k,
+                ['%d', '%s', '%s', '%d', '%d', '%s', '%s', '%s', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed Outbound Webhook Endpoints (Sprint 10).
+     *
+     * @return void
+     */
+    public static function seed_webhooks(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_webhooks';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $webhooks = [
+            [
+                'tenant_id'     => 1,
+                'event_topic'   => 'order.created',
+                'target_url'    => 'https://erp.enterprise-corp.com/api/suresalez/orders',
+                'secret_hash'   => hash('sha256', 'whsec_enterprise_secret_order_99'),
+                'failure_count' => 0,
+                'status'        => 'active',
+                'created_at'    => current_time('mysql'),
+            ],
+            [
+                'tenant_id'     => 1,
+                'event_topic'   => 'inventory.low',
+                'target_url'    => 'https://warehouse.enterprise-corp.com/hooks/stock',
+                'secret_hash'   => hash('sha256', 'whsec_enterprise_secret_stock_88'),
+                'failure_count' => 0,
+                'status'        => 'active',
+                'created_at'    => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($webhooks as $w) {
+            $wpdb->insert(
+                $table,
+                $w,
+                ['%d', '%s', '%s', '%s', '%d', '%s', '%s']
             );
         }
     }

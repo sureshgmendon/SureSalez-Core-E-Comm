@@ -1,0 +1,178 @@
+/**
+ * SureSalez Self-Service Customer RMA Portal Styles.
+ *
+ * @package SureSalez\Modules\FulfillmentRMA
+ */
+
+.suresalez-rma-portal-container {
+    max-width: 860px;
+    margin: 32px auto;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #0f172a;
+}
+
+.suresalez-rma-header {
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+}
+
+.suresalez-rma-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.suresalez-rma-subtitle {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+}
+
+.suresalez-rma-steps {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
+    background: #f8fafc;
+    padding: 6px;
+    border-radius: 10px;
+}
+
+.suresalez-rma-step-item {
+    flex: 1;
+    text-align: center;
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.suresalez-rma-step-item.active {
+    background: #ffffff;
+    color: #2563eb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.suresalez-rma-step-item.completed {
+    color: #10b981;
+}
+
+.suresalez-rma-item-card {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    transition: border-color 0.2s ease;
+}
+
+.suresalez-rma-item-card.selected {
+    border-color: #2563eb;
+    background: #eff6ff;
+}
+
+.suresalez-rma-item-thumb {
+    width: 64px;
+    height: 64px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: #f1f5f9;
+}
+
+.suresalez-rma-item-details {
+    flex: 1;
+}
+
+.suresalez-rma-item-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0 0 4px 0;
+}
+
+.suresalez-rma-item-price {
+    font-size: 13px;
+    color: #475569;
+}
+
+.suresalez-resolution-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.suresalez-resolution-card {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.suresalez-resolution-card.selected {
+    border-color: #2563eb;
+    background: #f0fdf4;
+}
+
+.suresalez-resolution-card .badge-bonus {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #10b981;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 9999px;
+}
+
+.suresalez-rma-submit-btn {
+    background: #0f172a;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    width: 100%;
+}
+
+.suresalez-rma-submit-btn:hover {
+    background: #1e293b;
+}
+
+.suresalez-rma-confirmation {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+}
+
+.suresalez-rma-barcode-box {
+    background: #ffffff;
+    border: 1px dashed #cbd5e1;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 20px auto;
+    max-width: 380px;
+    font-family: monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+}

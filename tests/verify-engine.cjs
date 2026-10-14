@@ -123,6 +123,16 @@ const requiredFiles = [
     'plugins/suresalez-core/modules/omnichannel-ai/class-analytics-bi.php',
     'plugins/suresalez-core/modules/omnichannel-ai/assets/css/shoppable-reels.css',
     'plugins/suresalez-core/modules/omnichannel-ai/assets/js/shoppable-reels.js',
+    // Sprint 06 Modules
+    'plugins/suresalez-core/modules/fulfillment-rma/class-fulfillment-rma-module.php',
+    'plugins/suresalez-core/modules/fulfillment-rma/class-order-router.php',
+    'plugins/suresalez-core/modules/fulfillment-rma/class-batch-fulfillment.php',
+    'plugins/suresalez-core/modules/fulfillment-rma/class-dropship-dispatcher.php',
+    'plugins/suresalez-core/modules/fulfillment-rma/class-rma-engine.php',
+    'plugins/suresalez-core/modules/fulfillment-rma/assets/css/rma-portal.css',
+    'plugins/suresalez-core/modules/fulfillment-rma/assets/js/rma-portal.js',
+    'plugins/suresalez-core/modules/fulfillment-rma/assets/css/tracking-widget.css',
+    'plugins/suresalez-core/modules/fulfillment-rma/assets/js/tracking-widget.js',
 ];
 
 const rootDir = path.resolve(__dirname, '..');
@@ -259,6 +269,12 @@ const expectedTables = [
     'suresalez_campaign_schedules',
     'suresalez_capi_events',
     'suresalez_analytics_snapshots',
+    // Sprint 06
+    'suresalez_fulfillments',
+    'suresalez_fulfillment_items',
+    'suresalez_rma_requests',
+    'suresalez_rma_items',
+    'suresalez_supplier_dropships',
 ];
 
 expectedTables.forEach(tbl => {
@@ -317,6 +333,18 @@ assert(coreBootstrapContent.includes('Reviews_QA_Module'), 'Core bootstrap insta
 assert(coreBootstrapContent.includes('Localization_Module'), 'Core bootstrap instantiates Localization_Module');
 assert(coreBootstrapContent.includes('CRM_Automations_Module'), 'Core bootstrap instantiates CRM_Automations_Module');
 assert(coreBootstrapContent.includes('Omnichannel_AI_Module'), 'Core bootstrap instantiates Omnichannel_AI_Module');
+assert(coreBootstrapContent.includes('Fulfillment_RMA_Module'), 'Core bootstrap instantiates Fulfillment_RMA_Module');
+
+// Check that Fulfillment RMA module loads sub-components
+const fulfillmentModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/fulfillment-rma/class-fulfillment-rma-module.php'), 'utf8');
+assert(fulfillmentModuleContent.includes('Order_Router'), 'Fulfillment RMA Module loads Order Router engine');
+assert(fulfillmentModuleContent.includes('Batch_Fulfillment'), 'Fulfillment RMA Module loads Batch Fulfillment engine');
+assert(fulfillmentModuleContent.includes('Dropship_Dispatcher'), 'Fulfillment RMA Module loads Dropship Dispatcher engine');
+assert(fulfillmentModuleContent.includes('RMA_Engine'), 'Fulfillment RMA Module loads RMA Engine');
+
+assert(dbFileContent.includes('seed_fulfillments'), 'Database seeds default split fulfillments');
+assert(dbFileContent.includes('seed_rma_data'), 'Database seeds sample RMA requests');
+assert(dbFileContent.includes('seed_supplier_dropships'), 'Database seeds supplier dropship purchase orders');
 
 // Check that Omnichannel AI module loads sub-components
 const omnichannelModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/omnichannel-ai/class-omnichannel-ai-module.php'), 'utf8');

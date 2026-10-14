@@ -112,7 +112,11 @@ final class Core {
         require_once SURESALEZ_PATH . 'modules/omnichannel-ai/class-omnichannel-ai-module.php';
         $manager->register_module(new \SureSalez\Modules\OmnichannelAI\Omnichannel_AI_Module());
 
-        // Sprint 06-10 module placeholders (scaffolded for architectural completion)
+        // Sprint 06 Modules
+        require_once SURESALEZ_PATH . 'modules/fulfillment-rma/class-fulfillment-rma-module.php';
+        $manager->register_module(new \SureSalez\Modules\FulfillmentRMA\Fulfillment_RMA_Module());
+
+        // Sprint 07-10 module placeholders (scaffolded for architectural completion)
         $this->register_roadmap_modules($manager);
     }
 
@@ -124,12 +128,6 @@ final class Core {
      */
     private function register_roadmap_modules(Module_Manager $manager): void {
         $roadmap_defs = [
-            'orders-routing-rma' => [
-                'name'     => 'Intelligent Routing, Split Shipments & Self-Service RMA',
-                'desc'     => 'Multi-warehouse split routing, 3PL carrier sync (ShipStation, FedEx, UPS), and customer self-service returns portal.',
-                'category' => 'Logistics & Orders',
-                'default'  => false,
-            ],
             'b2b-rfq' => [
                 'name'     => 'B2B Wholesale Accounts & RFQ Quote Engine',
                 'desc'     => 'Corporate company hierarchies, tiered pricing, Net-30 terms, and Request-For-Quote negotiation engine.',

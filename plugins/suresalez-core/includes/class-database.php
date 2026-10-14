@@ -22,7 +22,7 @@ class Database {
     /**
      * Database version.
      */
-    public const DB_VERSION = '1.4.0';
+    public const DB_VERSION = '1.5.0';
 
     /**
      * Option key storing current schema version.
@@ -404,6 +404,98 @@ class Database {
         ) {$charset_collate};";
         dbDelta($sql_analytics_snapshots);
 
+        // 21. Order Fulfillments Table (Sprint 06)
+        $table_fulfillments = $wpdb->prefix . 'suresalez_fulfillments';
+        $sql_fulfillments = "CREATE TABLE {$table_fulfillments} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            order_id bigint(20) unsigned NOT NULL,
+            fulfillment_number varchar(64) NOT NULL,
+            location_id bigint(20) unsigned NOT NULL,
+            carrier_name varchar(64) NOT NULL,
+            tracking_number varchar(128) NOT NULL,
+            tracking_url text DEFAULT NULL,
+            status varchar(30) DEFAULT 'unfulfilled' NOT NULL,
+            shipped_at datetime DEFAULT NULL,
+            delivered_at datetime DEFAULT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_fulfillment_num (fulfillment_number),
+            KEY idx_order_status (order_id, status),
+            KEY idx_location (location_id),
+            KEY idx_tracking (tracking_number)
+        ) {$charset_collate};";
+        dbDelta($sql_fulfillments);
+
+        // 22. Fulfillment Items Table (Sprint 06)
+        $table_fulfillment_items = $wpdb->prefix . 'suresalez_fulfillment_items';
+        $sql_fulfillment_items = "CREATE TABLE {$table_fulfillment_items} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            fulfillment_id bigint(20) unsigned NOT NULL,
+            order_item_id bigint(20) unsigned NOT NULL,
+            product_id bigint(20) unsigned NOT NULL,
+            variation_id bigint(20) unsigned DEFAULT 0 NOT NULL,
+            quantity int(11) unsigned DEFAULT 1 NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_fulfillment_order_item (fulfillment_id, order_item_id),
+            KEY idx_product (product_id)
+        ) {$charset_collate};";
+        dbDelta($sql_fulfillment_items);
+
+        // 23. Customer Self-Service RMA Requests Table (Sprint 06)
+        $table_rma_requests = $wpdb->prefix . 'suresalez_rma_requests';
+        $sql_rma_requests = "CREATE TABLE {$table_rma_requests} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            rma_number varchar(64) NOT NULL,
+            order_id bigint(20) unsigned NOT NULL,
+            customer_id bigint(20) unsigned NOT NULL,
+            status varchar(30) DEFAULT 'requested' NOT NULL,
+            return_type varchar(30) DEFAULT 'store_credit' NOT NULL,
+            reason_code varchar(64) NOT NULL,
+            customer_notes text DEFAULT NULL,
+            media_evidence longtext DEFAULT NULL,
+            return_label_url text DEFAULT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_rma_number (rma_number),
+            KEY idx_order_customer (order_id, customer_id),
+            KEY idx_status (status)
+        ) {$charset_collate};";
+        dbDelta($sql_rma_requests);
+
+        // 24. RMA Requested Items & Restock Inspection Table (Sprint 06)
+        $table_rma_items = $wpdb->prefix . 'suresalez_rma_items';
+        $sql_rma_items = "CREATE TABLE {$table_rma_items} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            rma_id bigint(20) unsigned NOT NULL,
+            order_item_id bigint(20) unsigned NOT NULL,
+            product_id bigint(20) unsigned NOT NULL,
+            quantity int(11) unsigned DEFAULT 1 NOT NULL,
+            inspection_status varchar(20) DEFAULT 'pending' NOT NULL,
+            restock_location_id bigint(20) unsigned DEFAULT 0 NOT NULL,
+            refund_amount decimal(12,2) DEFAULT 0.00 NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_rma_item (rma_id, product_id)
+        ) {$charset_collate};";
+        dbDelta($sql_rma_items);
+
+        // 25. Supplier Dropship & Print-on-Demand Integrations Table (Sprint 06)
+        $table_supplier_dropships = $wpdb->prefix . 'suresalez_supplier_dropships';
+        $sql_supplier_dropships = "CREATE TABLE {$table_supplier_dropships} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            supplier_name varchar(191) NOT NULL,
+            supplier_email varchar(191) NOT NULL,
+            webhook_url text DEFAULT NULL,
+            sku_prefix varchar(32) NOT NULL,
+            lead_time_days int(11) DEFAULT 3 NOT NULL,
+            status varchar(20) DEFAULT 'active' NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_sku_prefix (sku_prefix),
+            KEY idx_status (status)
+        ) {$charset_collate};";
+        dbDelta($sql_supplier_dropships);
+
         update_option(self::DB_VERSION_KEY, self::DB_VERSION);
 
         // Seed 10 warehouse fulfillment locations
@@ -424,6 +516,11 @@ class Database {
         self::seed_shoppable_videos();
         self::seed_campaign_schedules();
         self::seed_analytics_snapshots();
+
+        // Seed fulfillments, suppliers & RMA data (Sprint 06)
+        self::seed_fulfillments();
+        self::seed_rma_data();
+        self::seed_supplier_dropships();
     }
 
     /**
@@ -1120,4 +1217,253 @@ class Database {
             );
         }
     }
+
+    /**
+     * Seed sample order fulfillments & split shipments (Sprint 06).
+     *
+     * @return void
+     */
+    public static function seed_fulfillments(): void {
+        global $wpdb;
+
+        $table_f = $wpdb->prefix . 'suresalez_fulfillments';
+        $table_i = $wpdb->prefix . 'suresalez_fulfillment_items';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table_f}");
+        if ($count > 0) {
+            return;
+        }
+
+        $now = current_time('mysql');
+
+        // Fulfillment 1: Order #98455 - Split Package 1 (US-EAST-01 Newark)
+        $wpdb->insert(
+            $table_f,
+            [
+                'order_id'           => 98455,
+                'fulfillment_number' => 'FUL-98455-1',
+                'location_id'        => 1,
+                'carrier_name'       => 'FedEx Express',
+                'tracking_number'    => 'FDX9823412039US',
+                'tracking_url'       => 'https://www.fedex.com/fedextrack/?trknbr=FDX9823412039US',
+                'status'             => 'shipped',
+                'shipped_at'         => date('Y-m-d H:i:s', strtotime('-1 day')),
+                'delivered_at'       => null,
+                'created_at'         => $now,
+            ],
+            ['%d', '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s']
+        );
+        $f1_id = (int) $wpdb->insert_id;
+        $wpdb->insert(
+            $table_i,
+            [
+                'fulfillment_id' => $f1_id,
+                'order_item_id'  => 1011,
+                'product_id'     => 101,
+                'variation_id'   => 0,
+                'quantity'       => 1,
+            ],
+            ['%d', '%d', '%d', '%d', '%d']
+        );
+
+        // Fulfillment 2: Order #98455 - Split Package 2 (EU-CENTRAL-01 Frankfurt)
+        $wpdb->insert(
+            $table_f,
+            [
+                'order_id'           => 98455,
+                'fulfillment_number' => 'FUL-98455-2',
+                'location_id'        => 4,
+                'carrier_name'       => 'DHL Express',
+                'tracking_number'    => 'DHL7712390492DE',
+                'tracking_url'       => 'https://www.dhl.com/en/express/tracking.html?AWB=DHL7712390492DE',
+                'status'             => 'in_transit',
+                'shipped_at'         => date('Y-m-d H:i:s', strtotime('-12 hours')),
+                'delivered_at'       => null,
+                'created_at'         => $now,
+            ],
+            ['%d', '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s']
+        );
+        $f2_id = (int) $wpdb->insert_id;
+        $wpdb->insert(
+            $table_i,
+            [
+                'fulfillment_id' => $f2_id,
+                'order_item_id'  => 1012,
+                'product_id'     => 102,
+                'variation_id'   => 0,
+                'quantity'       => 1,
+            ],
+            ['%d', '%d', '%d', '%d', '%d']
+        );
+
+        // Fulfillment 3: Order #98210 - Single Package (APAC-SOUTH-01 Singapore)
+        $wpdb->insert(
+            $table_f,
+            [
+                'order_id'           => 98210,
+                'fulfillment_number' => 'FUL-98210-1',
+                'location_id'        => 7,
+                'carrier_name'       => 'BlueDart / DHL',
+                'tracking_number'    => 'BD3309124488IN',
+                'tracking_url'       => 'https://www.bluedart.com/tracking?track=BD3309124488IN',
+                'status'             => 'delivered',
+                'shipped_at'         => date('Y-m-d H:i:s', strtotime('-4 days')),
+                'delivered_at'       => date('Y-m-d H:i:s', strtotime('-1 day')),
+                'created_at'         => $now,
+            ],
+            ['%d', '%s', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s']
+        );
+        $f3_id = (int) $wpdb->insert_id;
+        $wpdb->insert(
+            $table_i,
+            [
+                'fulfillment_id' => $f3_id,
+                'order_item_id'  => 9901,
+                'product_id'     => 201,
+                'variation_id'   => 0,
+                'quantity'       => 2,
+            ],
+            ['%d', '%d', '%d', '%d', '%d']
+        );
+    }
+
+    /**
+     * Seed sample customer RMA requests and return inspection items (Sprint 06).
+     *
+     * @return void
+     */
+    public static function seed_rma_data(): void {
+        global $wpdb;
+
+        $table_r = $wpdb->prefix . 'suresalez_rma_requests';
+        $table_i = $wpdb->prefix . 'suresalez_rma_items';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table_r}");
+        if ($count > 0) {
+            return;
+        }
+
+        $now = current_time('mysql');
+
+        // RMA 1: Order #98210 (Inspected & Approved for Store Credit)
+        $wpdb->insert(
+            $table_r,
+            [
+                'rma_number'       => 'RMA-20261012-001',
+                'order_id'         => 98210,
+                'customer_id'      => 1,
+                'status'           => 'inspected',
+                'return_type'      => 'store_credit',
+                'reason_code'      => 'size_fit',
+                'customer_notes'   => 'Strap is 20mm, needed 22mm for Apex watch. Exchanging for store credit.',
+                'media_evidence'   => json_encode(['https://assets.suresalez.internal/rma/returns/strap-scale.jpg']),
+                'return_label_url' => 'https://shipping.suresalez.internal/labels/rma-return-001.pdf',
+                'created_at'       => date('Y-m-d H:i:s', strtotime('-2 days')),
+                'updated_at'       => $now,
+            ],
+            ['%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s']
+        );
+        $rma1_id = (int) $wpdb->insert_id;
+        $wpdb->insert(
+            $table_i,
+            [
+                'rma_id'              => $rma1_id,
+                'order_item_id'       => 9901,
+                'product_id'          => 201,
+                'quantity'            => 1,
+                'inspection_status'   => 'pass',
+                'restock_location_id' => 7,
+                'refund_amount'       => 96.85,
+            ],
+            ['%d', '%d', '%d', '%d', '%s', '%d', '%f']
+        );
+
+        // RMA 2: Order #98455 (Requested for Direct Refund)
+        $wpdb->insert(
+            $table_r,
+            [
+                'rma_number'       => 'RMA-20261014-002',
+                'order_id'         => 98455,
+                'customer_id'      => 2,
+                'status'           => 'requested',
+                'return_type'      => 'refund',
+                'reason_code'      => 'defective',
+                'customer_notes'   => 'Small hairline finish mark on bezel upon initial unboxing.',
+                'media_evidence'   => json_encode(['https://assets.suresalez.internal/rma/returns/bezel-macro.jpg']),
+                'return_label_url' => 'https://shipping.suresalez.internal/labels/rma-return-002.pdf',
+                'created_at'       => $now,
+                'updated_at'       => $now,
+            ],
+            ['%s', '%d', '%d', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s']
+        );
+        $rma2_id = (int) $wpdb->insert_id;
+        $wpdb->insert(
+            $table_i,
+            [
+                'rma_id'              => $rma2_id,
+                'order_item_id'       => 1011,
+                'product_id'          => 101,
+                'quantity'            => 1,
+                'inspection_status'   => 'pending',
+                'restock_location_id' => 1,
+                'refund_amount'       => 899.00,
+            ],
+            ['%d', '%d', '%d', '%d', '%s', '%d', '%f']
+        );
+    }
+
+    /**
+     * Seed dropship and print-on-demand supplier partners (Sprint 06).
+     *
+     * @return void
+     */
+    public static function seed_supplier_dropships(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_supplier_dropships';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $suppliers = [
+            [
+                'supplier_name'  => 'Atelier Artisan Leatherworks',
+                'supplier_email' => 'dropship@atelierleather.internal',
+                'webhook_url'    => 'https://api.atelierleather.internal/v1/orders/dispatch',
+                'sku_prefix'     => 'POD-LTH-',
+                'lead_time_days' => 3,
+                'status'         => 'active',
+                'created_at'     => current_time('mysql'),
+            ],
+            [
+                'supplier_name'  => 'Apex Swiss Precision Horology',
+                'supplier_email' => 'fulfillment@apexhorology.internal',
+                'webhook_url'    => 'https://api.apexhorology.internal/edi/purchase-orders',
+                'sku_prefix'     => 'DROP-APX-',
+                'lead_time_days' => 2,
+                'status'         => 'active',
+                'created_at'     => current_time('mysql'),
+            ],
+            [
+                'supplier_name'  => 'Milano Fine Mesh Foundry',
+                'supplier_email' => 'logistics@milanomesh.internal',
+                'webhook_url'    => 'https://api.milanomesh.internal/dispatch',
+                'sku_prefix'     => 'POD-MSH-',
+                'lead_time_days' => 4,
+                'status'         => 'active',
+                'created_at'     => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($suppliers as $sup) {
+            $wpdb->insert(
+                $table,
+                $sup,
+                ['%s', '%s', '%s', '%s', '%d', '%s', '%s']
+            );
+        }
+    }
 }
+

@@ -22,7 +22,7 @@ class Database {
     /**
      * Database version.
      */
-    public const DB_VERSION = '1.3.0';
+    public const DB_VERSION = '1.4.0';
 
     /**
      * Option key storing current schema version.
@@ -338,6 +338,72 @@ class Database {
         ) {$charset_collate};";
         dbDelta($sql_flow_logs);
 
+        // 17. Shoppable Videos Table (Sprint 05)
+        $table_shoppable_videos = $wpdb->prefix . 'suresalez_shoppable_videos';
+        $sql_shoppable_videos = "CREATE TABLE {$table_shoppable_videos} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            title varchar(255) NOT NULL,
+            video_url text NOT NULL,
+            thumbnail_url text DEFAULT NULL,
+            duration int(10) unsigned DEFAULT 0 NOT NULL,
+            tagged_product_ids longtext NOT NULL,
+            views_count bigint(20) unsigned DEFAULT 0 NOT NULL,
+            clicks_count bigint(20) unsigned DEFAULT 0 NOT NULL,
+            sort_order int(11) DEFAULT 0 NOT NULL,
+            status varchar(20) DEFAULT 'published' NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_status_sort (status, sort_order)
+        ) {$charset_collate};";
+        dbDelta($sql_shoppable_videos);
+
+        // 18. Campaign Schedules Table (Sprint 05)
+        $table_campaign_schedules = $wpdb->prefix . 'suresalez_campaign_schedules';
+        $sql_campaign_schedules = "CREATE TABLE {$table_campaign_schedules} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            campaign_name varchar(191) NOT NULL,
+            start_time datetime NOT NULL,
+            end_time datetime NOT NULL,
+            theme_mods longtext DEFAULT NULL,
+            price_rules longtext DEFAULT NULL,
+            status varchar(20) DEFAULT 'scheduled' NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_status_dates (status, start_time, end_time)
+        ) {$charset_collate};";
+        dbDelta($sql_campaign_schedules);
+
+        // 19. CAPI Events Queue Table (Sprint 05)
+        $table_capi_events = $wpdb->prefix . 'suresalez_capi_events';
+        $sql_capi_events = "CREATE TABLE {$table_capi_events} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            event_name varchar(50) NOT NULL,
+            event_id varchar(191) NOT NULL,
+            user_data_hashed longtext DEFAULT NULL,
+            custom_data longtext DEFAULT NULL,
+            status varchar(20) DEFAULT 'pending' NOT NULL,
+            response_code int(11) DEFAULT 0 NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_event_id (event_id),
+            KEY idx_status_event (status, event_name)
+        ) {$charset_collate};";
+        dbDelta($sql_capi_events);
+
+        // 20. Analytics BI Snapshots Table (Sprint 05)
+        $table_analytics_snapshots = $wpdb->prefix . 'suresalez_analytics_snapshots';
+        $sql_analytics_snapshots = "CREATE TABLE {$table_analytics_snapshots} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            snapshot_date date NOT NULL,
+            metric_key varchar(100) NOT NULL,
+            metric_value decimal(14,4) DEFAULT 0.0000 NOT NULL,
+            dimensions longtext DEFAULT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_date_metric (snapshot_date, metric_key)
+        ) {$charset_collate};";
+        dbDelta($sql_analytics_snapshots);
+
         update_option(self::DB_VERSION_KEY, self::DB_VERSION);
 
         // Seed 10 warehouse fulfillment locations
@@ -353,6 +419,11 @@ class Database {
         // Seed default CRM segments & Flow workflows (Sprint 04)
         self::seed_default_segments();
         self::seed_default_flows();
+
+        // Seed shoppable videos, campaigns & analytics snapshots (Sprint 05)
+        self::seed_shoppable_videos();
+        self::seed_campaign_schedules();
+        self::seed_analytics_snapshots();
     }
 
     /**
@@ -813,6 +884,239 @@ class Database {
                 $table,
                 $flow,
                 ['%s', '%s', '%s', '%s', '%s', '%d', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed default shoppable video reels (Sprint 05).
+     *
+     * @return void
+     */
+    public static function seed_shoppable_videos(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_shoppable_videos';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $reels = [
+            [
+                'title'              => 'Behind the Craft: Royal Emerald Chronograph Assembly',
+                'video_url'          => 'https://assets.suresalez.internal/videos/reels/emerald-craft.mp4',
+                'thumbnail_url'      => 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop',
+                'duration'           => 28,
+                'tagged_product_ids' => json_encode([
+                    [
+                        'product_id' => 101,
+                        'title'      => 'Royal Emerald Automatic Chronograph',
+                        'price'      => 899.00,
+                        'x_pct'      => 50.0,
+                        'y_pct'      => 65.0,
+                        'timestamp'  => 4,
+                    ],
+                    [
+                        'product_id' => 102,
+                        'title'      => 'Italian Handcrafted Leather Travel Case',
+                        'price'      => 120.00,
+                        'x_pct'      => 32.0,
+                        'y_pct'      => 78.0,
+                        'timestamp'  => 12,
+                    ],
+                ]),
+                'views_count'        => 14200,
+                'clicks_count'       => 1840,
+                'sort_order'         => 1,
+                'status'             => 'published',
+                'created_at'         => current_time('mysql'),
+            ],
+            [
+                'title'              => 'Milanese Loop & Titanium Bezel: Water Resistance Test',
+                'video_url'          => 'https://assets.suresalez.internal/videos/reels/milanese-water-test.mp4',
+                'thumbnail_url'      => 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=600&auto=format&fit=crop',
+                'duration'           => 34,
+                'tagged_product_ids' => json_encode([
+                    [
+                        'product_id' => 201,
+                        'title'      => 'Milanese Magnetic Mesh Strap - Grade 5 Titanium',
+                        'price'      => 96.85,
+                        'x_pct'      => 45.0,
+                        'y_pct'      => 55.0,
+                        'timestamp'  => 6,
+                    ],
+                    [
+                        'product_id' => 202,
+                        'title'      => 'Ceramic Diver 300M Master Chronometer',
+                        'price'      => 1250.00,
+                        'x_pct'      => 58.0,
+                        'y_pct'      => 48.0,
+                        'timestamp'  => 15,
+                    ],
+                ]),
+                'views_count'        => 9800,
+                'clicks_count'       => 1120,
+                'sort_order'         => 2,
+                'status'             => 'published',
+                'created_at'         => current_time('mysql'),
+            ],
+            [
+                'title'              => 'Sunset Unboxing & Dial Macro Reflections',
+                'video_url'          => 'https://assets.suresalez.internal/videos/reels/sunset-unboxing.mp4',
+                'thumbnail_url'      => 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&auto=format&fit=crop',
+                'duration'           => 22,
+                'tagged_product_ids' => json_encode([
+                    [
+                        'product_id' => 301,
+                        'title'      => 'Rose Gold Sunburst Dress Watch',
+                        'price'      => 649.00,
+                        'x_pct'      => 52.0,
+                        'y_pct'      => 60.0,
+                        'timestamp'  => 5,
+                    ],
+                ]),
+                'views_count'        => 22500,
+                'clicks_count'       => 3100,
+                'sort_order'         => 3,
+                'status'             => 'published',
+                'created_at'         => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($reels as $reel) {
+            $wpdb->insert(
+                $table,
+                $reel,
+                ['%s', '%s', '%s', '%d', '%s', '%d', '%d', '%d', '%s', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed scheduled flash campaigns (Sprint 05).
+     *
+     * @return void
+     */
+    public static function seed_campaign_schedules(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_campaign_schedules';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $campaigns = [
+            [
+                'campaign_name' => 'Cyber Flash Drop & VIP Access',
+                'start_time'    => '2026-10-01 00:00:00',
+                'end_time'      => '2026-11-30 23:59:59',
+                'theme_mods'    => json_encode([
+                    'banner_text'       => '⚡ FLASH SALE: Extra 20% off with code CYBERVIP — Free Worldwide Express Shipping on all orders above $150',
+                    'banner_cta'        => 'Shop The Drop',
+                    'banner_cta_url'    => '/#suresalez-shoppable-reels-mount',
+                    'banner_bg'         => '#0f172a',
+                    'banner_text_color' => '#f8fafc',
+                    'badge'             => 'LIMITED TIME',
+                ]),
+                'price_rules'   => json_encode([
+                    'discount_pct' => 20,
+                    'coupon'       => 'CYBERVIP',
+                    'min_subtotal' => 150.00,
+                ]),
+                'status'        => 'active',
+                'created_at'    => current_time('mysql'),
+            ],
+            [
+                'campaign_name' => 'Holiday Luxury Gala 2026',
+                'start_time'    => '2026-12-01 00:00:00',
+                'end_time'      => '2026-12-31 23:59:59',
+                'theme_mods'    => json_encode([
+                    'banner_text'       => '✨ Holiday Gift Suite: Complimentary Diamond-Grade Gift Packaging & Velvet Travel Roll Included',
+                    'banner_cta'        => 'Explore Gifts',
+                    'banner_cta_url'    => '/shop',
+                    'banner_bg'         => '#1e1b4b',
+                    'banner_text_color' => '#fef08a',
+                    'badge'             => 'HOLIDAY EXCLUSIVE',
+                ]),
+                'price_rules'   => json_encode([
+                    'gift_threshold' => 300.00,
+                ]),
+                'status'        => 'scheduled',
+                'created_at'    => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($campaigns as $camp) {
+            $wpdb->insert(
+                $table,
+                $camp,
+                ['%s', '%s', '%s', '%s', '%s', '%s', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed initial BI analytics snapshots (Sprint 05).
+     *
+     * @return void
+     */
+    public static function seed_analytics_snapshots(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_analytics_snapshots';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $today = current_time('Y-m-d');
+        $snapshots = [
+            [
+                'snapshot_date' => $today,
+                'metric_key'    => 'net_revenue',
+                'metric_value'  => 148520.0000,
+                'dimensions'    => json_encode(['channel' => 'omnichannel', 'currency' => 'USD']),
+                'created_at'    => current_time('mysql'),
+            ],
+            [
+                'snapshot_date' => $today,
+                'metric_key'    => 'gross_margin_pct',
+                'metric_value'  => 64.8000,
+                'dimensions'    => json_encode(['period' => 'trailing_30d', 'target' => 60.0]),
+                'created_at'    => current_time('mysql'),
+            ],
+            [
+                'snapshot_date' => $today,
+                'metric_key'    => 'cart_to_detail_rate',
+                'metric_value'  => 18.6500,
+                'dimensions'    => json_encode(['benchmark' => 'luxury_ecommerce', 'industry_avg' => 10.5]),
+                'created_at'    => current_time('mysql'),
+            ],
+            [
+                'snapshot_date' => $today,
+                'metric_key'    => 'channel_attribution',
+                'metric_value'  => 42.5000,
+                'dimensions'    => json_encode([
+                    'organic'         => 35.2,
+                    'shoppable_reels' => 26.4,
+                    'ai_chat'         => 18.9,
+                    'paid_social'     => 12.5,
+                    'email'           => 7.0,
+                ]),
+                'created_at'    => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($snapshots as $snap) {
+            $wpdb->insert(
+                $table,
+                $snap,
+                ['%s', '%s', '%f', '%s', '%s']
             );
         }
     }

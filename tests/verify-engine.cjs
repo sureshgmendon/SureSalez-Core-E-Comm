@@ -114,6 +114,15 @@ const requiredFiles = [
     'plugins/suresalez-core/modules/crm-automations/assets/js/chat-widget.js',
     'plugins/suresalez-core/modules/crm-automations/assets/css/lead-capture.css',
     'plugins/suresalez-core/modules/crm-automations/assets/js/lead-capture.js',
+    // Sprint 05 Modules
+    'plugins/suresalez-core/modules/omnichannel-ai/class-omnichannel-ai-module.php',
+    'plugins/suresalez-core/modules/omnichannel-ai/class-ai-chat-commerce.php',
+    'plugins/suresalez-core/modules/omnichannel-ai/class-shoppable-reels.php',
+    'plugins/suresalez-core/modules/omnichannel-ai/class-capi-dispatcher.php',
+    'plugins/suresalez-core/modules/omnichannel-ai/class-marketplace-feeds.php',
+    'plugins/suresalez-core/modules/omnichannel-ai/class-analytics-bi.php',
+    'plugins/suresalez-core/modules/omnichannel-ai/assets/css/shoppable-reels.css',
+    'plugins/suresalez-core/modules/omnichannel-ai/assets/js/shoppable-reels.js',
 ];
 
 const rootDir = path.resolve(__dirname, '..');
@@ -245,6 +254,11 @@ const expectedTables = [
     'suresalez_segments',
     'suresalez_flow_workflows',
     'suresalez_flow_logs',
+    // Sprint 05
+    'suresalez_shoppable_videos',
+    'suresalez_campaign_schedules',
+    'suresalez_capi_events',
+    'suresalez_analytics_snapshots',
 ];
 
 expectedTables.forEach(tbl => {
@@ -302,6 +316,19 @@ assert(coreBootstrapContent.includes('Visual_Swatches_Module'), 'Core bootstrap 
 assert(coreBootstrapContent.includes('Reviews_QA_Module'), 'Core bootstrap instantiates Reviews_QA_Module');
 assert(coreBootstrapContent.includes('Localization_Module'), 'Core bootstrap instantiates Localization_Module');
 assert(coreBootstrapContent.includes('CRM_Automations_Module'), 'Core bootstrap instantiates CRM_Automations_Module');
+assert(coreBootstrapContent.includes('Omnichannel_AI_Module'), 'Core bootstrap instantiates Omnichannel_AI_Module');
+
+// Check that Omnichannel AI module loads sub-components
+const omnichannelModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/omnichannel-ai/class-omnichannel-ai-module.php'), 'utf8');
+assert(omnichannelModuleContent.includes('AI_Chat_Commerce'), 'Omnichannel AI Module loads AI Chat Commerce engine');
+assert(omnichannelModuleContent.includes('Shoppable_Reels'), 'Omnichannel AI Module loads Shoppable Reels engine');
+assert(omnichannelModuleContent.includes('CAPI_Dispatcher'), 'Omnichannel AI Module loads CAPI Dispatcher');
+assert(omnichannelModuleContent.includes('Marketplace_Feeds'), 'Omnichannel AI Module loads Marketplace Feeds engine');
+assert(omnichannelModuleContent.includes('Analytics_BI'), 'Omnichannel AI Module loads Analytics BI engine');
+
+assert(dbFileContent.includes('seed_shoppable_videos'), 'Database seeds default shoppable video reels');
+assert(dbFileContent.includes('seed_campaign_schedules'), 'Database seeds scheduled flash campaigns');
+assert(dbFileContent.includes('seed_analytics_snapshots'), 'Database seeds initial BI analytics snapshots');
 
 // Check that localization module loads currency switcher, gateway router, tax compliance, and market routing
 const localizationModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/localization/class-localization-module.php'), 'utf8');

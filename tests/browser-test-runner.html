@@ -24,6 +24,8 @@
   <!-- Sprint 04 CSS -->
   <link rel="stylesheet" href="../plugins/suresalez-core/modules/crm-automations/assets/css/chat-widget.css">
   <link rel="stylesheet" href="../plugins/suresalez-core/modules/crm-automations/assets/css/lead-capture.css">
+  <!-- Sprint 05 CSS -->
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/omnichannel-ai/assets/css/shoppable-reels.css">
 
   <style>
     body {
@@ -158,10 +160,13 @@
 </head>
 <body>
 
+  <!-- Dynamic Campaign Announcement Banner Mount (Sprint 05) -->
+  <div id="suresalez-campaign-banner-mount" class="suresalez-campaign-banner-mount" style="max-width: 1280px; margin: 0 auto 16px auto;"></div>
+
   <header class="harness-nav">
     <h1>
       <span>⚡ SureSalez E-Commerce Verification Harness</span>
-      <span class="harness-badge">Sprint 01 - 04 Live</span>
+      <span class="harness-badge">Sprint 01 - 05 Live</span>
     </h1>
     <div class="tab-pills">
       <button class="tab-pill-btn active" data-target="view-product">Product & Buy Box</button>
@@ -171,6 +176,7 @@
       <button class="tab-pill-btn" data-target="view-upsell">1-Click Upsell Demo</button>
       <button class="tab-pill-btn" data-target="view-localization">Global Localization & Compliance</button>
       <button class="tab-pill-btn" data-target="view-crm-flow">CRM 360 &amp; Flow Engine</button>
+      <button class="tab-pill-btn" data-target="view-omnichannel">Omnichannel, Reels &amp; AI</button>
       <button class="tab-pill-btn" data-target="view-admin">Module Manager Admin</button>
       <button class="tab-pill-btn" data-target="view-schema">Schema.org JSON-LD</button>
     </div>
@@ -707,6 +713,198 @@
           </div>
         </div>
 
+      </div>
+    </div>
+
+    <!-- TAB 10: OMNICHANNEL, REELS & AI COMMERCE (SPRINT 05) -->
+    <div id="view-omnichannel" class="harness-tab-pane" style="display:none;">
+      <div class="test-status-banner">
+        <span>⚡</span>
+        <div>
+          <strong>Sprint 05 Live:</strong> Interactive Shoppable Video Reels with Hotspots, Conversational AI Sales Assistant (NLP &amp; 1-Click Cart URLs), Server-Side CAPI (SHA-256), Google Merchant XML / Meta Catalog Syndication, and Real-Time BI Analytics Dashboard.
+        </div>
+      </div>
+
+      <!-- SECTION 1: SHOPPABLE REELS MOUNT -->
+      <div class="product-view-card" style="margin-bottom:24px; padding:24px;">
+        <h2 style="font-size:18px; font-weight:700; margin:0 0 16px 0; display:flex; align-items:center; gap:8px;">
+          <span>📱 Shoppable Video Reels Component</span>
+          <span class="harness-badge">Theme Slot: #suresalez-shoppable-reels-mount</span>
+        </h2>
+        <div id="suresalez-shoppable-reels-mount" class="suresalez-shoppable-reels-mount"></div>
+      </div>
+
+      <!-- SECTION 2: CONVERSATIONAL AI SALES ASSISTANT & NLP PARSER -->
+      <div class="product-view-card" style="margin-bottom:24px; padding:24px;">
+        <h2 style="font-size:18px; font-weight:700; margin:0 0 12px 0; display:flex; align-items:center; justify-content:space-between;">
+          <span>🤖 Conversational AI Sales Assistant &amp; NLP Parser</span>
+          <span class="suresalez-tax-badge badge-ddp">OpenAPI 3.1 &bull; /ai/chat</span>
+        </h2>
+        <p style="color:#64748b; font-size:13px; margin:0 0 16px 0;">
+          Autonomous semantic search engine with natural language budget, material, and category extraction + 1-click cart links for ChatGPT Actions, Gemini, and Copilot.
+        </p>
+
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:16px;">
+          <button type="button" class="btn-test-action" onclick="runAiQuery('Show me luxury titanium watches under $1,000')">Titanium under $1000</button>
+          <button type="button" class="btn-test-action" onclick="runAiQuery('Recommend leather travel cases between $50 and $150')">Leather case ($50-$150)</button>
+          <button type="button" class="btn-test-action" onclick="runAiQuery('Is the Ceramic Diver available in stock?')">Ceramic Diver Stock Check</button>
+          <button type="button" class="btn-test-action" onclick="runAiQuery('I want to buy the Royal Emerald chronograph')">1-Click Purchase Emerald</button>
+        </div>
+
+        <div style="display:flex; gap:12px; margin-bottom:16px;">
+          <input type="text" id="ai-chat-input" placeholder="Type prompt, e.g. 'Show me emerald dials under $900'..." style="flex:1; padding:10px 14px; border:1px solid #cbd5e1; border-radius:8px; font-size:13px;" value="Show me luxury titanium watches under $1,000" />
+          <button type="button" class="btn-test-action" onclick="runAiQuery(document.getElementById('ai-chat-input').value)">Send Prompt</button>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+          <!-- NLP Parsed Structure -->
+          <div style="background:#0f172a; border-radius:10px; padding:16px; color:#f8fafc; font-family:'JetBrains Mono', monospace; font-size:12px;">
+            <div style="color:#94a3b8; margin-bottom:8px;">// NLP STRUCTURED INTENT &amp; FILTERS:</div>
+            <div id="ai-nlp-output" style="line-height:1.6; white-space:pre-wrap;">// Ready for conversational inquiry...</div>
+          </div>
+
+          <!-- Bot Reply & Product Card Preview -->
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px; display:flex; flex-direction:column; gap:12px;">
+            <div style="font-weight:600; font-size:13px; color:#334155;">// CONVERSATIONAL AGENT RESPONSE:</div>
+            <div id="ai-reply-text" style="font-size:13.5px; color:#0f172a; line-height:1.5;">Select an inquiry above or enter a custom prompt.</div>
+            <div id="ai-card-preview" style="border-top:1px solid #e2e8f0; padding-top:10px; display:none;">
+              <!-- Dynamic Product Card -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 3: SERVER-SIDE CAPI PRIVACY DISPATCHER -->
+      <div class="product-view-card" style="margin-bottom:24px; padding:24px;">
+        <h2 style="font-size:18px; font-weight:700; margin:0 0 12px 0; display:flex; align-items:center; justify-content:space-between;">
+          <span>🔒 Server-Side CAPI &amp; Privacy Parameter Hashing (SHA-256)</span>
+          <span class="suresalez-tax-badge badge-gst">Meta CAPI &bull; Google Enhanced &bull; TikTok</span>
+        </h2>
+        <p style="color:#64748b; font-size:13px; margin:0 0 16px 0;">
+          All PII (Email, Phone, Name, City, Country) is normalized and encrypted via irreversible SHA-256 hashes prior to transmission with unique deduplication IDs.
+        </p>
+
+        <div style="display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;">
+          <button type="button" class="btn-test-action" onclick="fireCapiDemo('PageView')">Dispatch PageView</button>
+          <button type="button" class="btn-test-action" onclick="fireCapiDemo('ViewContent')">Dispatch ViewContent (Reel #1)</button>
+          <button type="button" class="btn-test-action" onclick="fireCapiDemo('AddToCart')">Dispatch AddToCart (Hotspot Pin)</button>
+          <button type="button" class="btn-test-action" onclick="fireCapiDemo('Purchase')">Dispatch Purchase ($899.00)</button>
+        </div>
+
+        <div style="background:#0f172a; border-radius:10px; padding:16px; color:#f8fafc; font-family:'JetBrains Mono', monospace; font-size:12px;">
+          <div style="color:#94a3b8; margin-bottom:8px;">// CAPI DISPATCH TRACE LOG:</div>
+          <div id="capi-stream" style="line-height:1.6; max-height:220px; overflow-y:auto; white-space:pre-wrap;">
+            <span style="color:#10b981;">[Ready]</span> CAPI dispatcher waiting for conversion trigger...
+          </div>
+        </div>
+      </div>
+
+      <!-- SECTION 4: MARKETPLACE FEEDS INSPECTOR -->
+      <div class="product-view-card" style="margin-bottom:24px; padding:24px;">
+        <h2 style="font-size:18px; font-weight:700; margin:0 0 12px 0; display:flex; align-items:center; justify-content:space-between;">
+          <span>📡 Automated Marketplace Feeds Syndication</span>
+          <span class="harness-badge">Google XML &bull; Meta CSV &bull; TikTok JSON</span>
+        </h2>
+        <p style="color:#64748b; font-size:13px; margin:0 0 16px 0;">
+          Differential inventory feeds with taxonomy category mapping, GTIN/MPN identifiers, and Sprint 03 HSN customs codes.
+        </p>
+
+        <div style="display:flex; gap:10px; margin-bottom:16px;">
+          <button type="button" class="btn-test-action" onclick="showFeedInspector('google')">Google Merchant XML</button>
+          <button type="button" class="btn-test-action" onclick="showFeedInspector('meta')">Meta Catalog CSV</button>
+          <button type="button" class="btn-test-action" onclick="showFeedInspector('tiktok')">TikTok Shop JSON</button>
+        </div>
+
+        <pre id="feed-code-inspector" class="schema-inspector" style="max-height:280px;"></pre>
+      </div>
+
+      <!-- SECTION 5: EXECUTIVE BI ANALYTICS & ATTRIBUTION -->
+      <div class="product-view-card" style="padding:24px;">
+        <h2 style="font-size:18px; font-weight:700; margin:0 0 12px 0; display:flex; align-items:center; justify-content:space-between;">
+          <span>📊 High-Throughput BI Analytics &amp; Omnichannel Attribution</span>
+          <span class="suresalez-tax-badge badge-ddp">Trailing 30-Day Metrics</span>
+        </h2>
+
+        <!-- KPI Grid -->
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:24px;">
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px;">
+            <div style="font-size:12px; color:#64748b; font-weight:600; text-transform:uppercase;">Net Revenue</div>
+            <div style="font-size:24px; font-weight:800; color:#0f172a; margin:4px 0;">$153,520</div>
+            <div style="font-size:11px; color:#10b981; font-weight:600;">+24.8% vs prior month</div>
+          </div>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px;">
+            <div style="font-size:12px; color:#64748b; font-weight:600; text-transform:uppercase;">Gross Margin</div>
+            <div style="font-size:24px; font-weight:800; color:#0f172a; margin:4px 0;">64.8%</div>
+            <div style="font-size:11px; color:#10b981; font-weight:600;">Target: 60.0% (&bull;4.8%)</div>
+          </div>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px;">
+            <div style="font-size:12px; color:#64748b; font-weight:600; text-transform:uppercase;">Cart-to-Detail Rate</div>
+            <div style="font-size:24px; font-weight:800; color:#0f172a; margin:4px 0;">18.65%</div>
+            <div style="font-size:11px; color:#10b981; font-weight:600;">Industry Benchmark: 10.5%</div>
+          </div>
+
+          <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px;">
+            <div style="font-size:12px; color:#64748b; font-weight:600; text-transform:uppercase;">Average Order Value (AOV)</div>
+            <div style="font-size:24px; font-weight:800; color:#0f172a; margin:4px 0;">$122.82</div>
+            <div style="font-size:11px; color:#2563eb; font-weight:600;">1,250 total orders</div>
+          </div>
+        </div>
+
+        <!-- Attribution Progress Bars -->
+        <h3 style="font-size:15px; font-weight:700; margin:0 0 12px 0;">Multi-Touch Channel Revenue Attribution</h3>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:4px;">
+              <span>Organic Search (SEO)</span>
+              <span>35.2% ($54,039)</span>
+            </div>
+            <div style="background:#e2e8f0; height:8px; border-radius:9999px; overflow:hidden;">
+              <div style="background:#3b82f6; width:35.2%; height:100%;"></div>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:4px;">
+              <span>Shoppable Video Reels (Sprint 05)</span>
+              <span style="color:#0f172a; font-weight:700;">26.4% ($40,529)</span>
+            </div>
+            <div style="background:#e2e8f0; height:8px; border-radius:9999px; overflow:hidden;">
+              <div style="background:#10b981; width:26.4%; height:100%;"></div>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:4px;">
+              <span>Conversational AI Sales Assistant (Sprint 05)</span>
+              <span style="color:#0f172a; font-weight:700;">18.9% ($29,015)</span>
+            </div>
+            <div style="background:#e2e8f0; height:8px; border-radius:9999px; overflow:hidden;">
+              <div style="background:#8b5cf6; width:18.9%; height:100%;"></div>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:4px;">
+              <span>Paid Meta / TikTok Ads (CAPI Tracked)</span>
+              <span>12.5% ($19,190)</span>
+            </div>
+            <div style="background:#e2e8f0; height:8px; border-radius:9999px; overflow:hidden;">
+              <div style="background:#f59e0b; width:12.5%; height:100%;"></div>
+            </div>
+          </div>
+
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600; margin-bottom:4px;">
+              <span>Automated CRM Flows (Sprint 04)</span>
+              <span>7.0% ($10,746)</span>
+            </div>
+            <div style="background:#e2e8f0; height:8px; border-radius:9999px; overflow:hidden;">
+              <div style="background:#ec4899; width:7.0%; height:100%;"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1252,9 +1450,253 @@
         });
       }
     }
+
+    // Sprint 05 Omnichannel & AI Chat Data
+    window.suresalezOmnichannelData = {
+      restUrl: '/wp-json/suresalez/v1/',
+      nonce: 'mock_rest_nonce_sprint05',
+      campaign: {
+        id: 1,
+        campaign_name: 'Cyber Flash Drop & VIP Access',
+        start_time: '2026-10-01 00:00:00',
+        end_time: '2026-11-30 23:59:59',
+        theme_mods: {
+          banner_text: '⚡ FLASH SALE: Extra 20% off with code CYBERVIP — Free Worldwide Express Shipping on all orders above $150',
+          banner_cta: 'Shop The Drop',
+          banner_cta_url: '#suresalez-shoppable-reels-mount',
+          banner_bg: '#0f172a',
+          banner_text_color: '#f8fafc',
+          badge: 'LIMITED TIME'
+        },
+        price_rules: {
+          discount_pct: 20,
+          coupon: 'CYBERVIP',
+          min_subtotal: 150.00
+        },
+        status: 'active'
+      },
+      reels: [
+        {
+          id: 1,
+          title: 'Behind the Craft: Royal Emerald Chronograph Assembly',
+          video_url: 'https://assets.suresalez.internal/videos/reels/emerald-craft.mp4',
+          thumbnail_url: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&auto=format&fit=crop',
+          duration: 28,
+          tagged_products: [
+            { product_id: 101, title: 'Royal Emerald Automatic Chronograph', price: 899.00, x_pct: 50.0, y_pct: 65.0 },
+            { product_id: 102, title: 'Italian Handcrafted Leather Travel Case', price: 120.00, x_pct: 32.0, y_pct: 78.0 }
+          ],
+          views_count: 14200,
+          clicks_count: 1840,
+          sort_order: 1
+        },
+        {
+          id: 2,
+          title: 'Milanese Loop & Titanium Bezel: Water Resistance Test',
+          video_url: 'https://assets.suresalez.internal/videos/reels/milanese-water-test.mp4',
+          thumbnail_url: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=600&auto=format&fit=crop',
+          duration: 34,
+          tagged_products: [
+            { product_id: 201, title: 'Milanese Magnetic Mesh Strap - Grade 5 Titanium', price: 96.85, x_pct: 45.0, y_pct: 55.0 },
+            { product_id: 202, title: 'Ceramic Diver 300M Master Chronometer', price: 1250.00, x_pct: 58.0, y_pct: 48.0 }
+          ],
+          views_count: 9800,
+          clicks_count: 1120,
+          sort_order: 2
+        },
+        {
+          id: 3,
+          title: 'Sunset Unboxing & Dial Macro Reflections',
+          video_url: 'https://assets.suresalez.internal/videos/reels/sunset-unboxing.mp4',
+          thumbnail_url: 'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?w=600&auto=format&fit=crop',
+          duration: 22,
+          tagged_products: [
+            { product_id: 301, title: 'Rose Gold Sunburst Dress Watch', price: 649.00, x_pct: 52.0, y_pct: 60.0 }
+          ],
+          views_count: 22500,
+          clicks_count: 3100,
+          sort_order: 3
+        }
+      ]
+    };
+
+    // AI Chat & Query Simulation
+    function runAiQuery(query) {
+      const input = document.getElementById('ai-chat-input');
+      if (input) input.value = query;
+
+      const lower = query.toLowerCase().trim();
+      let maxPrice = null, minPrice = null, material = null, category = 'Watches', intent = 'search';
+
+      if (lower.includes('between') && lower.match(/\$([0-9]+)\s+and\s+\$([0-9]+)/)) {
+        const m = lower.match(/\$([0-9]+)\s+and\s+\$([0-9]+)/);
+        minPrice = parseInt(m[1]);
+        maxPrice = parseInt(m[2]);
+      } else if (lower.includes('under') && lower.match(/under\s+\$?([0-9,]+)/)) {
+        maxPrice = parseInt(lower.match(/under\s+\$?([0-9,]+)/)[1].replace(',', ''));
+      }
+
+      ['titanium', 'emerald', 'sapphire', 'leather', 'ceramic', 'rose gold'].forEach(m => {
+        if (lower.includes(m)) material = m;
+      });
+
+      if (lower.includes('case') || lower.includes('travel')) category = 'Accessories';
+      else if (lower.includes('strap') || lower.includes('loop')) category = 'Straps';
+
+      if (lower.includes('buy') || lower.includes('order')) intent = 'purchase';
+      else if (lower.includes('recommend')) intent = 'recommendation';
+      else if (lower.includes('stock')) intent = 'stock_check';
+
+      const nlpResult = {
+        query: query,
+        intent: intent,
+        filters: {
+          category: category,
+          material: material,
+          min_price: minPrice,
+          max_price: maxPrice,
+          in_stock_only: true
+        },
+        matched_tokens: [material, category.toLowerCase()].filter(Boolean)
+      };
+
+      document.getElementById('ai-nlp-output').textContent = JSON.stringify(nlpResult, null, 2);
+
+      // Find best match in mock catalog
+      let bestItem = {
+        id: 201,
+        title: "Milanese Magnetic Mesh Strap - Grade 5 Titanium",
+        price: 96.85,
+        rating: 4.92,
+        stock: 85,
+        image: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=300&auto=format&fit=crop"
+      };
+
+      if (material === 'emerald' || lower.includes('chronograph')) {
+        bestItem = {
+          id: 101,
+          title: "Royal Emerald Automatic Chronograph 42mm",
+          price: 899.00,
+          rating: 4.95,
+          stock: 45,
+          image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300&auto=format&fit=crop"
+        };
+      } else if (material === 'leather' || category === 'Accessories') {
+        bestItem = {
+          id: 102,
+          title: "Italian Handcrafted Leather Travel Watch Case",
+          price: 120.00,
+          rating: 4.88,
+          stock: 110,
+          image: "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=300&auto=format&fit=crop"
+        };
+      } else if (material === 'ceramic') {
+        bestItem = {
+          id: 202,
+          title: "Ceramic Diver 300M Master Chronometer",
+          price: 1250.00,
+          rating: 4.98,
+          stock: 28,
+          image: "https://images.unsplash.com/photo-1508057198894-247b23fe5ade?w=300&auto=format&fit=crop"
+        };
+      }
+
+      let replyMsg = `I found a top match for your ${material || ''} request: The ${bestItem.title} ($${bestItem.price.toFixed(2)}). Rated ${bestItem.rating}/5 from verified buyers.`;
+      if (intent === 'purchase') {
+        replyMsg = `Direct checkout link prepared for ${bestItem.title}. Includes worldwide complimentary express shipping.`;
+      } else if (intent === 'stock_check') {
+        replyMsg = `In stock! We currently have ${bestItem.stock} units available across our North American & European fulfillment hubs.`;
+      }
+
+      document.getElementById('ai-reply-text').textContent = replyMsg;
+
+      const cardPreview = document.getElementById('ai-card-preview');
+      cardPreview.style.display = 'block';
+      cardPreview.innerHTML = `
+        <div style="display:flex; gap:12px; align-items:center; background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; padding:10px;">
+          <img src="${bestItem.image}" alt="${bestItem.title}" style="width:60px; height:60px; object-fit:cover; border-radius:6px;" />
+          <div style="flex:1;">
+            <div style="font-weight:700; font-size:13px; color:#0f172a;">${bestItem.title}</div>
+            <div style="font-weight:700; color:#2563eb; font-size:14px;">$${bestItem.price.toFixed(2)} <span style="font-size:11px; color:#10b981; font-weight:600;">(${bestItem.stock} in stock)</span></div>
+          </div>
+          <button type="button" class="btn-test-action" onclick="alert('Navigating to Direct Cart Link: /checkout/?add-to-cart=${bestItem.id}&quantity=1&ref=ai-chat')">
+            🛒 1-Click Buy
+          </button>
+        </div>
+      `;
+    }
+
+    // CAPI Simulation
+    function fireCapiDemo(eventName) {
+      const log = document.getElementById('capi-stream');
+      const time = new Date().toLocaleTimeString();
+      const evtId = 'evt_' + Date.now() + '_' + Math.random().toString(36).substring(2, 9);
+      
+      const emailHash = 'b4c26d45236e94f09d2208a0d4cf965b263b61de805e27a69cb84e858db1b9';
+      const phoneHash = '8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c';
+
+      log.innerHTML = `<span style="color:#38bdf8;">[${time} CAPI]</span> Event: <strong style="color:#ffffff;">${eventName}</strong>
+&bull; Event ID (Deduplication): <span style="color:#fef08a;">${evtId}</span>
+&bull; Encrypted Parameters: { em: "${emailHash}...", ph: "${phoneHash}...", country: "us" }
+&bull; Status: <span style="color:#10b981;">200 OK — Dispatched to Meta CAPI, Google Enhanced Conversions, and TikTok API</span>
+` + log.innerHTML;
+    }
+
+    // Feeds Inspector
+    function showFeedInspector(type) {
+      const box = document.getElementById('feed-code-inspector');
+      if (type === 'google') {
+        box.textContent = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+  <channel>
+    <title>SureSalez Enterprise Store Product Feed</title>
+    <link>https://suresalez.store</link>
+    <item>
+      <g:id>SS-101</g:id>
+      <g:title>Royal Emerald Automatic Chronograph 42mm</g:title>
+      <g:price>899.00 USD</g:price>
+      <g:availability>in stock</g:availability>
+      <g:brand>SureSalez Atelier</g:brand>
+      <g:gtin>0894561234567</g:gtin>
+      <g:mpn>EMR-CHRONO-42</g:mpn>
+      <g:google_product_category>Apparel &amp; Accessories &gt; Jewelry &gt; Watches</g:google_product_category>
+      <g:custom_label_0>HSN:7117.90.90</g:custom_label_0>
+    </item>
+    <item>
+      <g:id>SS-202</g:id>
+      <g:title>Ceramic Diver 300M Master Chronometer</g:title>
+      <g:price>1250.00 USD</g:price>
+      <g:availability>in stock</g:availability>
+      <g:brand>SureSalez Atelier</g:brand>
+      <g:gtin>0894561234570</g:gtin>
+      <g:mpn>DIV-CER-300M</g:mpn>
+      <g:google_product_category>Apparel &amp; Accessories &gt; Jewelry &gt; Watches</g:google_product_category>
+      <g:custom_label_0>HSN:9102.11.00</g:custom_label_0>
+    </item>
+  </channel>
+</rss>`;
+      } else if (type === 'meta') {
+        box.textContent = `id,title,description,availability,condition,price,link,image_link,brand,fb_product_category
+SS-101,"Royal Emerald Automatic Chronograph 42mm","Luxury automatic chronograph with guilloché dial",in stock,new,899.00 USD,https://suresalez.store/product/royal-emerald,https://images.unsplash.com/photo-1523275335684-37898b6baf30,SureSalez Atelier,apparel & accessories > jewelry > watches
+SS-201,"Milanese Magnetic Mesh Strap - Grade 5 Titanium","Titanium woven band with magnetic clasp",in stock,new,96.85 USD,https://suresalez.store/product/milanese-strap,https://images.unsplash.com/photo-1524805444758-089113d48a6d,SureSalez Atelier,apparel & accessories > jewelry > watch accessories`;
+      } else if (type === 'tiktok') {
+        box.textContent = JSON.stringify({
+          catalog_name: "SureSalez TikTok Showcase",
+          version: "2.0",
+          items_count: 5,
+          feed_url: "https://suresalez.store/wp-json/suresalez/v1/feeds/tiktok-catalog",
+          status: "synced_active"
+        }, null, 2);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      showFeedInspector('google');
+      runAiQuery('Show me luxury titanium watches under $1,000');
+    });
   </script>
 
-  <!-- Load Module Scripts (Sprint 01 + Sprint 02 + Sprint 03 + Sprint 04) -->
+  <!-- Load Module Scripts (Sprint 01 + Sprint 02 + Sprint 03 + Sprint 04 + Sprint 05) -->
   <script src="../plugins/suresalez-core/modules/catalog-pim/assets/js/catalog-pim.js"></script>
   <script src="../plugins/suresalez-core/modules/multi-location-inventory/assets/js/multi-location-inventory.js"></script>
   <script src="../plugins/suresalez-core/modules/visual-swatches/assets/js/visual-swatches.js"></script>
@@ -1267,6 +1709,7 @@
   <script src="../plugins/suresalez-core/modules/localization/assets/js/tax-compliance.js"></script>
   <script src="../plugins/suresalez-core/modules/crm-automations/assets/js/chat-widget.js"></script>
   <script src="../plugins/suresalez-core/modules/crm-automations/assets/js/lead-capture.js"></script>
+  <script src="../plugins/suresalez-core/modules/omnichannel-ai/assets/js/shoppable-reels.js"></script>
 
 </body>
 </html>

@@ -108,7 +108,11 @@ final class Core {
         require_once SURESALEZ_PATH . 'modules/crm-automations/class-crm-automations-module.php';
         $manager->register_module(new \SureSalez\Modules\CRMAutomations\CRM_Automations_Module());
 
-        // Sprint 05-10 module placeholders (scaffolded for architectural completion)
+        // Sprint 05 Modules
+        require_once SURESALEZ_PATH . 'modules/omnichannel-ai/class-omnichannel-ai-module.php';
+        $manager->register_module(new \SureSalez\Modules\OmnichannelAI\Omnichannel_AI_Module());
+
+        // Sprint 06-10 module placeholders (scaffolded for architectural completion)
         $this->register_roadmap_modules($manager);
     }
 
@@ -120,12 +124,6 @@ final class Core {
      */
     private function register_roadmap_modules(Module_Manager $manager): void {
         $roadmap_defs = [
-            'omnichannel-reels' => [
-                'name'     => 'Omnichannel Feeds, AI Chat & Shoppable Reels',
-                'desc'     => 'Google/Meta/TikTok merchant catalog feeds, conversational AI sales assistant, and shoppable video reels.',
-                'category' => 'Marketing & CRM',
-                'default'  => false,
-            ],
             'orders-routing-rma' => [
                 'name'     => 'Intelligent Routing, Split Shipments & Self-Service RMA',
                 'desc'     => 'Multi-warehouse split routing, 3PL carrier sync (ShipStation, FedEx, UPS), and customer self-service returns portal.',

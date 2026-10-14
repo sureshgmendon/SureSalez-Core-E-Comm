@@ -155,6 +155,16 @@ const requiredFiles = [
     'plugins/suresalez-core/modules/pos-subscriptions/assets/js/vendor-portal.js',
     'plugins/suresalez-core/modules/pos-subscriptions/assets/css/subscription-portal.css',
     'plugins/suresalez-core/modules/pos-subscriptions/assets/js/subscription-portal.js',
+    // Sprint 09 Modules
+    'plugins/suresalez-core/modules/loyalty-mobile-api/class-loyalty-mobile-api-module.php',
+    'plugins/suresalez-core/modules/loyalty-mobile-api/class-loyalty-engine.php',
+    'plugins/suresalez-core/modules/loyalty-mobile-api/class-referral-program.php',
+    'plugins/suresalez-core/modules/loyalty-mobile-api/class-seo-manager.php',
+    'plugins/suresalez-core/modules/loyalty-mobile-api/class-mobile-api.php',
+    'plugins/suresalez-core/modules/loyalty-mobile-api/assets/css/loyalty-portal.css',
+    'plugins/suresalez-core/modules/loyalty-mobile-api/assets/js/loyalty-portal.js',
+    'plugins/suresalez-core/modules/loyalty-mobile-api/assets/css/referral-banner.css',
+    'plugins/suresalez-core/modules/loyalty-mobile-api/assets/js/referral-banner.js',
 ];
 
 const rootDir = path.resolve(__dirname, '..');
@@ -310,6 +320,12 @@ const expectedTables = [
     'suresalez_vendor_commissions',
     'suresalez_subscriptions',
     'suresalez_subscription_logs',
+    // Sprint 09
+    'suresalez_loyalty_points',
+    'suresalez_points_transactions',
+    'suresalez_referrals',
+    'suresalez_seo_redirects',
+    'suresalez_mobile_devices',
 ];
 
 expectedTables.forEach(tbl => {
@@ -371,6 +387,18 @@ assert(coreBootstrapContent.includes('Omnichannel_AI_Module'), 'Core bootstrap i
 assert(coreBootstrapContent.includes('Fulfillment_RMA_Module'), 'Core bootstrap instantiates Fulfillment_RMA_Module');
 assert(coreBootstrapContent.includes('B2B_Wholesale_Module'), 'Core bootstrap instantiates B2B_Wholesale_Module');
 assert(coreBootstrapContent.includes('POS_Subscriptions_Module'), 'Core bootstrap instantiates POS_Subscriptions_Module');
+assert(coreBootstrapContent.includes('Loyalty_Mobile_API_Module'), 'Core bootstrap instantiates Loyalty_Mobile_API_Module');
+
+// Check that Loyalty Mobile API module loads sub-components
+const loyaltyModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/loyalty-mobile-api/class-loyalty-mobile-api-module.php'), 'utf8');
+assert(loyaltyModuleContent.includes('Loyalty_Engine'), 'Loyalty Mobile API Module loads Loyalty Engine');
+assert(loyaltyModuleContent.includes('Referral_Program'), 'Loyalty Mobile API Module loads Referral Program');
+assert(loyaltyModuleContent.includes('SEO_Manager'), 'Loyalty Mobile API Module loads SEO Manager');
+assert(loyaltyModuleContent.includes('Mobile_API'), 'Loyalty Mobile API Module loads Mobile API');
+
+assert(dbFileContent.includes('seed_loyalty_points'), 'Database seeds sample loyalty points accounts');
+assert(dbFileContent.includes('seed_referrals'), 'Database seeds sample referrals');
+assert(dbFileContent.includes('seed_seo_redirects'), 'Database seeds default SEO redirects');
 
 // Check that POS Subscriptions module loads sub-components
 const posModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/pos-subscriptions/class-pos-subscriptions-module.php'), 'utf8');

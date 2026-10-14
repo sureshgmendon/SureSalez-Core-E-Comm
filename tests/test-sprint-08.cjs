@@ -322,7 +322,7 @@ for (const relPath of sprint08Files) {
 
 // Check database schema v1.7.0
 const dbFile = fs.readFileSync(path.join(baseDir, 'plugins/suresalez-core/includes/class-database.php'), 'utf8');
-assert(dbFile.includes('1.7.0'), 'Database schema version bumped to 1.7.0');
+assert(dbFile.includes('1.7.0') || dbFile.includes('1.8.0'), 'Database schema version is at least 1.7.0');
 assert(dbFile.includes('suresalez_pos_registers'), 'Database includes suresalez_pos_registers table');
 assert(dbFile.includes('suresalez_pos_transactions'), 'Database includes suresalez_pos_transactions table');
 assert(dbFile.includes('suresalez_marketplace_vendors'), 'Database includes suresalez_marketplace_vendors table');

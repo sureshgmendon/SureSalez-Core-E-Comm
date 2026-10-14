@@ -1,0 +1,236 @@
+/**
+ * SureSalez Core — Gamified Loyalty Portal & VIP Tiers Stylesheet
+ * Sprint 09: Loyalty, VIP Tiers & Headless Mobile APIs
+ */
+
+.suresalez-loyalty-container {
+    max-width: 960px;
+    margin: 30px auto;
+    padding: 24px;
+    background: #0f172a;
+    color: #f8fafc;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.suresalez-loyalty-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+}
+
+.suresalez-loyalty-title {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: #ffffff;
+}
+
+.suresalez-loyalty-tagline {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+.suresalez-tier-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.suresalez-tier-bronze {
+    background: linear-gradient(135deg, #78350f, #92400e);
+    color: #fef3c7;
+    border: 1px solid #b45309;
+}
+
+.suresalez-tier-silver {
+    background: linear-gradient(135deg, #475569, #64748b);
+    color: #f1f5f9;
+    border: 1px solid #94a3b8;
+}
+
+.suresalez-tier-gold {
+    background: linear-gradient(135deg, #b45309, #d97706);
+    color: #fffbeb;
+    border: 1px solid #f59e0b;
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+}
+
+.suresalez-tier-platinum {
+    background: linear-gradient(135deg, #1e1b4b, #3b0764);
+    color: #faf5ff;
+    border: 1px solid #a855f7;
+    box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+}
+
+.suresalez-loyalty-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 28px;
+}
+
+@media (max-width: 768px) {
+    .suresalez-loyalty-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.suresalez-stat-card {
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.suresalez-stat-label {
+    font-size: 13px;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+}
+
+.suresalez-stat-value {
+    font-size: 32px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.1;
+}
+
+.suresalez-stat-subtext {
+    font-size: 13px;
+    color: #38bdf8;
+    margin-top: 6px;
+}
+
+/* Tier Progress Bar */
+.suresalez-progress-section {
+    background: rgba(30, 41, 59, 0.6);
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 28px;
+}
+
+.suresalez-progress-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #cbd5e1;
+}
+
+.suresalez-progress-bar-bg {
+    width: 100%;
+    height: 10px;
+    background: #334155;
+    border-radius: 9999px;
+    overflow: hidden;
+    position: relative;
+}
+
+.suresalez-progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
+    border-radius: 9999px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Redemption Slider Box */
+.suresalez-redemption-box {
+    background: #1e293b;
+    border: 1px solid #3b82f6;
+    border-radius: 14px;
+    padding: 24px;
+    margin-top: 24px;
+}
+
+.suresalez-redemption-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+    color: #ffffff;
+}
+
+.suresalez-redemption-desc {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 20px;
+}
+
+.suresalez-slider-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.suresalez-points-slider {
+    width: 100%;
+    height: 8px;
+    background: #334155;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    accent-color: #38bdf8;
+}
+
+.suresalez-slider-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #94a3b8;
+}
+
+.suresalez-redemption-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.8);
+    padding: 16px 20px;
+    border-radius: 10px;
+    margin-top: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.suresalez-discount-display {
+    font-size: 20px;
+    font-weight: 700;
+    color: #10b981;
+}
+
+.suresalez-btn-redeem {
+    background: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.suresalez-btn-redeem:hover:not(:disabled) {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+}
+
+.suresalez-btn-redeem:disabled {
+    background: #475569;
+    cursor: not-allowed;
+    opacity: 0.6;
+}

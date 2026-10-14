@@ -1,0 +1,104 @@
+/**
+ * SureSalez Core — Dual-Sided Viral Referral Sharing Banner Stylesheet
+ * Sprint 09: Loyalty, VIP Tiers & Headless Mobile APIs
+ */
+
+.suresalez-referral-banner {
+    max-width: 960px;
+    margin: 20px auto;
+    padding: 20px 24px;
+    background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 100%);
+    border: 1px solid #6366f1;
+    border-radius: 14px;
+    color: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.2);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+@media (max-width: 768px) {
+    .suresalez-referral-banner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+.suresalez-ref-content {
+    flex: 1;
+}
+
+.suresalez-ref-heading {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.suresalez-ref-pill {
+    background: #6366f1;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.suresalez-ref-subtext {
+    font-size: 13px;
+    color: #cbd5e1;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.suresalez-ref-action-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(15, 23, 42, 0.7);
+    padding: 8px 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.suresalez-ref-code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 15px;
+    font-weight: 700;
+    color: #38bdf8;
+    letter-spacing: 0.05em;
+    padding: 4px 8px;
+}
+
+.suresalez-btn-copy {
+    background: #4f46e5;
+    color: #ffffff;
+    border: none;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.suresalez-btn-copy:hover {
+    background: #4338ca;
+}
+
+.suresalez-ref-stats-badge {
+    font-size: 12px;
+    color: #a5b4fc;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+}

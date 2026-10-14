@@ -22,7 +22,7 @@ class Database {
     /**
      * Database version.
      */
-    public const DB_VERSION = '1.7.0';
+    public const DB_VERSION = '1.8.0';
 
     /**
      * Option key storing current schema version.
@@ -701,6 +701,84 @@ class Database {
         ) {$charset_collate};";
         dbDelta($sql_sub_logs);
 
+        // 37. Loyalty Points Accounts Table (Sprint 09)
+        $table_loyalty = $wpdb->prefix . 'suresalez_loyalty_points';
+        $sql_loyalty = "CREATE TABLE {$table_loyalty} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            user_id bigint(20) unsigned NOT NULL,
+            points_balance int(11) DEFAULT 0 NOT NULL,
+            lifetime_points int(11) DEFAULT 0 NOT NULL,
+            tier_level varchar(30) DEFAULT 'bronze' NOT NULL,
+            updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_user_loyalty (user_id),
+            KEY idx_tier (tier_level)
+        ) {$charset_collate};";
+        dbDelta($sql_loyalty);
+
+        // 38. Loyalty Points Transactions Ledger Table (Sprint 09)
+        $table_points_tx = $wpdb->prefix . 'suresalez_points_transactions';
+        $sql_points_tx = "CREATE TABLE {$table_points_tx} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            user_id bigint(20) unsigned NOT NULL,
+            points int(11) NOT NULL,
+            type varchar(30) DEFAULT 'earned' NOT NULL,
+            description varchar(255) DEFAULT '' NOT NULL,
+            reference_order_id bigint(20) unsigned DEFAULT 0 NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_user_type (user_id, type),
+            KEY idx_ref_order (reference_order_id)
+        ) {$charset_collate};";
+        dbDelta($sql_points_tx);
+
+        // 39. Referrals & Viral Program Table (Sprint 09)
+        $table_referrals = $wpdb->prefix . 'suresalez_referrals';
+        $sql_referrals = "CREATE TABLE {$table_referrals} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            referrer_user_id bigint(20) unsigned NOT NULL,
+            referral_code varchar(64) NOT NULL,
+            referred_user_id bigint(20) unsigned DEFAULT 0 NOT NULL,
+            reward_status varchar(30) DEFAULT 'pending' NOT NULL,
+            order_id bigint(20) unsigned DEFAULT 0 NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_referral_code (referral_code),
+            KEY idx_referrer_status (referrer_user_id, reward_status)
+        ) {$charset_collate};";
+        dbDelta($sql_referrals);
+
+        // 40. Automated SEO 301 Redirects Table (Sprint 09)
+        $table_redirects = $wpdb->prefix . 'suresalez_seo_redirects';
+        $sql_redirects = "CREATE TABLE {$table_redirects} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            source_url varchar(255) NOT NULL,
+            target_url varchar(255) NOT NULL,
+            status_code int(11) DEFAULT 301 NOT NULL,
+            hit_count int(11) DEFAULT 0 NOT NULL,
+            last_accessed_at datetime DEFAULT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_source_url (source_url),
+            KEY idx_status (status_code)
+        ) {$charset_collate};";
+        dbDelta($sql_redirects);
+
+        // 41. Headless Mobile Push Notification Devices Table (Sprint 09)
+        $table_mobile_devices = $wpdb->prefix . 'suresalez_mobile_devices';
+        $sql_mobile_devices = "CREATE TABLE {$table_mobile_devices} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            user_id bigint(20) unsigned NOT NULL,
+            device_token varchar(255) NOT NULL,
+            platform varchar(20) DEFAULT 'ios' NOT NULL,
+            app_version varchar(32) DEFAULT '1.0.0' NOT NULL,
+            last_active_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_device_token (device_token),
+            KEY idx_user_platform (user_id, platform)
+        ) {$charset_collate};";
+        dbDelta($sql_mobile_devices);
+
         update_option(self::DB_VERSION_KEY, self::DB_VERSION);
 
         // Seed 10 warehouse fulfillment locations
@@ -738,6 +816,11 @@ class Database {
         self::seed_marketplace_vendors();
         self::seed_vendor_commissions();
         self::seed_subscriptions();
+
+        // Seed Loyalty points, referrals & SEO redirects (Sprint 09)
+        self::seed_loyalty_points();
+        self::seed_referrals();
+        self::seed_seo_redirects();
     }
 
     /**
@@ -2125,6 +2208,184 @@ class Database {
                 $table,
                 $s,
                 ['%s', '%d', '%d', '%d', '%s', '%f', '%s', '%s', '%s', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed Sample Loyalty Points & Transactions (Sprint 09).
+     *
+     * @return void
+     */
+    public static function seed_loyalty_points(): void {
+        global $wpdb;
+
+        $table_points = $wpdb->prefix . 'suresalez_loyalty_points';
+        $table_tx = $wpdb->prefix . 'suresalez_points_transactions';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table_points}");
+        if ($count > 0) {
+            return;
+        }
+
+        $loyalty_data = [
+            [
+                'user_id'         => 10,
+                'points_balance'  => 1250,
+                'lifetime_points' => 2500,
+                'tier_level'      => 'gold',
+                'updated_at'      => current_time('mysql'),
+            ],
+            [
+                'user_id'         => 11,
+                'points_balance'  => 450,
+                'lifetime_points' => 950,
+                'tier_level'      => 'silver',
+                'updated_at'      => current_time('mysql'),
+            ],
+            [
+                'user_id'         => 12,
+                'points_balance'  => 100,
+                'lifetime_points' => 100,
+                'tier_level'      => 'bronze',
+                'updated_at'      => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($loyalty_data as $l) {
+            $wpdb->insert(
+                $table_points,
+                $l,
+                ['%d', '%d', '%d', '%s', '%s']
+            );
+        }
+
+        $transactions = [
+            [
+                'user_id'            => 10,
+                'points'             => 500,
+                'type'               => 'earned',
+                'description'        => 'Points earned for order #401 (Gold 1.5x multiplier)',
+                'reference_order_id' => 401,
+                'created_at'         => current_time('mysql'),
+            ],
+            [
+                'user_id'            => 10,
+                'points'             => -200,
+                'type'               => 'redeemed',
+                'description'        => 'Redeemed at checkout on order #420 ($10 discount)',
+                'reference_order_id' => 420,
+                'created_at'         => current_time('mysql'),
+            ],
+            [
+                'user_id'            => 11,
+                'points'             => 250,
+                'type'               => 'bonus',
+                'description'        => 'Birthday promotional bonus points',
+                'reference_order_id' => 0,
+                'created_at'         => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($transactions as $t) {
+            $wpdb->insert(
+                $table_tx,
+                $t,
+                ['%d', '%d', '%s', '%s', '%d', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed Sample Referrals (Sprint 09).
+     *
+     * @return void
+     */
+    public static function seed_referrals(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_referrals';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $referrals = [
+            [
+                'referrer_user_id' => 10,
+                'referral_code'    => 'SURE-VIP10',
+                'referred_user_id' => 12,
+                'reward_status'    => 'rewarded',
+                'order_id'         => 425,
+                'created_at'       => current_time('mysql'),
+            ],
+            [
+                'referrer_user_id' => 11,
+                'referral_code'    => 'SURE-SILVER11',
+                'referred_user_id' => 0,
+                'reward_status'    => 'pending',
+                'order_id'         => 0,
+                'created_at'       => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($referrals as $r) {
+            $wpdb->insert(
+                $table,
+                $r,
+                ['%d', '%s', '%d', '%s', '%d', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed Common SEO 301 Redirects (Sprint 09).
+     *
+     * @return void
+     */
+    public static function seed_seo_redirects(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_seo_redirects';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $redirects = [
+            [
+                'source_url'       => '/old-product/watch-series-1',
+                'target_url'       => '/product/classic-chronograph',
+                'status_code'      => 301,
+                'hit_count'        => 42,
+                'last_accessed_at' => current_time('mysql'),
+                'created_at'       => current_time('mysql'),
+            ],
+            [
+                'source_url'       => '/catalog/mens-watches',
+                'target_url'       => '/category/watches',
+                'status_code'      => 301,
+                'hit_count'        => 128,
+                'last_accessed_at' => current_time('mysql'),
+                'created_at'       => current_time('mysql'),
+            ],
+            [
+                'source_url'       => '/deals/black-friday-2023',
+                'target_url'       => '/deals',
+                'status_code'      => 301,
+                'hit_count'        => 19,
+                'last_accessed_at' => current_time('mysql'),
+                'created_at'       => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($redirects as $rd) {
+            $wpdb->insert(
+                $table,
+                $rd,
+                ['%s', '%s', '%d', '%d', '%s', '%s']
             );
         }
     }

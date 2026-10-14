@@ -124,7 +124,11 @@ final class Core {
         require_once SURESALEZ_PATH . 'modules/pos-subscriptions/class-pos-subscriptions-module.php';
         $manager->register_module(new \SureSalez\Modules\POSSubscriptions\POS_Subscriptions_Module());
 
-        // Sprint 09-10 module placeholders (scaffolded for architectural completion)
+        // Sprint 09 Modules
+        require_once SURESALEZ_PATH . 'modules/loyalty-mobile-api/class-loyalty-mobile-api-module.php';
+        $manager->register_module(new \SureSalez\Modules\LoyaltyMobileAPI\Loyalty_Mobile_API_Module());
+
+        // Sprint 10 module placeholder (scaffolded for architectural completion)
         $this->register_roadmap_modules($manager);
     }
 
@@ -136,12 +140,6 @@ final class Core {
      */
     private function register_roadmap_modules(Module_Manager $manager): void {
         $roadmap_defs = [
-            'loyalty-mobile-apis' => [
-                'name'     => 'Loyalty Points, 301 Redirects & Headless Mobile APIs',
-                'desc'     => 'Gamified VIP tiers, sub-millisecond regex 301 redirects, and high-performance headless mobile REST/GraphQL APIs.',
-                'category' => 'Retention & Scale',
-                'default'  => false,
-            ],
             'multistore-billing' => [
                 'name'     => 'Multi-Store Organization Admin & Tenant Billing',
                 'desc'     => 'Multi-store tenant orchestration, reseller white-label billing, and Redis edge caching for extreme scale.',

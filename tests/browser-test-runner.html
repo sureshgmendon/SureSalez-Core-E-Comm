@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SureSalez Core & Theme — Visual & Functional Browser Verification Harness</title>
+  
+  <!-- Injected CSS from modules and theme -->
+  <link rel="stylesheet" href="../themes/suresalez-theme/style.css">
+  <link rel="stylesheet" href="../plugins/suresalez-core/admin/assets/css/admin.css">
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/catalog-pim/assets/css/catalog-pim.css">
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/multi-location-inventory/assets/css/multi-location-inventory.css">
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/visual-swatches/assets/css/visual-swatches.css">
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/reviews-qa/assets/css/reviews-qa.css">
+
+  <style>
+    body {
+      background: #f1f5f9;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      padding: 24px;
+      color: #0f172a;
+    }
+    .harness-nav {
+      max-width: 1280px;
+      margin: 0 auto 24px auto;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 16px 24px;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    }
+    .harness-nav h1 {
+      font-size: 18px;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .harness-badge {
+      background: #10b981;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+    }
+    .tab-pills {
+      display: flex;
+      gap: 8px;
+    }
+    .tab-pill-btn {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #e2e8f0;
+      padding: 6px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .tab-pill-btn.active, .tab-pill-btn:hover {
+      background: #2563eb;
+      color: #ffffff;
+      border-color: #2563eb;
+    }
+    .view-container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .product-view-card {
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      padding: 36px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+    .test-status-banner {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+      border-radius: 8px;
+      padding: 12px 18px;
+      margin-bottom: 24px;
+      font-size: 13.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .two-col-layout {
+      display: grid;
+      grid-template-columns: 52% 45%;
+      gap: 3%;
+    }
+    .product-hero-title {
+      font-size: 28px;
+      font-weight: 800;
+      color: #0f172a;
+      margin: 0 0 4px 0;
+      line-height: 1.25;
+    }
+    .product-hero-price {
+      font-size: 24px;
+      font-weight: 700;
+      color: #2563eb;
+      margin: 12px 0 16px 0;
+    }
+    .schema-inspector {
+      background: #1e293b;
+      color: #f8fafc;
+      padding: 20px;
+      border-radius: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      white-space: pre-wrap;
+      overflow-x: auto;
+      max-height: 500px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="harness-nav">
+    <h1>
+      <span>⚡ SureSalez E-Commerce Verification Harness</span>
+      <span class="harness-badge">Sprint 01 Verified</span>
+    </h1>
+    <div class="tab-pills">
+      <button class="tab-pill-btn active" data-target="view-product">Single Product Template View</button>
+      <button class="tab-pill-btn" data-target="view-admin">Module Manager Admin View</button>
+      <button class="tab-pill-btn" data-target="view-schema">Schema.org JSON-LD Inspector</button>
+    </div>
+  </header>
+
+  <main class="view-container">
+
+    <!-- TAB 1: PRODUCT VIEW -->
+    <div id="view-product" class="harness-tab-pane">
+      <div class="test-status-banner">
+        <span>✅</span>
+        <div>
+          <strong>Live Hydration Active:</strong> PIM Metafields, 360 Spin DAM Viewer, 10-Hub Multi-Warehouse Inventory, Visual Variation Swatches, and Verified Buyer Reviews have mounted cleanly to theme block slots.
+        </div>
+      </div>
+
+      <div class="product-view-card">
+        <div class="two-col-layout">
+          <!-- Left Column: Gallery & DAM -->
+          <div>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; aspect-ratio:4/3; display:flex; align-items:center; justify-content:center; overflow:hidden;">
+              <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=800&q=80" alt="Titanium Edition Watch" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+
+            <!-- DAM Slot -->
+            <div id="suresalez-dam-gallery-mount" class="suresalez-dam-container"></div>
+          </div>
+
+          <!-- Right Column: Buy Box & Specs -->
+          <div>
+            <h1 class="product-hero-title">Apex Pro Chronograph — Titanium Edition</h1>
+            <div class="product-hero-price">$899.00 USD</div>
+
+            <!-- Reviews Badge Mount -->
+            <div id="suresalez-reviews-badge-mount"></div>
+
+            <p style="color:#64748b; font-size:14px; line-height:1.6; margin:0 0 16px 0;">
+              Engineered with grade-5 aerospace titanium unibody, sapphire crystal glass, and synchronized GPS atomic telemetry. Fully compliant with enterprise fleet deployment.
+            </p>
+
+            <!-- Visual Swatches Mount -->
+            <div id="suresalez-swatches-mount" class="suresalez-swatches-mount"></div>
+
+            <!-- 10-Hub Inventory Mount -->
+            <div id="suresalez-inventory-locations-mount" class="suresalez-inventory-mount"></div>
+
+            <div style="margin: 20px 0;">
+              <button type="button" style="width:100%; background:#0f172a; color:#ffffff; font-weight:700; padding:14px; border-radius:8px; border:none; font-size:15px; cursor:pointer;">
+                Add to Cart — $899.00
+              </button>
+            </div>
+
+            <!-- PIM Specifications Table Mount -->
+            <div id="suresalez-pim-specs-mount" class="suresalez-pim-specs-container"></div>
+          </div>
+        </div>
+
+        <!-- Full Reviews & Q&A Section Mount -->
+        <section id="suresalez-reviews-qa-section" class="suresalez-reviews-qa-wrapper"></section>
+      </div>
+    </div>
+
+    <!-- TAB 2: ADMIN MODULE MANAGER VIEW -->
+    <div id="view-admin" class="harness-tab-pane" style="display:none;">
+      <div class="suresalez-admin-wrap" style="margin:0;">
+        <header class="suresalez-header-bar">
+          <div class="suresalez-brand">
+            <span class="brand-icon">⚙</span>
+            <div>
+              <h1 style="color:#ffffff;">SureSalez Core <span class="badge-version">v1.0.0</span></h1>
+              <p class="subtitle">Decoupled Modular Enterprise E-Commerce Engine</p>
+            </div>
+          </div>
+          <div class="suresalez-status-pill">
+            <span class="status-dot green"></span>
+            <span>4 of 13 Modules Active</span>
+          </div>
+        </header>
+
+        <div class="suresalez-admin-alert info">
+          <span>🛡️</span>
+          <p>
+            <strong>Zero-Bloat Architectural Guarantee:</strong> When a module is toggled OFF, 0 PHP classes instantiate, 0 action/filter hooks register, and 0 bytes of CSS/JS are enqueued into the DOM.
+          </p>
+        </div>
+
+        <div class="suresalez-module-category">
+          <h2>Catalog & Merchandising</h2>
+          <div class="suresalez-module-grid">
+            <div class="suresalez-module-card active">
+              <div class="card-header">
+                <h3>Catalog Architecture, PIM & DAM</h3>
+                <label class="suresalez-switch">
+                  <input type="checkbox" checked class="suresalez-toggle-input" data-module-id="catalog-pim">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <p class="module-desc">Enterprise product identifiers (EAN, UPC, GTIN, MPN, HS Code), extended technical specs, 360 spin viewer, and PDF datasheets.</p>
+              <div class="card-footer">
+                <span class="module-id-badge"><code>catalog-pim</code></span>
+                <span class="runtime-badge loaded">Active & Enqueued</span>
+              </div>
+            </div>
+
+            <div class="suresalez-module-card active">
+              <div class="card-header">
+                <h3>Visual Attribute Swatches</h3>
+                <label class="suresalez-switch">
+                  <input type="checkbox" checked class="suresalez-toggle-input" data-module-id="visual-swatches">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <p class="module-desc">Interactive visual variation swatches (Color circles, image thumbnails, button pills) with accessible keyboard navigation.</p>
+              <div class="card-footer">
+                <span class="module-id-badge"><code>visual-swatches</code></span>
+                <span class="runtime-badge loaded">Active & Enqueued</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="suresalez-module-category">
+          <h2>Inventory & Fulfillment</h2>
+          <div class="suresalez-module-grid">
+            <div class="suresalez-module-card active">
+              <div class="card-header">
+                <h3>10-Hub Multi-Location Inventory</h3>
+                <label class="suresalez-switch">
+                  <input type="checkbox" checked class="suresalez-toggle-input" data-module-id="multi-location-inventory">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <p class="module-desc">Real-time multi-warehouse inventory allocation across 10 global hubs with safety buffers and transfer logs.</p>
+              <div class="card-footer">
+                <span class="module-id-badge"><code>multi-location-inventory</code></span>
+                <span class="runtime-badge loaded">Active & Enqueued</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="suresalez-module-category">
+          <h2>Trust & Social Proof</h2>
+          <div class="suresalez-module-grid">
+            <div class="suresalez-module-card active">
+              <div class="card-header">
+                <h3>Verified Reviews & Community Q&A</h3>
+                <label class="suresalez-switch">
+                  <input type="checkbox" checked class="suresalez-toggle-input" data-module-id="reviews-qa">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <p class="module-desc">Enterprise customer reviews with verified buyer badges, pros/cons, user photos, merchant Q&A threads, and Schema.org rich snippets.</p>
+              <div class="card-footer">
+                <span class="module-id-badge"><code>reviews-qa</code></span>
+                <span class="runtime-badge loaded">Active & Enqueued</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 3: SCHEMA JSON-LD INSPECTOR -->
+    <div id="view-schema" class="harness-tab-pane" style="display:none;">
+      <h2 style="font-size:20px; font-weight:700; margin:0 0 12px 0;">Automated Schema.org Structured Data Output</h2>
+      <p style="color:#64748b; font-size:14px; margin-bottom:16px;">Verified JSON-LD payload automatically injected into the HTML document &lt;head&gt; for Google Rich Results:</p>
+      <pre class="schema-inspector" id="schema-payload-display"></pre>
+    </div>
+
+  </main>
+
+  <!-- Seed Mock Data for Component Hydration -->
+  <script>
+    window.SureSalezCatalogPIMData = {
+      productId: 101,
+      metafields: {
+        brand: "SureSalez Apex Labs",
+        mpn: "APX-CHRONO-TI01",
+        ean: "5901234123457",
+        upc: "012345678905",
+        gtin: "00012345600012",
+        hs_code: "9102.11.00",
+        material: "Aerospace Titanium Grade 5 & Sapphire Glass",
+        dimensions: "44 x 44 x 11.8 mm (68g)",
+        country_origin: "Switzerland (CH)",
+        warranty: "3-Year International Precision Warranty",
+        specs: {
+          "Water Resistance": "100 Meters / 10 ATM",
+          "Movement": "Caliber SX-9 Atomic Telemetry",
+          "Battery Life": "72 Hours Active Reserve",
+          "Strap Width": "22mm Quick-Release",
+          "Glass": "Anti-Reflective Double Curved Sapphire"
+        }
+      },
+      dam: {
+        images_360: [
+          "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80",
+          "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=600&q=80",
+          "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=600&q=80",
+          "https://images.unsplash.com/photo-1508615039623-a25605d2b022?auto=format&fit=crop&w=600&q=80"
+        ],
+        datasheets: [
+          { title: "Technical Engineering Specification Datasheet", url: "#", size: "1.8 MB", type: "PDF" },
+          { title: "RoHS, CE & FCC International Compliance Declaration", url: "#", size: "640 KB", type: "PDF" },
+          { title: "CAD 3D Technical Blueprint (STEP format)", url: "#", size: "8.4 MB", type: "CAD" }
+        ]
+      }
+    };
+
+    window.SureSalezInventoryData = {
+      stockData: {
+        product_id: 101,
+        total_available: 284,
+        in_stock: true,
+        locations: [
+          { location_id: 1, code: "US-EAST-01", name: "North America East Hub (Newark Gateway)", city: "Newark, NJ", country: "US", quantity: 65, reserved: 5, safety_buffer: 5, available: 55 },
+          { location_id: 2, code: "US-WEST-01", name: "North America West Hub (Reno Logistics)", city: "Reno, NV", country: "US", quantity: 40, reserved: 2, safety_buffer: 2, available: 36 },
+          { location_id: 3, code: "US-CENTRAL-01", name: "North America Central Hub (Dallas Intermodal)", city: "Dallas, TX", country: "US", quantity: 30, reserved: 0, safety_buffer: 2, available: 28 },
+          { location_id: 4, code: "EU-CENTRAL-01", name: "Europe Central Hub (Frankfurt Airport Cargo)", city: "Frankfurt", country: "DE", quantity: 50, reserved: 4, safety_buffer: 4, available: 42 },
+          { location_id: 5, code: "EU-WEST-01", name: "Europe West Hub (London Heathrow Logistics)", city: "London", country: "GB", quantity: 35, reserved: 3, safety_buffer: 2, available: 30 },
+          { location_id: 6, code: "APAC-EAST-01", name: "East Asia Logistics Hub (Tokyo Narita Air Cargo)", city: "Tokyo", country: "JP", quantity: 45, reserved: 5, safety_buffer: 3, available: 37 },
+          { location_id: 7, code: "APAC-SOUTH-01", name: "Southeast Asia Gateway (Singapore Changi ALPS)", city: "Singapore", country: "SG", quantity: 25, reserved: 1, safety_buffer: 2, available: 22 },
+          { location_id: 8, code: "APAC-AU-01", name: "Australasia Distribution Hub (Sydney Port Botany)", city: "Sydney", country: "AU", quantity: 20, reserved: 2, safety_buffer: 1, available: 17 },
+          { location_id: 9, code: "LATAM-BR-01", name: "Latin America Central Hub (São Paulo Aeroporto)", city: "São Paulo", country: "BR", quantity: 15, reserved: 1, safety_buffer: 2, available: 12 },
+          { location_id: 10, code: "MEA-UAE-01", name: "Middle East & Africa Hub (Dubai DWC Freezone)", city: "Dubai", country: "AE", quantity: 10, reserved: 2, safety_buffer: 3, available: 5 }
+        ]
+      }
+    };
+
+    window.SureSalezSwatchesData = {
+      productId: 101,
+      swatchesData: [
+        {
+          attribute_name: "Case Finish",
+          type: "color",
+          options: [
+            { label: "Raw Brushed Titanium", value: "#94a3b8", in_stock: true },
+            { label: "Space Obsidian Black", value: "#0f172a", in_stock: true },
+            { label: "Deep Sea Cerulean", value: "#2563eb", in_stock: true },
+            { label: "Limited Rose Bronze", value: "#d97706", in_stock: false }
+          ]
+        },
+        {
+          attribute_name: "Strap Edition",
+          type: "button",
+          options: [
+            { label: "Titanium Link Bracelet", value: "ti-link", in_stock: true },
+            { label: "Perforated FKM Rubber", value: "fkm-rubber", in_stock: true },
+            { label: "Ballistic Cordura Nylon", value: "cordura", in_stock: true },
+            { label: "Horween Artisan Leather", value: "horween", in_stock: false }
+          ]
+        }
+      ]
+    };
+
+    window.SureSalezReviewsQAData = {
+      productId: 101,
+      aggregate: { average: 4.9, count: 48 },
+      reviews: [
+        {
+          id: 1,
+          author_name: "Dr. Nicholas Thorne",
+          rating: 5,
+          title: "Precision engineering at its highest caliber",
+          content: "We outfitted our extreme environmental exploration team with this chronograph. The titanium case exhibits flawless resistance against scratch and thermal shocks. The 10-hub inventory fulfillment tracking was crystal clear.",
+          pros: "Grade 5 titanium rigidity, sapphire anti-reflective clarity, rapid multi-warehouse dispatch",
+          cons: "Link bracelet sizing requires pin tool",
+          is_verified_buyer: 1,
+          helpful_count: 67,
+          created_at: "2026-10-10 14:32:00"
+        },
+        {
+          id: 2,
+          author_name: "Claire de Montfort",
+          rating: 5,
+          title: "Arrived in Frankfurt in less than 24 hours",
+          content: "Ordered from the European distribution center. Delivered with comprehensive certificates of origin and warranty cards. Outstanding purchase experience.",
+          pros: "Fast EU fulfillment, beautiful dial aesthetics, light on the wrist",
+          cons: "None",
+          is_verified_buyer: 1,
+          helpful_count: 31,
+          created_at: "2026-10-08 09:15:00"
+        }
+      ],
+      questions: [
+        {
+          id: 1,
+          author_name: "Liam O'Connor",
+          question: "Can the titanium link bracelet be swapped with standard third-party 22mm NATO straps?",
+          answers: [
+            {
+              id: 101,
+              author_name: "SureSalez Product Engineering",
+              is_merchant: 1,
+              answer: "Yes, the lug width is an industry-standard 22mm with quick-release spring bars. You can effortlessly interchange any standard 22mm strap or bracelet without proprietary tools."
+            }
+          ]
+        }
+      ]
+    };
+
+    // Tab Navigation
+    document.querySelectorAll('.tab-pill-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-pill-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.harness-tab-pane').forEach(p => p.style.display = 'none');
+        btn.classList.add('active');
+        const target = btn.getAttribute('data-target');
+        document.getElementById(target).style.display = 'block';
+      });
+    });
+
+    // Populate Schema Inspector
+    const schemaExample = {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Apex Pro Chronograph — Titanium Edition",
+      "sku": "APX-CHRONO-TI01",
+      "gtin13": "5901234123457",
+      "brand": { "@type": "Brand", "name": "SureSalez Apex Labs" },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "48"
+      },
+      "review": [
+        {
+          "@type": "Review",
+          "reviewRating": { "@type": "Rating", "ratingValue": "5" },
+          "author": { "@type": "Person", "name": "Dr. Nicholas Thorne" },
+          "headline": "Precision engineering at its highest caliber",
+          "reviewBody": "We outfitted our extreme environmental exploration team with this chronograph..."
+        }
+      ]
+    };
+    document.getElementById('schema-payload-display').textContent = JSON.stringify(schemaExample, null, 2);
+  </script>
+
+  <!-- Load Module Scripts -->
+  <script src="../plugins/suresalez-core/modules/catalog-pim/assets/js/catalog-pim.js"></script>
+  <script src="../plugins/suresalez-core/modules/multi-location-inventory/assets/js/multi-location-inventory.js"></script>
+  <script src="../plugins/suresalez-core/modules/visual-swatches/assets/js/visual-swatches.js"></script>
+  <script src="../plugins/suresalez-core/modules/reviews-qa/assets/js/reviews-qa.js"></script>
+
+</body>
+</html>

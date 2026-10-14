@@ -1,0 +1,70 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"main","layout":{"type":"constrained"},"style":{"spacing":{"padding":{"top":"2.5rem","bottom":"4rem"}}}} -->
+<main class="wp-block-group suresalez-single-product">
+  <!-- wp:group {"align":"wide","layout":{"type":"constrained"}} -->
+  <div class="wp-block-group alignwide">
+    <!-- wp:columns {"style":{"spacing":{"blockGap":"3rem"}}} -->
+    <div class="wp-block-columns">
+      <!-- Media & DAM Column -->
+      <!-- wp:column {"width":"52%"} -->
+      <div class="wp-block-column" style="flex-basis:52%">
+        <!-- wp:post-featured-image {"aspectRatio":"1/1","style":{"border":{"radius":"16px"}}} /-->
+        
+        <!-- Slot for SureSalez Core 360 Spin Viewer & DAM Assets -->
+        <!-- wp:html -->
+        <div id="suresalez-dam-gallery-mount" class="suresalez-dam-container"></div>
+        <!-- /wp:html -->
+      </div>
+      <!-- /wp:column -->
+
+      <!-- Product Buy Box Column -->
+      <!-- wp:column {"width":"48%"} -->
+      <div class="wp-block-column" style="flex-basis:48%">
+        <!-- wp:post-title {"level":1,"style":{"typography":{"fontWeight":"800","fontSize":"2.25rem"}}} /-->
+
+        <!-- Slot for Reviews Rating Badge (Sprint 01) -->
+        <!-- wp:html -->
+        <div id="suresalez-reviews-badge-mount"></div>
+        <!-- /wp:html -->
+
+        <!-- wp:post-excerpt /-->
+
+        <!-- Slot for Visual Variation Swatches (Sprint 01) -->
+        <!-- wp:html -->
+        <div id="suresalez-swatches-mount" class="suresalez-swatches-mount"></div>
+        <!-- /wp:html -->
+
+        <!-- Slot for Multi-Location Warehouse Inventory Badges (Sprint 01) -->
+        <!-- wp:html -->
+        <div id="suresalez-inventory-locations-mount" class="suresalez-inventory-mount"></div>
+        <!-- /wp:html -->
+
+        <!-- wp:template-part {"slug":"product-meta"} /-->
+
+        <!-- Slot for PIM Extended Metafields Table (Sprint 01) -->
+        <!-- wp:html -->
+        <div id="suresalez-pim-specs-mount" class="suresalez-pim-specs-container"></div>
+        <!-- /wp:html -->
+      </div>
+      <!-- /wp:column -->
+    </div>
+    <!-- /wp:columns -->
+
+    <!-- Product Details & Reviews / Q&A Section -->
+    <!-- wp:group {"style":{"spacing":{"margin":{"top":"4rem"}},"border":{"top":{"color":"var(--wp--preset--color--border-subtle)","width":"1px"}}}} -->
+    <div class="wp-block-group">
+      <!-- wp:post-content /-->
+
+      <!-- Slot for Full Reviews & Q&A Community Feed (Sprint 01) -->
+      <!-- wp:html -->
+      <section id="suresalez-reviews-qa-section" class="suresalez-reviews-qa-wrapper"></section>
+      <!-- /wp:html -->
+    </div>
+    <!-- /wp:group -->
+  </div>
+  <!-- /wp:group -->
+</main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

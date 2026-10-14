@@ -1,0 +1,297 @@
+/**
+ * SureSalez Verified Reviews & Community Q&A Stylesheet
+ */
+
+/* Rating Badge in Buy Box */
+.suresalez-rating-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin: 8px 0 16px 0;
+    font-size: 13.5px;
+    cursor: pointer;
+}
+
+.suresalez-stars {
+    color: #f59e0b;
+    letter-spacing: 2px;
+}
+
+.suresalez-rating-score {
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.suresalez-rating-count {
+    color: #64748b;
+    text-decoration: underline;
+}
+
+/* Main Section */
+.suresalez-reviews-qa-wrapper {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    font-family: inherit;
+}
+
+/* Tabs */
+.suresalez-qa-tabs {
+    display: flex;
+    gap: 24px;
+    border-bottom: 2px solid #e2e8f0;
+    margin-bottom: 28px;
+}
+
+.suresalez-tab-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    color: #64748b;
+    padding: 10px 4px;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+.suresalez-tab-btn:hover {
+    color: #0f172a;
+}
+
+.suresalez-tab-btn.is-active {
+    color: #0f172a;
+}
+
+.suresalez-tab-btn.is-active::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #2563eb;
+    border-radius: 3px 3px 0 0;
+}
+
+/* Section Header & Action Bar */
+.suresalez-section-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.suresalez-btn-action {
+    background: #0f172a;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.suresalez-btn-action:hover {
+    background: #1e293b;
+}
+
+/* Review Cards */
+.suresalez-reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.suresalez-review-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.suresalez-review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+
+.suresalez-author-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.suresalez-author-name {
+    font-weight: 700;
+    font-size: 14px;
+    color: #0f172a;
+}
+
+.suresalez-verified-badge {
+    background: #dcfce7;
+    color: #15803d;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.suresalez-review-date {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.suresalez-review-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 6px 0;
+}
+
+.suresalez-review-content {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #334155;
+    margin: 8px 0;
+}
+
+.suresalez-pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: #f8fafc;
+    border-radius: 8px;
+    font-size: 12.5px;
+}
+
+.suresalez-pros {
+    color: #15803d;
+}
+
+.suresalez-cons {
+    color: #b91c1c;
+}
+
+.suresalez-helpful-btn {
+    margin-top: 12px;
+    background: none;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.suresalez-helpful-btn:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+/* Q&A Thread */
+.suresalez-questions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.suresalez-question-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 16px 20px;
+    background: #ffffff;
+}
+
+.suresalez-question-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.suresalez-answers-list {
+    margin-top: 12px;
+    padding-left: 24px;
+    border-left: 2px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.suresalez-answer-item {
+    font-size: 13px;
+    color: #334155;
+    line-height: 1.5;
+}
+
+.suresalez-merchant-pill {
+    background: #eff6ff;
+    color: #1e40af;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+/* Modal Form */
+.suresalez-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999999;
+}
+
+.suresalez-modal-card {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px 28px;
+    max-width: 520px;
+    width: 90%;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.suresalez-modal-card h3 {
+    margin: 0 0 16px 0;
+    font-size: 18px;
+    color: #0f172a;
+}
+
+.suresalez-form-row {
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.suresalez-form-row label {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #334155;
+}
+
+.suresalez-form-row input, .suresalez-form-row textarea, .suresalez-form-row select {
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    padding: 8px 10px;
+    font-size: 13px;
+    font-family: inherit;
+}

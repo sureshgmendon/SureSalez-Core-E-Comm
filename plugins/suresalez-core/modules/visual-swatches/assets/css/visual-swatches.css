@@ -1,0 +1,128 @@
+/**
+ * SureSalez Visual Swatches Stylesheet
+ */
+
+.suresalez-swatches-mount {
+    margin: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.suresalez-swatch-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.suresalez-swatch-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.suresalez-swatch-selected-label {
+    font-weight: 400;
+    color: #64748b;
+}
+
+.suresalez-swatch-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+/* Base Swatch Item */
+.suresalez-swatch-item {
+    position: relative;
+    cursor: pointer;
+    border: 2px solid #e2e8f0;
+    border-radius: 50%;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    background: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}
+
+.suresalez-swatch-item:hover:not(.out-of-stock) {
+    transform: translateY(-2px);
+    border-color: #94a3b8;
+}
+
+.suresalez-swatch-item:focus-visible {
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.4);
+}
+
+.suresalez-swatch-item.is-selected {
+    border-color: #0f172a;
+    box-shadow: 0 0 0 2px #0f172a;
+}
+
+/* Color Swatches */
+.suresalez-swatch-item.type-color {
+    width: 34px;
+    height: 34px;
+}
+
+.suresalez-swatch-color-fill {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+/* Button / Pill Swatches */
+.suresalez-swatch-item.type-button {
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1e293b;
+    border: 1px solid #cbd5e1;
+    min-height: 38px;
+}
+
+.suresalez-swatch-item.type-button.is-selected {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+    box-shadow: none;
+}
+
+/* Image Swatches */
+.suresalez-swatch-item.type-image {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.suresalez-swatch-item.type-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Out of Stock Strikethrough */
+.suresalez-swatch-item.out-of-stock {
+    opacity: 0.45;
+    cursor: not-allowed;
+    position: relative;
+}
+
+.suresalez-swatch-item.out-of-stock::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1.5px;
+    background: #ef4444;
+    transform: rotate(-45deg);
+    pointer-events: none;
+}

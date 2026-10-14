@@ -100,7 +100,11 @@ final class Core {
         $manager->register_module(new \SureSalez\Modules\CheckoutEngine\Checkout_Engine_Module());
         $manager->register_module(new \SureSalez\Modules\Wallet\Wallet_Module());
 
-        // Sprint 03-10 module placeholders (scaffolded for architectural completion)
+        // Sprint 03 Modules
+        require_once SURESALEZ_PATH . 'modules/localization/class-localization-module.php';
+        $manager->register_module(new \SureSalez\Modules\Localization\Localization_Module());
+
+        // Sprint 04-10 module placeholders (scaffolded for architectural completion)
         $this->register_roadmap_modules($manager);
     }
 
@@ -112,12 +116,6 @@ final class Core {
      */
     private function register_roadmap_modules(Module_Manager $manager): void {
         $roadmap_defs = [
-            'localization-compliance' => [
-                'name'     => 'Global Multi-Currency & Tax Compliance',
-                'desc'     => 'Real-time FX rates, EU VAT reverse charge, India GST, US sales tax, and landed cost duty estimation.',
-                'category' => 'Localization',
-                'default'  => false,
-            ],
             'crm-flow' => [
                 'name'     => 'Customer CRM & Visual Flow Engine',
                 'desc'     => 'RFM dynamic segmentation, multi-channel SMS/Email triggers, and visual node-based workflow automation.',

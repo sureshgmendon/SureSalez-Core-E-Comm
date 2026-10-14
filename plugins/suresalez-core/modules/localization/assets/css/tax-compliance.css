@@ -1,0 +1,102 @@
+/**
+ * SureSalez Tax Compliance & GST/Duty UI Stylesheet
+ *
+ * @package SureSalez\Modules\Localization
+ */
+
+.suresalez-tax-compliance-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    font-size: 0.875rem;
+}
+
+.suresalez-tax-title {
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.suresalez-tax-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.suresalez-tax-badge.badge-gst {
+    background: #ecfdf5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.suresalez-tax-badge.badge-lut {
+    background: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+}
+
+.suresalez-tax-badge.badge-ddp {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
+
+.suresalez-tax-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+.suresalez-tax-table td {
+    padding: 6px 0;
+    border-bottom: 1px dashed #e2e8f0;
+    color: #475569;
+}
+
+.suresalez-tax-table td.tax-val {
+    text-align: right;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.suresalez-tax-table tr:last-child td {
+    border-bottom: none;
+}
+
+.suresalez-tax-note {
+    font-size: 0.75rem;
+    color: #64748b;
+    margin-top: 8px;
+    font-style: italic;
+    line-height: 1.4;
+}
+
+/* GSTIN B2B Input field styling */
+.suresalez-gstin-wrapper {
+    position: relative;
+    margin: 12px 0;
+}
+
+.suresalez-gstin-status {
+    font-size: 0.75rem;
+    margin-top: 4px;
+    display: none;
+}
+
+.suresalez-gstin-status.is-valid {
+    display: block;
+    color: #059669;
+}
+
+.suresalez-gstin-status.is-invalid {
+    display: block;
+    color: #dc2626;
+}

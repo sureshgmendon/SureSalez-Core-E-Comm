@@ -1,7 +1,7 @@
 ---
 title: "Sprint 03: Global Localization, Multi-Currency & Compliance (GST / Duties)"
 sprint: 3
-status: "planned"
+status: "completed"
 tags: ["localization", "currency", "tax", "gst", "duties"]
 ---
 

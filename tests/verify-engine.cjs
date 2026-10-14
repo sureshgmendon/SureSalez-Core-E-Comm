@@ -95,6 +95,16 @@ const requiredFiles = [
     'plugins/suresalez-core/modules/wallet/class-wallet-ledger.php',
     'plugins/suresalez-core/modules/wallet/assets/css/wallet.css',
     'plugins/suresalez-core/modules/wallet/assets/js/wallet.js',
+    // Sprint 03 Modules
+    'plugins/suresalez-core/modules/localization/class-localization-module.php',
+    'plugins/suresalez-core/modules/localization/class-currency-switcher.php',
+    'plugins/suresalez-core/modules/localization/class-gateway-router.php',
+    'plugins/suresalez-core/modules/localization/class-tax-compliance.php',
+    'plugins/suresalez-core/modules/localization/class-market-routing.php',
+    'plugins/suresalez-core/modules/localization/assets/css/currency-switcher.css',
+    'plugins/suresalez-core/modules/localization/assets/js/currency-switcher.js',
+    'plugins/suresalez-core/modules/localization/assets/css/tax-compliance.css',
+    'plugins/suresalez-core/modules/localization/assets/js/tax-compliance.js',
 ];
 
 const rootDir = path.resolve(__dirname, '..');
@@ -217,6 +227,9 @@ const expectedTables = [
     'suresalez_wallet_transactions',
     'suresalez_abandoned_checkouts',
     'suresalez_post_purchase_offers',
+    // Sprint 03
+    'suresalez_currencies',
+    'suresalez_tax_jurisdictions',
 ];
 
 expectedTables.forEach(tbl => {
@@ -272,6 +285,14 @@ assert(coreBootstrapContent.includes('Catalog_PIM_Module'), 'Core bootstrap inst
 assert(coreBootstrapContent.includes('Multi_Location_Inventory_Module'), 'Core bootstrap instantiates Multi_Location_Inventory_Module');
 assert(coreBootstrapContent.includes('Visual_Swatches_Module'), 'Core bootstrap instantiates Visual_Swatches_Module');
 assert(coreBootstrapContent.includes('Reviews_QA_Module'), 'Core bootstrap instantiates Reviews_QA_Module');
+assert(coreBootstrapContent.includes('Localization_Module'), 'Core bootstrap instantiates Localization_Module');
+
+// Check that localization module loads currency switcher, gateway router, tax compliance, and market routing
+const localizationModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/localization/class-localization-module.php'), 'utf8');
+assert(localizationModuleContent.includes('Currency_Switcher'), 'Localization Module loads Currency Switcher engine');
+assert(localizationModuleContent.includes('Gateway_Router'), 'Localization Module loads Gateway Router engine');
+assert(localizationModuleContent.includes('Tax_Compliance'), 'Localization Module loads Tax Compliance engine');
+assert(localizationModuleContent.includes('Market_Routing'), 'Localization Module loads Market Routing engine');
 
 // Check that checkout-engine has cart-drawer, checkout-customizer, post-purchase-upsell, and abandoned-cart-recovery
 const checkoutModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/checkout-engine/class-checkout-engine-module.php'), 'utf8');

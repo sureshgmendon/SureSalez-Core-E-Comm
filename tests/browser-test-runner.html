@@ -18,6 +18,9 @@
   <link rel="stylesheet" href="../plugins/suresalez-core/modules/checkout-engine/assets/css/checkout.css">
   <link rel="stylesheet" href="../plugins/suresalez-core/modules/checkout-engine/assets/css/upsell-modal.css">
   <link rel="stylesheet" href="../plugins/suresalez-core/modules/wallet/assets/css/wallet.css">
+  <!-- Sprint 03 CSS -->
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/localization/assets/css/currency-switcher.css">
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/localization/assets/css/tax-compliance.css">
 
   <style>
     body {
@@ -155,7 +158,7 @@
   <header class="harness-nav">
     <h1>
       <span>⚡ SureSalez E-Commerce Verification Harness</span>
-      <span class="harness-badge">Sprint 01 + 02 Live</span>
+      <span class="harness-badge">Sprint 01 + 02 + 03 Live</span>
     </h1>
     <div class="tab-pills">
       <button class="tab-pill-btn active" data-target="view-product">Product & Buy Box</button>
@@ -163,6 +166,7 @@
       <button class="tab-pill-btn" data-target="view-checkout">Multi-Step Checkout</button>
       <button class="tab-pill-btn" data-target="view-wallet">Store Credit Wallet</button>
       <button class="tab-pill-btn" data-target="view-upsell">1-Click Upsell Demo</button>
+      <button class="tab-pill-btn" data-target="view-localization">Global Localization & Compliance</button>
       <button class="tab-pill-btn" data-target="view-admin">Module Manager Admin</button>
       <button class="tab-pill-btn" data-target="view-schema">Schema.org JSON-LD</button>
     </div>
@@ -416,9 +420,21 @@
                 </label>
               </div>
               <p class="module-desc">Enterprise customer reviews with verified buyer badges, pros/cons, user photos, merchant Q&A threads, and Schema.org rich snippets.</p>
+        <div class="suresalez-module-category">
+          <h2>Localization &amp; Compliance (Sprint 03)</h2>
+          <div class="suresalez-module-grid">
+            <div class="suresalez-module-card active">
+              <div class="card-header">
+                <h3>Global Localization, Multi-Currency &amp; Compliance</h3>
+                <label class="suresalez-switch">
+                  <input type="checkbox" checked class="suresalez-toggle-input" data-module-id="localization">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <p class="module-desc">Real-time multi-currency switcher with charm pricing, context-aware payment gateway routing, Indian GST (CGST/SGST vs IGST) and cross-border duties estimation, and international hreflang SEO.</p>
               <div class="card-footer">
-                <span class="module-id-badge"><code>reviews-qa</code></span>
-                <span class="runtime-badge loaded">Active & Enqueued</span>
+                <span class="module-id-badge"><code>localization</code></span>
+                <span class="runtime-badge loaded">Active &amp; Enqueued</span>
               </div>
             </div>
           </div>
@@ -431,6 +447,122 @@
       <h2 style="font-size:20px; font-weight:700; margin:0 0 12px 0;">Automated Schema.org Structured Data Output</h2>
       <p style="color:#64748b; font-size:14px; margin-bottom:16px;">Verified JSON-LD payload automatically injected into the HTML document &lt;head&gt; for Google Rich Results:</p>
       <pre class="schema-inspector" id="schema-payload-display"></pre>
+    </div>
+
+    <!-- TAB 8: GLOBAL LOCALIZATION & COMPLIANCE (SPRINT 03) -->
+    <div id="view-localization" class="harness-tab-pane" style="display:none;">
+      <div class="test-status-banner">
+        <span>🌍</span>
+        <div>
+          <strong>Sprint 03 Live:</strong> Multi-Currency Switcher with Psychological Charm Pricing (.99, .00, integers), Automated Indian GST (Intra-State CGST+SGST vs Inter-State IGST, HSN 7117 3% rates), B2B GSTIN live validation, Export Zero-Rating under LUT, Cross-Border Duties (DDP vs DDU), and Context-Aware Payment Gateway Routing.
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 24px; margin-bottom: 24px;">
+        
+        <!-- CARD 1: MULTI-CURRENCY SWITCHER -->
+        <div class="product-view-card" style="padding: 24px;">
+          <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 12px 0; display:flex; align-items:center; justify-content:space-between;">
+            <span>💱 Multi-Currency &amp; Charm Pricing</span>
+            <span class="suresalez-tax-badge badge-lut">8 Active FX</span>
+          </h2>
+          <p style="color:#64748b; font-size:13px; margin-bottom: 16px;">
+            Test real-time currency conversion with retail charm pricing rules:
+          </p>
+
+          <div style="margin-bottom: 16px;">
+            <label style="display:block; font-size:12px; font-weight:600; color:#475569; margin-bottom:6px;">Select Currency:</label>
+            <div id="runner-currency-switcher-mount">
+              <!-- Dynamically hydrated by JS -->
+            </div>
+          </div>
+
+          <table style="width:100%; border-collapse:collapse; font-size:13px; margin-top:12px;">
+            <thead>
+              <tr style="border-bottom:2px solid #e2e8f0; color:#64748b; text-align:left;">
+                <th style="padding:6px 0;">Currency</th>
+                <th style="padding:6px 0;">FX Rate</th>
+                <th style="padding:6px 0;">Rounding Rule</th>
+                <th style="padding:6px 0; text-align:right;">Sample ($899)</th>
+              </tr>
+            </thead>
+            <tbody id="currency-rates-tbody">
+              <!-- Hydrated by JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- CARD 2: INDIAN GST & EXPORT ENGINE -->
+        <div class="product-view-card" style="padding: 24px;">
+          <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 12px 0; display:flex; align-items:center; justify-content:space-between;">
+            <span>🏛️ GST &amp; Compliance Simulator</span>
+            <span class="suresalez-tax-badge badge-gst" id="tax-mode-badge">Intra-State GST</span>
+          </h2>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom: 12px;">
+            <div>
+              <label style="display:block; font-size:12px; font-weight:600; color:#475569; margin-bottom:4px;">Store Origin:</label>
+              <select id="sim-origin-state" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;">
+                <option value="KA" selected>KA — Karnataka (Store Hub)</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block; font-size:12px; font-weight:600; color:#475569; margin-bottom:4px;">Customer Destination:</label>
+              <select id="sim-dest-region" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;">
+                <option value="IN-KA" selected>🇮🇳 India — Karnataka (Intra-State)</option>
+                <option value="IN-MH">🇮🇳 India — Maharashtra (Inter-State IGST)</option>
+                <option value="IN-DL">🇮🇳 India — Delhi (Inter-State IGST)</option>
+                <option value="US">🇺🇸 United States (Export LUT - DDU De Minimis)</option>
+                <option value="GB">🇬🇧 United Kingdom (Export LUT - DDP 20% VAT + 4% Duty)</option>
+                <option value="DE">🇩🇪 Germany (Export LUT - EU IOSS 19% VAT)</option>
+                <option value="AE">🇦🇪 UAE (Export LUT - DDU 5% VAT)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin-bottom: 12px;">
+            <div>
+              <label style="display:block; font-size:12px; font-weight:600; color:#475569; margin-bottom:4px;">Product Classification:</label>
+              <select id="sim-product-hsn" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;">
+                <option value="7117" selected>HSN 7117 — Imitation Jewelry (3% GST)</option>
+                <option value="DEFAULT">Standard Products (18% GST)</option>
+              </select>
+            </div>
+            <div>
+              <label style="display:block; font-size:12px; font-weight:600; color:#475569; margin-bottom:4px;">Subtotal Amount (₹ / $):</label>
+              <input type="number" id="sim-subtotal-input" value="10000" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; box-sizing:border-box;">
+            </div>
+          </div>
+
+          <!-- B2B GSTIN input -->
+          <div id="sim-gstin-container" style="margin-bottom:12px;">
+            <label style="display:block; font-size:12px; font-weight:600; color:#475569; margin-bottom:4px;">B2B GSTIN (Optional):</label>
+            <input type="text" id="sim-gstin-input" placeholder="e.g. 29ABCDE1234F1Z5" value="29ABCDE1234F1Z5" style="width:100%; padding:8px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px; box-sizing:border-box; text-transform:uppercase;">
+            <div id="sim-gstin-feedback" style="font-size:12px; margin-top:4px;"></div>
+          </div>
+
+          <!-- Tax Calculation Results Box -->
+          <div class="suresalez-tax-compliance-card" id="sim-tax-results" style="margin-top:12px;">
+            <!-- Hydrated by JS -->
+          </div>
+        </div>
+
+        <!-- CARD 3: CONTEXT-AWARE GATEWAY ROUTER -->
+        <div class="product-view-card" style="padding: 24px;">
+          <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 12px 0; display:flex; align-items:center; justify-content:space-between;">
+            <span>💳 Context-Aware Gateway Router</span>
+            <span class="suresalez-tax-badge badge-ddp" id="sim-market-badge">Domestic IN</span>
+          </h2>
+          <p style="color:#64748b; font-size:13px; margin-bottom: 16px;">
+            Dynamically filters and surfaces regional payment rails without code bloat:
+          </p>
+
+          <div id="sim-gateway-list" style="display:flex; flex-direction:column; gap:10px;">
+            <!-- Hydrated by JS -->
+          </div>
+        </div>
+
+      </div>
     </div>
 
   </main>
@@ -657,9 +789,242 @@
         }));
       });
     }
+
+    // Sprint 03 Localization & Tax Simulation Engine
+    const fxRates = [
+      { code: "USD", symbol: "$",   name: "US Dollar",         rate: 1.00,  rule: "dot_99", flag: "🇺🇸" },
+      { code: "EUR", symbol: "€",   name: "Euro",              rate: 0.92,  rule: "dot_99", flag: "🇪🇺" },
+      { code: "GBP", symbol: "£",   name: "British Pound",     rate: 0.78,  rule: "dot_99", flag: "🇬🇧" },
+      { code: "INR", symbol: "₹",   name: "Indian Rupee",      rate: 84.50, rule: "nearest_integer", flag: "🇮🇳" },
+      { code: "AED", symbol: "د.إ", name: "UAE Dirham",        rate: 3.67,  rule: "dot_00", flag: "🇦🇪" },
+      { code: "JPY", symbol: "¥",   name: "Japanese Yen",      rate: 152.0, rule: "nearest_integer", flag: "🇯🇵" },
+      { code: "AUD", symbol: "A$",  name: "Australian Dollar", rate: 1.54,  rule: "dot_99", flag: "🇦🇺" },
+      { code: "CAD", symbol: "CA$", name: "Canadian Dollar",   rate: 1.38,  rule: "dot_99", flag: "🇨🇦" }
+    ];
+
+    function applyCharm(amount, rule) {
+      if (rule === "dot_99") return Math.floor(amount) + 0.99;
+      if (rule === "dot_00" || rule === "nearest_integer") return Math.round(amount);
+      return parseFloat(amount.toFixed(2));
+    }
+
+    function renderCurrencyTable() {
+      const tbody = document.getElementById('currency-rates-tbody');
+      const mount = document.getElementById('runner-currency-switcher-mount');
+      if (!tbody || !mount) return;
+
+      tbody.innerHTML = '';
+      let mountHtml = '<select id="active-curr-select" style="padding:8px 12px; border-radius:6px; border:1px solid #cbd5e1; font-size:14px; font-weight:600;">';
+
+      fxRates.forEach(fx => {
+        const raw = 899.00 * fx.rate;
+        const charmed = applyCharm(raw, fx.rule);
+        const dec = (fx.code === 'INR' || fx.code === 'JPY') ? 0 : 2;
+        const formatted = fx.symbol + charmed.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+
+        mountHtml += `<option value="${fx.code}">${fx.flag} ${fx.code} (${fx.symbol}) — ${fx.name}</option>`;
+
+        const tr = document.createElement('tr');
+        tr.style.borderBottom = '1px solid #f1f5f9';
+        tr.innerHTML = `
+          <td style="padding:8px 0; font-weight:600;">${fx.flag} ${fx.code}</td>
+          <td style="padding:8px 0; color:#64748b;">${fx.rate.toFixed(2)}</td>
+          <td style="padding:8px 0;"><code style="background:#f1f5f9; padding:2px 6px; border-radius:4px; font-size:11px;">${fx.rule}</code></td>
+          <td style="padding:8px 0; text-align:right; font-weight:700; color:#2563eb;">${formatted}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      mountHtml += '</select>';
+      mount.innerHTML = mountHtml;
+
+      document.getElementById('active-curr-select').addEventListener('change', (e) => {
+        updateGatewayRouting();
+      });
+    }
+
+    function updateTaxSimulation() {
+      const destVal = document.getElementById('sim-dest-region').value;
+      const hsnVal = document.getElementById('sim-product-hsn').value;
+      const subtotal = parseFloat(document.getElementById('sim-subtotal-input').value) || 0;
+      const gstinVal = (document.getElementById('sim-gstin-input').value || '').trim().toUpperCase();
+      const resultsBox = document.getElementById('sim-tax-results');
+      const modeBadge = document.getElementById('tax-mode-badge');
+      const gstinContainer = document.getElementById('sim-gstin-container');
+      const gstinFeedback = document.getElementById('sim-gstin-feedback');
+
+      if (!resultsBox) return;
+
+      const isIndia = destVal.startsWith('IN-');
+
+      if (isIndia) {
+        gstinContainer.style.display = 'block';
+        const destState = destVal.replace('IN-', '');
+        const isIntraState = (destState === 'KA');
+        const rate = (hsnVal === '7117') ? 3.0 : 18.0;
+
+        modeBadge.className = 'suresalez-tax-badge badge-gst';
+        modeBadge.textContent = isIntraState ? 'Intra-State GST (KA)' : `Inter-State IGST (${destState})`;
+
+        // Validate GSTIN
+        let gstinValid = false;
+        let gstinMsg = '';
+        if (gstinVal) {
+          const pattern = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
+          if (!pattern.test(gstinVal)) {
+            gstinMsg = '<span style="color:#dc2626;">✕ Invalid GSTIN regex format (15 alphanumeric characters required)</span>';
+          } else {
+            const prefix = gstinVal.substring(0, 2);
+            const stateMap = { '29': 'KA', '27': 'MH', '07': 'DL' };
+            const mappedState = stateMap[prefix];
+            if (mappedState && mappedState !== destState) {
+              gstinMsg = `<span style="color:#dc2626;">✕ State Code Mismatch: GSTIN is ${mappedState} (${prefix}) but destination is ${destState}</span>`;
+            } else {
+              gstinValid = true;
+              gstinMsg = `<span style="color:#059669;">✓ Verified GSTIN: ${gstinVal} (${mappedState || prefix}) — B2B Input Tax Credit Eligible</span>`;
+            }
+          }
+        }
+        gstinFeedback.innerHTML = gstinMsg;
+
+        if (isIntraState) {
+          const halfRate = rate / 2.0;
+          const cgst = (subtotal * halfRate) / 100.0;
+          const sgst = (subtotal * halfRate) / 100.0;
+          const totalTax = cgst + sgst;
+          const grandTotal = subtotal + totalTax;
+
+          resultsBox.innerHTML = `
+            <div class="suresalez-tax-title">
+              <span>Indian GST Line-Item Breakdown</span>
+              <span class="suresalez-tax-badge badge-gst">${rate}% Total GST</span>
+            </div>
+            <table class="suresalez-tax-table">
+              <tr><td>Taxable Subtotal:</td><td class="tax-val">₹${subtotal.toLocaleString('en-IN', {minimumFractionDigits:2})}</td></tr>
+              <tr><td>Central GST (CGST @ ${halfRate}%):</td><td class="tax-val">₹${cgst.toLocaleString('en-IN', {minimumFractionDigits:2})}</td></tr>
+              <tr><td>State GST (SGST @ ${halfRate}%):</td><td class="tax-val">₹${sgst.toLocaleString('en-IN', {minimumFractionDigits:2})}</td></tr>
+              <tr style="font-size:14px; border-top:1px solid #cbd5e1;"><td><strong>Grand Total (Inclusive):</strong></td><td class="tax-val" style="color:#2563eb;"><strong>₹${grandTotal.toLocaleString('en-IN', {minimumFractionDigits:2})}</strong></td></tr>
+            </table>
+            <div class="suresalez-tax-note">Intra-State supply within Karnataka. Taxes equally allocated between Central &amp; State Governments.</div>
+          `;
+        } else {
+          const igst = (subtotal * rate) / 100.0;
+          const grandTotal = subtotal + igst;
+
+          resultsBox.innerHTML = `
+            <div class="suresalez-tax-title">
+              <span>Indian Inter-State GST Breakdown</span>
+              <span class="suresalez-tax-badge badge-gst">${rate}% IGST</span>
+            </div>
+            <table class="suresalez-tax-table">
+              <tr><td>Taxable Subtotal:</td><td class="tax-val">₹${subtotal.toLocaleString('en-IN', {minimumFractionDigits:2})}</td></tr>
+              <tr><td>Integrated GST (IGST @ ${rate}%):</td><td class="tax-val">₹${igst.toLocaleString('en-IN', {minimumFractionDigits:2})}</td></tr>
+              <tr style="font-size:14px; border-top:1px solid #cbd5e1;"><td><strong>Grand Total (Inclusive):</strong></td><td class="tax-val" style="color:#2563eb;"><strong>₹${grandTotal.toLocaleString('en-IN', {minimumFractionDigits:2})}</strong></td></tr>
+            </table>
+            <div class="suresalez-tax-note">Inter-State supply from KA to ${destState}. Integrated GST applied under Section 5 of IGST Act.</div>
+          `;
+        }
+      } else {
+        // Export under LUT
+        gstinContainer.style.display = 'none';
+        modeBadge.className = 'suresalez-tax-badge badge-lut';
+        modeBadge.textContent = 'Export Zero-Rated (LUT)';
+
+        const dutyMatrix = {
+          US: { duty: 0, tax: 0, mode: 'DDU', badge: 'US Import: Duty-Free under $800 De Minimis' },
+          GB: { duty: 4, tax: 20, mode: 'DDP', badge: 'UK DDP: 20% VAT & 4% Customs Pre-Collected' },
+          DE: { duty: 4.5, tax: 19, mode: 'DDP', badge: 'EU IOSS: 19% German VAT Pre-Collected' },
+          AE: { duty: 5, tax: 5, mode: 'DDU', badge: 'UAE: 5% VAT & Duty payable upon delivery (DDU)' }
+        };
+
+        const rule = dutyMatrix[destVal] || { duty: 5, tax: 10, mode: 'DDU', badge: 'Cross-Border Import (DDU)' };
+        const dutyAmount = (subtotal * rule.duty) / 100;
+        const taxAmount = (subtotal * rule.tax) / 100;
+        const grandTotal = subtotal + (rule.mode === 'DDP' ? (dutyAmount + taxAmount) : 0);
+
+        resultsBox.innerHTML = `
+          <div class="suresalez-tax-title">
+            <span>Cross-Border Export Compliance</span>
+            <span class="suresalez-tax-badge ${rule.mode === 'DDP' ? 'badge-ddp' : 'badge-lut'}">${rule.mode} Mode</span>
+          </div>
+          <table class="suresalez-tax-table">
+            <tr><td>Export Subtotal:</td><td class="tax-val">$${subtotal.toFixed(2)}</td></tr>
+            <tr><td>Domestic GST (LUT Zero-Rated):</td><td class="tax-val" style="color:#059669;">$0.00 (0%)</td></tr>
+            ${rule.mode === 'DDP' ? `
+              <tr><td>Destination Customs Duty (${rule.duty}%):</td><td class="tax-val">$${dutyAmount.toFixed(2)}</td></tr>
+              <tr><td>Destination Import VAT (${rule.tax}%):</td><td class="tax-val">$${taxAmount.toFixed(2)}</td></tr>
+            ` : `
+              <tr><td>Estimated Duties &amp; Taxes:</td><td class="tax-val" style="color:#64748b;">Assessed at Destination Customs</td></tr>
+            `}
+            <tr style="font-size:14px; border-top:1px solid #cbd5e1;"><td><strong>Total Charged Today:</strong></td><td class="tax-val" style="color:#2563eb;"><strong>$${grandTotal.toFixed(2)}</strong></td></tr>
+          </table>
+          <div class="suresalez-tax-note">Legal Notice: Supply meant for export under bond or letter of undertaking (LUT) without payment of integrated tax. ${rule.badge}.</div>
+        `;
+      }
+
+      updateGatewayRouting();
+    }
+
+    function updateGatewayRouting() {
+      const destVal = document.getElementById('sim-dest-region').value;
+      const isIndia = destVal.startsWith('IN-');
+      const currSelect = document.getElementById('active-curr-select');
+      const currency = currSelect ? currSelect.value : (isIndia ? 'INR' : 'USD');
+      const listEl = document.getElementById('sim-gateway-list');
+      const badgeEl = document.getElementById('sim-market-badge');
+
+      if (!listEl) return;
+
+      badgeEl.textContent = isIndia ? `Domestic IN (${currency})` : `International (${currency})`;
+      badgeEl.className = isIndia ? 'suresalez-tax-badge badge-gst' : 'suresalez-tax-badge badge-ddp';
+
+      let gateways = [];
+      if (isIndia) {
+        gateways = [
+          { name: "UPI Instant (GPay, PhonePe, Paytm, BHIM)", badge: "Instant Zero Fee", sub: "Domestic Real-time QR & App Intent", active: true },
+          { name: "Razorpay (RuPay, Cards, Netbanking)", badge: "PCI-DSS Level 1", sub: "Domestic Credit/Debit cards & 50+ Banks", active: true },
+          { name: "Cashfree Payments", badge: "Fast Checkout", sub: "Cardless EMI, Wallets & BNPL", active: true },
+          { name: "SureSalez Store Credit Wallet", badge: "Instant", sub: "Available Customer Balance ($75.00)", active: true },
+          { name: "PayPal International", badge: "Suppressed in Domestic INR", sub: "Foreign Gateway restricted for domestic INR", active: false }
+        ];
+      } else {
+        gateways = [
+          { name: "Stripe (Credit / Debit / Apple Pay / Google Pay)", badge: "Global Preferred", sub: "Visa, Mastercard, Amex, Apple Pay, Google Pay", active: true },
+          { name: "PayPal / Pay Later", badge: "Buyer Protection", sub: "Pay in 4 installments or PayPal balance", active: true },
+          { name: "SureSalez Store Credit Wallet", badge: "Instant", sub: "Available Customer Balance ($75.00)", active: true },
+          { name: "UPI Instant / Cashfree", badge: "Suppressed for Foreign Destinations", sub: "Domestic Indian payment rails disabled", active: false }
+        ];
+      }
+
+      listEl.innerHTML = gateways.map(gw => `
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; border:1px solid ${gw.active ? '#cbd5e1' : '#f1f5f9'}; border-radius:8px; background:${gw.active ? '#ffffff' : '#f8fafc'}; opacity:${gw.active ? '1' : '0.55'};">
+          <div>
+            <div style="font-weight:600; font-size:13.5px; color:${gw.active ? '#0f172a' : '#94a3b8'};">${gw.name}</div>
+            <div style="font-size:12px; color:#64748b;">${gw.sub}</div>
+          </div>
+          <span class="suresalez-tax-badge ${gw.active ? 'badge-gst' : 'badge-ddp'}">${gw.badge}</span>
+        </div>
+      `).join('');
+    }
+
+    // Attach simulation listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      renderCurrencyTable();
+      updateTaxSimulation();
+
+      const destSelect = document.getElementById('sim-dest-region');
+      const hsnSelect = document.getElementById('sim-product-hsn');
+      const subtotalInput = document.getElementById('sim-subtotal-input');
+      const gstinInput = document.getElementById('sim-gstin-input');
+
+      if (destSelect) destSelect.addEventListener('change', updateTaxSimulation);
+      if (hsnSelect) hsnSelect.addEventListener('change', updateTaxSimulation);
+      if (subtotalInput) subtotalInput.addEventListener('input', updateTaxSimulation);
+      if (gstinInput) gstinInput.addEventListener('input', updateTaxSimulation);
+    });
   </script>
 
-  <!-- Load Module Scripts (Sprint 01 + Sprint 02) -->
+  <!-- Load Module Scripts (Sprint 01 + Sprint 02 + Sprint 03) -->
   <script src="../plugins/suresalez-core/modules/catalog-pim/assets/js/catalog-pim.js"></script>
   <script src="../plugins/suresalez-core/modules/multi-location-inventory/assets/js/multi-location-inventory.js"></script>
   <script src="../plugins/suresalez-core/modules/visual-swatches/assets/js/visual-swatches.js"></script>
@@ -668,6 +1033,9 @@
   <script src="../plugins/suresalez-core/modules/checkout-engine/assets/js/cart-drawer.js"></script>
   <script src="../plugins/suresalez-core/modules/checkout-engine/assets/js/checkout.js"></script>
   <script src="../plugins/suresalez-core/modules/checkout-engine/assets/js/upsell-modal.js"></script>
+  <script src="../plugins/suresalez-core/modules/localization/assets/js/currency-switcher.js"></script>
+  <script src="../plugins/suresalez-core/modules/localization/assets/js/tax-compliance.js"></script>
 
 </body>
 </html>
+

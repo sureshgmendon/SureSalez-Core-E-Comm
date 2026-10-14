@@ -1,0 +1,136 @@
+/**
+ * SureSalez Multi-Currency Switcher Stylesheet
+ *
+ * @package SureSalez\Modules\Localization
+ */
+
+:root {
+    --ssz-curr-bg: #ffffff;
+    --ssz-curr-border: #e2e8f0;
+    --ssz-curr-text: #1e293b;
+    --ssz-curr-hover: #f8fafc;
+    --ssz-curr-active: #eff6ff;
+    --ssz-curr-accent: #2563eb;
+    --ssz-curr-radius: 8px;
+    --ssz-curr-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+.suresalez-currency-switcher-mount,
+#suresalez-currency-switcher-mount,
+.suresalez-currency-switcher-dropdown {
+    position: relative;
+    display: inline-block;
+    font-family: inherit;
+    font-size: 0.875rem;
+}
+
+.suresalez-currency-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--ssz-curr-bg);
+    border: 1px solid var(--ssz-curr-border);
+    border-radius: var(--ssz-curr-radius);
+    color: var(--ssz-curr-text);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    line-height: 1.4;
+}
+
+.suresalez-currency-btn:hover {
+    border-color: #cbd5e1;
+    background: var(--ssz-curr-hover);
+}
+
+.suresalez-currency-btn:focus-visible {
+    outline: 2px solid var(--ssz-curr-accent);
+    outline-offset: 2px;
+}
+
+.suresalez-currency-btn .chevron {
+    transition: transform 0.2s ease;
+}
+
+.suresalez-currency-switcher-dropdown.is-open .suresalez-currency-btn .chevron {
+    transform: rotate(180deg);
+}
+
+.suresalez-currency-options {
+    position: absolute;
+    top: calc(100% + 4px);
+    right: 0;
+    min-width: 220px;
+    max-height: 320px;
+    overflow-y: auto;
+    background: var(--ssz-curr-bg);
+    border: 1px solid var(--ssz-curr-border);
+    border-radius: var(--ssz-curr-radius);
+    box-shadow: var(--ssz-curr-shadow);
+    list-style: none;
+    margin: 0;
+    padding: 6px;
+    display: none;
+    z-index: 9999;
+}
+
+.suresalez-currency-switcher-dropdown.is-open .suresalez-currency-options {
+    display: block;
+    animation: ssz-curr-dropdown-fade 0.15s ease-out;
+}
+
+@keyframes ssz-curr-dropdown-fade {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.suresalez-curr-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+    color: var(--ssz-curr-text);
+}
+
+.suresalez-curr-item:hover {
+    background: var(--ssz-curr-hover);
+}
+
+.suresalez-curr-item.is-active {
+    background: var(--ssz-curr-active);
+    color: var(--ssz-curr-accent);
+    font-weight: 600;
+}
+
+.suresalez-curr-item .curr-flag {
+    font-size: 1.1rem;
+    line-height: 1;
+}
+
+.suresalez-curr-item .curr-title {
+    flex: 1;
+    margin-left: 4px;
+    font-size: 0.8125rem;
+}
+
+.suresalez-curr-item .curr-code-badge {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-family: monospace;
+}
+
+.suresalez-curr-item.is-active .curr-code-badge {
+    color: var(--ssz-curr-accent);
+}

@@ -22,7 +22,7 @@ class Database {
     /**
      * Database version.
      */
-    public const DB_VERSION = '1.1.0';
+    public const DB_VERSION = '1.2.0';
 
     /**
      * Option key storing current schema version.
@@ -220,6 +220,41 @@ class Database {
         ) {$charset_collate};";
         dbDelta($sql_offers);
 
+        // 10. Multi-Currency Exchange Rates & Rounding Table (Sprint 03)
+        $table_currencies = $wpdb->prefix . 'suresalez_currencies';
+        $sql_currencies = "CREATE TABLE {$table_currencies} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            code varchar(3) NOT NULL,
+            symbol varchar(8) NOT NULL,
+            name varchar(100) NOT NULL,
+            rate_to_base decimal(12,6) DEFAULT 1.000000 NOT NULL,
+            rounding_rule varchar(30) DEFAULT 'dot_99' NOT NULL,
+            is_active tinyint(1) DEFAULT 1 NOT NULL,
+            updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_code (code),
+            KEY idx_active (is_active)
+        ) {$charset_collate};";
+        dbDelta($sql_currencies);
+
+        // 11. Global Tax Jurisdictions & GST/VAT Rules Table (Sprint 03)
+        $table_tax = $wpdb->prefix . 'suresalez_tax_jurisdictions';
+        $sql_tax = "CREATE TABLE {$table_tax} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            country_code varchar(2) NOT NULL,
+            state_zone varchar(50) DEFAULT '' NOT NULL,
+            tax_type varchar(30) NOT NULL,
+            standard_rate decimal(5,2) DEFAULT 0.00 NOT NULL,
+            reduced_rate decimal(5,2) DEFAULT 0.00 NOT NULL,
+            hsn_sac_rules longtext DEFAULT NULL,
+            is_duties_precollected tinyint(1) DEFAULT 0 NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_country_zone (country_code, state_zone),
+            KEY idx_tax_type (tax_type)
+        ) {$charset_collate};";
+        dbDelta($sql_tax);
+
         update_option(self::DB_VERSION_KEY, self::DB_VERSION);
 
         // Seed 10 warehouse fulfillment locations
@@ -227,6 +262,10 @@ class Database {
 
         // Seed post-purchase offers
         self::seed_post_purchase_offers();
+
+        // Seed multi-currency rates & tax jurisdictions (Sprint 03)
+        self::seed_currencies();
+        self::seed_tax_jurisdictions();
     }
 
     /**
@@ -411,6 +450,130 @@ class Database {
                 $table,
                 $offer,
                 ['%s', '%s', '%d', '%s', '%f', '%d', '%s', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed active global currencies and psychological rounding rules.
+     *
+     * @return void
+     */
+    public static function seed_currencies(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_currencies';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $currencies = [
+            ['code' => 'USD', 'symbol' => '$',   'name' => 'US Dollar',        'rate' => 1.000000, 'rounding' => 'dot_99'],
+            ['code' => 'EUR', 'symbol' => '€',   'name' => 'Euro',             'rate' => 0.920000, 'rounding' => 'dot_99'],
+            ['code' => 'GBP', 'symbol' => '£',   'name' => 'British Pound',    'rate' => 0.780000, 'rounding' => 'dot_99'],
+            ['code' => 'INR', 'symbol' => '₹',   'name' => 'Indian Rupee',     'rate' => 84.500000,'rounding' => 'nearest_integer'],
+            ['code' => 'AED', 'symbol' => 'د.إ', 'name' => 'UAE Dirham',       'rate' => 3.670000, 'rounding' => 'dot_00'],
+            ['code' => 'JPY', 'symbol' => '¥',   'name' => 'Japanese Yen',     'rate' => 152.000000,'rounding' => 'nearest_integer'],
+            ['code' => 'AUD', 'symbol' => 'A$',  'name' => 'Australian Dollar','rate' => 1.540000, 'rounding' => 'dot_99'],
+            ['code' => 'CAD', 'symbol' => 'CA$', 'name' => 'Canadian Dollar',  'rate' => 1.380000, 'rounding' => 'dot_99'],
+        ];
+
+        foreach ($currencies as $curr) {
+            $wpdb->replace(
+                $table,
+                [
+                    'code'          => $curr['code'],
+                    'symbol'        => $curr['symbol'],
+                    'name'          => $curr['name'],
+                    'rate_to_base'  => $curr['rate'],
+                    'rounding_rule' => $curr['rounding'],
+                    'is_active'     => 1,
+                    'updated_at'    => current_time('mysql'),
+                ],
+                ['%s', '%s', '%s', '%f', '%s', '%d', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed global tax jurisdictions, Indian GST rules, and EU VAT rates.
+     *
+     * @return void
+     */
+    public static function seed_tax_jurisdictions(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_tax_jurisdictions';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $jurisdictions = [
+            [
+                'country_code'           => 'IN',
+                'state_zone'             => 'ALL',
+                'tax_type'               => 'GST',
+                'standard_rate'          => 18.00,
+                'reduced_rate'           => 3.00,
+                'hsn_sac_rules'          => json_encode([
+                    '7117' => 3.00,  // Imitation Jewelry
+                    '9102' => 18.00, // Wristwatches
+                    '8471' => 18.00, // Computing equipment
+                ]),
+                'is_duties_precollected' => 0,
+                'created_at'             => current_time('mysql'),
+            ],
+            [
+                'country_code'           => 'DE',
+                'state_zone'             => 'EU_OSS',
+                'tax_type'               => 'VAT',
+                'standard_rate'          => 19.00,
+                'reduced_rate'           => 7.00,
+                'hsn_sac_rules'          => null,
+                'is_duties_precollected' => 1,
+                'created_at'             => current_time('mysql'),
+            ],
+            [
+                'country_code'           => 'GB',
+                'state_zone'             => 'UK_HMRC',
+                'tax_type'               => 'VAT',
+                'standard_rate'          => 20.00,
+                'reduced_rate'           => 5.00,
+                'hsn_sac_rules'          => null,
+                'is_duties_precollected' => 1,
+                'created_at'             => current_time('mysql'),
+            ],
+            [
+                'country_code'           => 'US',
+                'state_zone'             => 'CA',
+                'tax_type'               => 'US_NEXUS',
+                'standard_rate'          => 7.25,
+                'reduced_rate'           => 0.00,
+                'hsn_sac_rules'          => null,
+                'is_duties_precollected' => 0,
+                'created_at'             => current_time('mysql'),
+            ],
+            [
+                'country_code'           => 'US',
+                'state_zone'             => 'NY',
+                'tax_type'               => 'US_NEXUS',
+                'standard_rate'          => 8.875,
+                'reduced_rate'           => 0.00,
+                'hsn_sac_rules'          => null,
+                'is_duties_precollected' => 0,
+                'created_at'             => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($jurisdictions as $item) {
+            $wpdb->insert(
+                $table,
+                $item,
+                ['%s', '%s', '%s', '%f', '%f', '%s', '%d', '%s']
             );
         }
     }

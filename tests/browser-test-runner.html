@@ -29,6 +29,9 @@
   <!-- Sprint 06 CSS -->
   <link rel="stylesheet" href="../plugins/suresalez-core/modules/fulfillment-rma/assets/css/rma-portal.css">
   <link rel="stylesheet" href="../plugins/suresalez-core/modules/fulfillment-rma/assets/css/tracking-widget.css">
+  <!-- Sprint 07 CSS -->
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/b2b-wholesale/assets/css/bulk-order.css">
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/b2b-wholesale/assets/css/rfq-portal.css">
 
   <style>
     body {
@@ -169,7 +172,7 @@
   <header class="harness-nav">
     <h1>
       <span>⚡ SureSalez E-Commerce Verification Harness</span>
-      <span class="harness-badge">Sprint 01 - 06 Live</span>
+      <span class="harness-badge">Sprint 01 - 07 Live</span>
     </h1>
     <div class="tab-pills">
       <button class="tab-pill-btn active" data-target="view-product">Product & Buy Box</button>
@@ -181,6 +184,7 @@
       <button class="tab-pill-btn" data-target="view-crm-flow">CRM 360 &amp; Flow Engine</button>
       <button class="tab-pill-btn" data-target="view-omnichannel">Omnichannel, Reels &amp; AI</button>
       <button class="tab-pill-btn" data-target="view-fulfillment-rma">Order Routing &amp; RMA</button>
+      <button class="tab-pill-btn" data-target="view-b2b-wholesale">B2B Wholesale &amp; RFQ</button>
       <button class="tab-pill-btn" data-target="view-admin">Module Manager Admin</button>
       <button class="tab-pill-btn" data-target="view-schema">Schema.org JSON-LD</button>
     </div>
@@ -981,8 +985,76 @@
                 &check; Wholesale Cost ($42.00) Suppressed &bull; Unbranded Carton Mandated
               </div>
             </div>
-            <button type="button" class="btn-test-action" style="margin-top: 12px; width: 100%;" onclick="alert('White-Label PO JSON payload dispatched to supplier EDI/REST endpoint!')">
-              Simulate 3PL PO Dispatch
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 12: B2B WHOLESALE COMMERCE & RFQ QUOTE ENGINE (SPRINT 07) -->
+    <div id="view-b2b-wholesale" class="harness-tab-pane" style="display:none;">
+      <div class="test-status-banner">
+        <span>🏢</span>
+        <div>
+          <strong>Sprint 07 Integrated:</strong> B2B Corporate Organizations &amp; Permissions, Dynamic Wholesale Tiered Pricing (-20% to -40%), MOQ &amp; Case-Pack Enforcement, Net 15/30/60 Purchase Order Checkout, Quick Bulk Order Matrix &amp; CSV Importer, and Request-For-Quote (RFQ) Negotiation with 1-Click Acceptance.
+        </div>
+      </div>
+
+      <!-- Quick Bulk Order Matrix Mount -->
+      <div class="product-view-card" style="margin-bottom: 24px; padding: 28px;">
+        <div id="suresalez-b2b-bulk-order-mount"></div>
+      </div>
+
+      <!-- Request For Quote (RFQ) Mount -->
+      <div class="product-view-card" style="margin-bottom: 24px; padding: 28px;">
+        <div id="suresalez-rfq-form-mount"></div>
+      </div>
+
+      <!-- Corporate Credit & Approval Simulation Card -->
+      <div class="product-view-card" style="padding: 28px;">
+        <h3 style="font-size: 18px; font-weight: 700; margin: 0 0 8px 0; color: #0f172a;">
+          💳 Corporate Net Terms &amp; Managerial Approval Engine
+        </h3>
+        <p style="font-size: 13.5px; color: #64748b; margin: 0 0 20px 0;">
+          Test company credit line availability, individual purchaser spending limits, and pro-forma invoice creation.
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <!-- Left: Credit Line Status -->
+          <div style="border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; background: #f8fafc;">
+            <div style="font-weight: 700; font-size: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+              <span>Apex Chronometry Distributors Ltd</span>
+              <span class="suresalez-tax-badge badge-gst">Net 30 Active</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
+              <span style="color: #64748b;">Total Credit Line:</span>
+              <strong>$50,000.00 USD</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px;">
+              <span style="color: #64748b;">Open Invoices Balance:</span>
+              <strong style="color: #dc2626;">$12,500.00 USD</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 12px;">
+              <span style="color: #64748b;">Available to Purchase:</span>
+              <strong style="color: #10b981;">$37,500.00 USD</strong>
+            </div>
+            <div style="background: #e2e8f0; height: 8px; border-radius: 9999px; overflow: hidden;">
+              <div style="background: #2563eb; width: 25%; height: 100%;"></div>
+            </div>
+          </div>
+
+          <!-- Right: Purchaser Spending Limit -->
+          <div style="border: 1px solid #e2e8f0; border-radius: 10px; padding: 18px; background: #f8fafc;">
+            <div style="font-weight: 700; font-size: 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+              <span>Seat: Sarah Jenkins (Purchaser)</span>
+              <span class="suresalez-tax-badge badge-ddp">Limit: $2,500/order</span>
+            </div>
+            <p style="font-size: 12.5px; color: #64748b; margin: 0 0 12px 0;">
+              Orders &le; $2,500 are approved automatically. Orders &gt; $2,500 trigger managerial review.
+            </p>
+            <button type="button" class="btn-test-action" style="width: 100%; margin-bottom: 8px;" onclick="alert('Order for $1,800 approved immediately under Sarah\'s limit!')">
+              Simulate $1,800 Order (Direct Approval)
+            </button>
+            <button type="button" class="btn-test-action" style="width: 100%; background: #d97706;" onclick="alert('Order for $4,200 held: Exceeds $2,500 purchaser limit. Company Admin Marcus notified for 1-click approval!')">
+              Simulate $4,200 Order (Held for Approval)
             </button>
           </div>
         </div>
@@ -1788,9 +1860,22 @@ SS-201,"Milanese Magnetic Mesh Strap - Grade 5 Titanium","Titanium woven band wi
       },
       returnWindowDays: 30
     };
+
+    window.suresalezB2BData = {
+      restUrl: '/wp-json/suresalez/v1/',
+      nonce: 'wp_rest_nonce_sprint07',
+      currentCompany: {
+        id: 1,
+        company_name: 'Apex Chronometry Distributors Ltd',
+        payment_terms: 'net_30',
+        credit_limit: 50000.00,
+        approval_threshold: 5000.00
+      },
+      isB2B: true
+    };
   </script>
 
-  <!-- Load Module Scripts (Sprint 01 + Sprint 02 + Sprint 03 + Sprint 04 + Sprint 05 + Sprint 06) -->
+  <!-- Load Module Scripts (Sprint 01 + Sprint 02 + Sprint 03 + Sprint 04 + Sprint 05 + Sprint 06 + Sprint 07) -->
   <script src="../plugins/suresalez-core/modules/catalog-pim/assets/js/catalog-pim.js"></script>
   <script src="../plugins/suresalez-core/modules/multi-location-inventory/assets/js/multi-location-inventory.js"></script>
   <script src="../plugins/suresalez-core/modules/visual-swatches/assets/js/visual-swatches.js"></script>
@@ -1806,6 +1891,8 @@ SS-201,"Milanese Magnetic Mesh Strap - Grade 5 Titanium","Titanium woven band wi
   <script src="../plugins/suresalez-core/modules/omnichannel-ai/assets/js/shoppable-reels.js"></script>
   <script src="../plugins/suresalez-core/modules/fulfillment-rma/assets/js/rma-portal.js"></script>
   <script src="../plugins/suresalez-core/modules/fulfillment-rma/assets/js/tracking-widget.js"></script>
+  <script src="../plugins/suresalez-core/modules/b2b-wholesale/assets/js/bulk-order.js"></script>
+  <script src="../plugins/suresalez-core/modules/b2b-wholesale/assets/js/rfq-portal.js"></script>
 
 </body>
 </html>

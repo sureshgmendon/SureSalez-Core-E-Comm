@@ -1,0 +1,158 @@
+/**
+ * SureSalez Request For Quote (RFQ) & Negotiation Portal Styles.
+ *
+ * @package SureSalez\Modules\B2BWholesale
+ */
+
+.suresalez-rfq-container {
+    max-width: 960px;
+    margin: 32px auto;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.08);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #0f172a;
+}
+
+.suresalez-rfq-header {
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 20px;
+    margin-bottom: 24px;
+}
+
+.suresalez-rfq-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+    letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.suresalez-rfq-subtitle {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+}
+
+.suresalez-rfq-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    background: #f8fafc;
+    margin-bottom: 24px;
+}
+
+.suresalez-rfq-items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    font-size: 14px;
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+}
+
+.suresalez-rfq-items-table th {
+    background: #f1f5f9;
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #475569;
+}
+
+.suresalez-rfq-items-table td {
+    padding: 12px 16px;
+    border-top: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.suresalez-rfq-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.suresalez-rfq-input:focus {
+    border-color: #2563eb;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.suresalez-rfq-counter-banner {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.suresalez-rfq-counter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.suresalez-rfq-badge-status {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.suresalez-rfq-badge-status.counter_offered {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.suresalez-rfq-badge-status.accepted {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.suresalez-rfq-submit-btn {
+    background: #0f172a;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.suresalez-rfq-submit-btn:hover {
+    background: #1e293b;
+}
+
+.suresalez-rfq-accept-btn {
+    background: #10b981;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.suresalez-rfq-accept-btn:hover {
+    background: #059669;
+}

@@ -391,9 +391,9 @@ for (const relPath of sprint06Files) {
     assert(fs.existsSync(fullPath), `Sprint 06 component exists: ${relPath}`);
 }
 
-// Check database schema v1.5.0
+// Check database schema v1.5.0+
 const dbFile = fs.readFileSync(path.join(baseDir, 'plugins/suresalez-core/includes/class-database.php'), 'utf8');
-assert(dbFile.includes('1.5.0'), 'Database schema version bumped to 1.5.0');
+assert(dbFile.includes('1.5.0') || dbFile.includes('1.6.0'), 'Database schema version is at least 1.5.0');
 assert(dbFile.includes('suresalez_fulfillments'), 'Database includes suresalez_fulfillments table');
 assert(dbFile.includes('suresalez_fulfillment_items'), 'Database includes suresalez_fulfillment_items table');
 assert(dbFile.includes('suresalez_rma_requests'), 'Database includes suresalez_rma_requests table');

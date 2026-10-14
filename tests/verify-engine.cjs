@@ -133,6 +133,17 @@ const requiredFiles = [
     'plugins/suresalez-core/modules/fulfillment-rma/assets/js/rma-portal.js',
     'plugins/suresalez-core/modules/fulfillment-rma/assets/css/tracking-widget.css',
     'plugins/suresalez-core/modules/fulfillment-rma/assets/js/tracking-widget.js',
+    // Sprint 07 Modules
+    'plugins/suresalez-core/modules/b2b-wholesale/class-b2b-wholesale-module.php',
+    'plugins/suresalez-core/modules/b2b-wholesale/class-b2b-organization.php',
+    'plugins/suresalez-core/modules/b2b-wholesale/class-b2b-pricing.php',
+    'plugins/suresalez-core/modules/b2b-wholesale/class-b2b-checkout.php',
+    'plugins/suresalez-core/modules/b2b-wholesale/class-bulk-order.php',
+    'plugins/suresalez-core/modules/b2b-wholesale/class-rfq-engine.php',
+    'plugins/suresalez-core/modules/b2b-wholesale/assets/css/bulk-order.css',
+    'plugins/suresalez-core/modules/b2b-wholesale/assets/js/bulk-order.js',
+    'plugins/suresalez-core/modules/b2b-wholesale/assets/css/rfq-portal.css',
+    'plugins/suresalez-core/modules/b2b-wholesale/assets/js/rfq-portal.js',
 ];
 
 const rootDir = path.resolve(__dirname, '..');
@@ -275,6 +286,12 @@ const expectedTables = [
     'suresalez_rma_requests',
     'suresalez_rma_items',
     'suresalez_supplier_dropships',
+    // Sprint 07
+    'suresalez_b2b_companies',
+    'suresalez_b2b_users',
+    'suresalez_b2b_pricelists',
+    'suresalez_b2b_quotes',
+    'suresalez_b2b_orders',
 ];
 
 expectedTables.forEach(tbl => {
@@ -334,6 +351,20 @@ assert(coreBootstrapContent.includes('Localization_Module'), 'Core bootstrap ins
 assert(coreBootstrapContent.includes('CRM_Automations_Module'), 'Core bootstrap instantiates CRM_Automations_Module');
 assert(coreBootstrapContent.includes('Omnichannel_AI_Module'), 'Core bootstrap instantiates Omnichannel_AI_Module');
 assert(coreBootstrapContent.includes('Fulfillment_RMA_Module'), 'Core bootstrap instantiates Fulfillment_RMA_Module');
+assert(coreBootstrapContent.includes('B2B_Wholesale_Module'), 'Core bootstrap instantiates B2B_Wholesale_Module');
+
+// Check that B2B Wholesale module loads sub-components
+const b2bModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/b2b-wholesale/class-b2b-wholesale-module.php'), 'utf8');
+assert(b2bModuleContent.includes('B2B_Organization'), 'B2B Wholesale Module loads B2B Organization engine');
+assert(b2bModuleContent.includes('B2B_Pricing'), 'B2B Wholesale Module loads B2B Pricing engine');
+assert(b2bModuleContent.includes('B2B_Checkout'), 'B2B Wholesale Module loads B2B Checkout engine');
+assert(b2bModuleContent.includes('Bulk_Order'), 'B2B Wholesale Module loads Bulk Order engine');
+assert(b2bModuleContent.includes('RFQ_Engine'), 'B2B Wholesale Module loads RFQ Engine');
+
+assert(dbFileContent.includes('seed_b2b_companies'), 'Database seeds sample B2B companies');
+assert(dbFileContent.includes('seed_b2b_users'), 'Database seeds B2B company users');
+assert(dbFileContent.includes('seed_b2b_pricelists'), 'Database seeds wholesale tiered pricelists');
+assert(dbFileContent.includes('seed_b2b_quotes'), 'Database seeds sample RFQ quotes');
 
 // Check that Fulfillment RMA module loads sub-components
 const fulfillmentModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/fulfillment-rma/class-fulfillment-rma-module.php'), 'utf8');

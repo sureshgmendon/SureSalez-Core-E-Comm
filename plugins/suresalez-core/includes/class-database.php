@@ -22,7 +22,7 @@ class Database {
     /**
      * Database version.
      */
-    public const DB_VERSION = '1.5.0';
+    public const DB_VERSION = '1.6.0';
 
     /**
      * Option key storing current schema version.
@@ -496,6 +496,100 @@ class Database {
         ) {$charset_collate};";
         dbDelta($sql_supplier_dropships);
 
+        // 26. B2B Corporate Companies Table (Sprint 07)
+        $table_b2b_companies = $wpdb->prefix . 'suresalez_b2b_companies';
+        $sql_b2b_companies = "CREATE TABLE {$table_b2b_companies} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            company_name varchar(191) NOT NULL,
+            company_tax_id varchar(64) NOT NULL,
+            status varchar(30) DEFAULT 'pending' NOT NULL,
+            credit_limit decimal(14,2) DEFAULT 0.00 NOT NULL,
+            payment_terms varchar(30) DEFAULT 'prepaid' NOT NULL,
+            approval_threshold decimal(14,2) DEFAULT 1000.00 NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_tax_id (company_tax_id),
+            KEY idx_status (status)
+        ) {$charset_collate};";
+        dbDelta($sql_b2b_companies);
+
+        // 27. B2B Company Users & Permissions Table (Sprint 07)
+        $table_b2b_users = $wpdb->prefix . 'suresalez_b2b_users';
+        $sql_b2b_users = "CREATE TABLE {$table_b2b_users} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            company_id bigint(20) unsigned NOT NULL,
+            user_id bigint(20) unsigned NOT NULL,
+            role varchar(30) DEFAULT 'purchaser' NOT NULL,
+            spending_limit_per_order decimal(14,2) DEFAULT 0.00 NOT NULL,
+            is_active tinyint(1) DEFAULT 1 NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_company_user (company_id, user_id),
+            KEY idx_user (user_id)
+        ) {$charset_collate};";
+        dbDelta($sql_b2b_users);
+
+        // 28. B2B Tiered Price Lists Table (Sprint 07)
+        $table_b2b_pricelists = $wpdb->prefix . 'suresalez_b2b_pricelists';
+        $sql_b2b_pricelists = "CREATE TABLE {$table_b2b_pricelists} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            name varchar(191) NOT NULL,
+            company_id bigint(20) unsigned DEFAULT 0 NOT NULL,
+            discount_type varchar(30) DEFAULT 'percent_off' NOT NULL,
+            pricing_rules longtext NOT NULL,
+            status varchar(20) DEFAULT 'active' NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_company (company_id),
+            KEY idx_status (status)
+        ) {$charset_collate};";
+        dbDelta($sql_b2b_pricelists);
+
+        // 29. B2B Request For Quote (RFQ) Table (Sprint 07)
+        $table_b2b_quotes = $wpdb->prefix . 'suresalez_b2b_quotes';
+        $sql_b2b_quotes = "CREATE TABLE {$table_b2b_quotes} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            quote_number varchar(64) NOT NULL,
+            company_id bigint(20) unsigned NOT NULL,
+            customer_id bigint(20) unsigned NOT NULL,
+            items longtext NOT NULL,
+            subtotal decimal(14,2) DEFAULT 0.00 NOT NULL,
+            freight_amount decimal(14,2) DEFAULT 0.00 NOT NULL,
+            total_quoted decimal(14,2) DEFAULT 0.00 NOT NULL,
+            status varchar(30) DEFAULT 'submitted' NOT NULL,
+            quote_token varchar(64) NOT NULL,
+            notes text DEFAULT NULL,
+            counter_notes text DEFAULT NULL,
+            expiration_date datetime DEFAULT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_quote_num (quote_number),
+            UNIQUE KEY uk_quote_token (quote_token),
+            KEY idx_company_status (company_id, status)
+        ) {$charset_collate};";
+        dbDelta($sql_b2b_quotes);
+
+        // 30. B2B Orders & Corporate PO Tracking Table (Sprint 07)
+        $table_b2b_orders = $wpdb->prefix . 'suresalez_b2b_orders';
+        $sql_b2b_orders = "CREATE TABLE {$table_b2b_orders} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            order_id bigint(20) unsigned NOT NULL,
+            company_id bigint(20) unsigned NOT NULL,
+            po_number varchar(64) NOT NULL,
+            payment_terms varchar(30) DEFAULT 'net_30' NOT NULL,
+            due_date date DEFAULT NULL,
+            approval_status varchar(30) DEFAULT 'approved' NOT NULL,
+            approved_by_user_id bigint(20) unsigned DEFAULT 0 NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_order (order_id),
+            KEY idx_company_approval (company_id, approval_status),
+            KEY idx_po (po_number)
+        ) {$charset_collate};";
+        dbDelta($sql_b2b_orders);
+
         update_option(self::DB_VERSION_KEY, self::DB_VERSION);
 
         // Seed 10 warehouse fulfillment locations
@@ -521,6 +615,12 @@ class Database {
         self::seed_fulfillments();
         self::seed_rma_data();
         self::seed_supplier_dropships();
+
+        // Seed B2B corporate accounts, users, pricelists & quotes (Sprint 07)
+        self::seed_b2b_companies();
+        self::seed_b2b_users();
+        self::seed_b2b_pricelists();
+        self::seed_b2b_quotes();
     }
 
     /**
@@ -1462,6 +1562,250 @@ class Database {
                 $table,
                 $sup,
                 ['%s', '%s', '%s', '%s', '%d', '%s', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed sample B2B Corporate Accounts.
+     *
+     * @return void
+     */
+    public static function seed_b2b_companies(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_b2b_companies';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $companies = [
+            [
+                'company_name'       => 'Apex Chronometry Distributors Ltd',
+                'company_tax_id'     => 'US-EIN-123456789',
+                'status'             => 'approved',
+                'credit_limit'       => 50000.00,
+                'payment_terms'      => 'net_30',
+                'approval_threshold' => 5000.00,
+                'created_at'         => current_time('mysql'),
+            ],
+            [
+                'company_name'       => 'Harrods Luxury Watch Boutiques',
+                'company_tax_id'     => 'GB-VAT-998877665',
+                'status'             => 'approved',
+                'credit_limit'       => 120000.00,
+                'payment_terms'      => 'net_60',
+                'approval_threshold' => 10000.00,
+                'created_at'         => current_time('mysql'),
+            ],
+            [
+                'company_name'       => 'Pacific Horology Network',
+                'company_tax_id'     => 'SG-UEN-20261199X',
+                'status'             => 'pending',
+                'credit_limit'       => 0.00,
+                'payment_terms'      => 'prepaid',
+                'approval_threshold' => 2500.00,
+                'created_at'         => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($companies as $comp) {
+            $wpdb->insert(
+                $table,
+                $comp,
+                ['%s', '%s', '%s', '%f', '%s', '%f', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed B2B Company User Seats and Permissions.
+     *
+     * @return void
+     */
+    public static function seed_b2b_users(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_b2b_users';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $users = [
+            [
+                'company_id'               => 1,
+                'user_id'                  => 10,
+                'role'                     => 'admin',
+                'spending_limit_per_order' => 0.00,
+                'is_active'                => 1,
+                'created_at'               => current_time('mysql'),
+            ],
+            [
+                'company_id'               => 1,
+                'user_id'                  => 11,
+                'role'                     => 'purchaser',
+                'spending_limit_per_order' => 2500.00,
+                'is_active'                => 1,
+                'created_at'               => current_time('mysql'),
+            ],
+            [
+                'company_id'               => 2,
+                'user_id'                  => 12,
+                'role'                     => 'admin',
+                'spending_limit_per_order' => 0.00,
+                'is_active'                => 1,
+                'created_at'               => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($users as $u) {
+            $wpdb->insert(
+                $table,
+                $u,
+                ['%d', '%d', '%s', '%f', '%d', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed Wholesale Tiered Price Lists.
+     *
+     * @return void
+     */
+    public static function seed_b2b_pricelists(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_b2b_pricelists';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $pricelists = [
+            [
+                'name'          => 'Authorized Global Wholesale Tier 1',
+                'company_id'    => 0,
+                'discount_type' => 'percent_off',
+                'pricing_rules' => wp_json_encode([
+                    'LUM-CHRONO-01' => [
+                        'msrp'   => 899.00,
+                        'moq'    => 2,
+                        'tiers'  => [
+                            ['min_qty' => 1, 'max_qty' => 9, 'price' => 719.20, 'discount_pct' => 20],
+                            ['min_qty' => 10, 'max_qty' => 49, 'price' => 629.30, 'discount_pct' => 30],
+                            ['min_qty' => 50, 'max_qty' => 9999, 'price' => 539.40, 'discount_pct' => 40],
+                        ],
+                    ],
+                    'LUM-STRAP-BLK' => [
+                        'msrp'   => 95.00,
+                        'moq'    => 5,
+                        'tiers'  => [
+                            ['min_qty' => 1, 'max_qty' => 19, 'price' => 76.00, 'discount_pct' => 20],
+                            ['min_qty' => 20, 'max_qty' => 9999, 'price' => 57.00, 'discount_pct' => 40],
+                        ],
+                    ],
+                    'LUM-TOOL-01'   => [
+                        'msrp'   => 45.00,
+                        'moq'    => 10,
+                        'tiers'  => [
+                            ['min_qty' => 1, 'max_qty' => 49, 'price' => 36.00, 'discount_pct' => 20],
+                            ['min_qty' => 50, 'max_qty' => 9999, 'price' => 27.00, 'discount_pct' => 40],
+                        ],
+                    ],
+                ]),
+                'status'        => 'active',
+                'created_at'    => current_time('mysql'),
+            ],
+            [
+                'name'          => 'Harrods Knightsbridge Exclusive Contract',
+                'company_id'    => 2,
+                'discount_type' => 'fixed_price',
+                'pricing_rules' => wp_json_encode([
+                    'LUM-CHRONO-01' => [
+                        'msrp'   => 899.00,
+                        'moq'    => 10,
+                        'tiers'  => [
+                            ['min_qty' => 10, 'max_qty' => 9999, 'price' => 495.00, 'discount_pct' => 45],
+                        ],
+                    ],
+                ]),
+                'status'        => 'active',
+                'created_at'    => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($pricelists as $pl) {
+            $wpdb->insert(
+                $table,
+                $pl,
+                ['%s', '%d', '%s', '%s', '%s', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed Sample B2B Quotes (RFQs).
+     *
+     * @return void
+     */
+    public static function seed_b2b_quotes(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_b2b_quotes';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $quotes = [
+            [
+                'quote_number'    => 'RFQ-20261014-1001',
+                'company_id'      => 1,
+                'customer_id'     => 11,
+                'items'           => wp_json_encode([
+                    ['sku' => 'LUM-CHRONO-01', 'title' => 'Luminor Chrono Automatic', 'qty' => 25, 'requested_price' => 550.00, 'quoted_price' => 580.00],
+                    ['sku' => 'LUM-STRAP-BLK', 'title' => 'Horween Leather Strap 22mm', 'qty' => 50, 'requested_price' => 45.00, 'quoted_price' => 50.00],
+                ]),
+                'subtotal'        => 17000.00,
+                'freight_amount'  => 350.00,
+                'total_quoted'    => 17350.00,
+                'status'          => 'counter_offered',
+                'quote_token'     => 'rfq_tok_99882211',
+                'notes'           => 'Requesting 25 chronographs and 50 straps for autumn showcase.',
+                'counter_notes'   => 'Offered $580/unit on chronos with expedited air courier freight included.',
+                'expiration_date' => date('Y-m-d H:i:s', strtotime('+14 days')),
+                'created_at'      => current_time('mysql'),
+            ],
+            [
+                'quote_number'    => 'RFQ-20261014-1002',
+                'company_id'      => 2,
+                'customer_id'     => 12,
+                'items'           => wp_json_encode([
+                    ['sku' => 'LUM-CHRONO-01', 'title' => 'Luminor Chrono Automatic', 'qty' => 100, 'requested_price' => 500.00, 'quoted_price' => 520.00],
+                ]),
+                'subtotal'        => 52000.00,
+                'freight_amount'  => 0.00,
+                'total_quoted'    => 52000.00,
+                'status'          => 'submitted',
+                'quote_token'     => 'rfq_tok_77441133',
+                'notes'           => 'Bulk stocking order for Knightsbridge flagship boutique.',
+                'counter_notes'   => '',
+                'expiration_date' => date('Y-m-d H:i:s', strtotime('+30 days')),
+                'created_at'      => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($quotes as $q) {
+            $wpdb->insert(
+                $table,
+                $q,
+                ['%s', '%d', '%d', '%s', '%f', '%f', '%f', '%s', '%s', '%s', '%s', '%s', '%s']
             );
         }
     }

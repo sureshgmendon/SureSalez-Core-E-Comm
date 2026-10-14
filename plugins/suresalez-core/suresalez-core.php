@@ -116,7 +116,11 @@ final class Core {
         require_once SURESALEZ_PATH . 'modules/fulfillment-rma/class-fulfillment-rma-module.php';
         $manager->register_module(new \SureSalez\Modules\FulfillmentRMA\Fulfillment_RMA_Module());
 
-        // Sprint 07-10 module placeholders (scaffolded for architectural completion)
+        // Sprint 07 Modules
+        require_once SURESALEZ_PATH . 'modules/b2b-wholesale/class-b2b-wholesale-module.php';
+        $manager->register_module(new \SureSalez\Modules\B2BWholesale\B2B_Wholesale_Module());
+
+        // Sprint 08-10 module placeholders (scaffolded for architectural completion)
         $this->register_roadmap_modules($manager);
     }
 
@@ -128,12 +132,6 @@ final class Core {
      */
     private function register_roadmap_modules(Module_Manager $manager): void {
         $roadmap_defs = [
-            'b2b-rfq' => [
-                'name'     => 'B2B Wholesale Accounts & RFQ Quote Engine',
-                'desc'     => 'Corporate company hierarchies, tiered pricing, Net-30 terms, and Request-For-Quote negotiation engine.',
-                'category' => 'B2B Wholesale',
-                'default'  => false,
-            ],
             'pos-marketplace-subscriptions' => [
                 'name'     => 'In-Store POS, Marketplace & Subscriptions',
                 'desc'     => 'Progressive Web App retail POS, multi-vendor commission payouts, and recurring subscription billing.',

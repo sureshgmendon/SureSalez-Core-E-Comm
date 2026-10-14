@@ -8,10 +8,16 @@
   <!-- Injected CSS from modules and theme -->
   <link rel="stylesheet" href="../themes/suresalez-theme/style.css">
   <link rel="stylesheet" href="../plugins/suresalez-core/admin/assets/css/admin.css">
+  <!-- Sprint 01 CSS -->
   <link rel="stylesheet" href="../plugins/suresalez-core/modules/catalog-pim/assets/css/catalog-pim.css">
   <link rel="stylesheet" href="../plugins/suresalez-core/modules/multi-location-inventory/assets/css/multi-location-inventory.css">
   <link rel="stylesheet" href="../plugins/suresalez-core/modules/visual-swatches/assets/css/visual-swatches.css">
   <link rel="stylesheet" href="../plugins/suresalez-core/modules/reviews-qa/assets/css/reviews-qa.css">
+  <!-- Sprint 02 CSS -->
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/checkout-engine/assets/css/cart-drawer.css">
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/checkout-engine/assets/css/checkout.css">
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/checkout-engine/assets/css/upsell-modal.css">
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/wallet/assets/css/wallet.css">
 
   <style>
     body {
@@ -31,6 +37,8 @@
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      flex-wrap: wrap;
+      gap: 16px;
     }
     .harness-nav h1 {
       font-size: 18px;
@@ -51,6 +59,7 @@
     .tab-pills {
       display: flex;
       gap: 8px;
+      flex-wrap: wrap;
     }
     .tab-pill-btn {
       background: rgba(255,255,255,0.1);
@@ -120,6 +129,25 @@
       overflow-x: auto;
       max-height: 500px;
     }
+    .action-toolbar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      align-items: center;
+    }
+    .btn-test-action {
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn-test-action:hover {
+      background: #1d4ed8;
+    }
   </style>
 </head>
 <body>
@@ -127,12 +155,16 @@
   <header class="harness-nav">
     <h1>
       <span>⚡ SureSalez E-Commerce Verification Harness</span>
-      <span class="harness-badge">Sprint 01 Verified</span>
+      <span class="harness-badge">Sprint 01 + 02 Live</span>
     </h1>
     <div class="tab-pills">
-      <button class="tab-pill-btn active" data-target="view-product">Single Product Template View</button>
-      <button class="tab-pill-btn" data-target="view-admin">Module Manager Admin View</button>
-      <button class="tab-pill-btn" data-target="view-schema">Schema.org JSON-LD Inspector</button>
+      <button class="tab-pill-btn active" data-target="view-product">Product & Buy Box</button>
+      <button class="tab-pill-btn" data-target="view-cart">Cart Drawer Test</button>
+      <button class="tab-pill-btn" data-target="view-checkout">Multi-Step Checkout</button>
+      <button class="tab-pill-btn" data-target="view-wallet">Store Credit Wallet</button>
+      <button class="tab-pill-btn" data-target="view-upsell">1-Click Upsell Demo</button>
+      <button class="tab-pill-btn" data-target="view-admin">Module Manager Admin</button>
+      <button class="tab-pill-btn" data-target="view-schema">Schema.org JSON-LD</button>
     </div>
   </header>
 
@@ -143,7 +175,7 @@
       <div class="test-status-banner">
         <span>✅</span>
         <div>
-          <strong>Live Hydration Active:</strong> PIM Metafields, 360 Spin DAM Viewer, 10-Hub Multi-Warehouse Inventory, Visual Variation Swatches, and Verified Buyer Reviews have mounted cleanly to theme block slots.
+          <strong>Sprint 01 + 02 Integrated:</strong> PIM Metafields, 360 Spin DAM Viewer, 10-Hub Multi-Warehouse Inventory, Visual Swatches, Verified Buyer Reviews, and 1-Click Cart Drawer integration are mounted to semantic theme slots.
         </div>
       </div>
 
@@ -177,9 +209,10 @@
             <!-- 10-Hub Inventory Mount -->
             <div id="suresalez-inventory-locations-mount" class="suresalez-inventory-mount"></div>
 
+            <!-- Add to Cart (Triggers Slide-Out Drawer) -->
             <div style="margin: 20px 0;">
-              <button type="button" style="width:100%; background:#0f172a; color:#ffffff; font-weight:700; padding:14px; border-radius:8px; border:none; font-size:15px; cursor:pointer;">
-                Add to Cart — $899.00
+              <button type="button" class="suresalez-btn-checkout" data-suresalez-action="add-to-cart" style="width:100%; font-size:15px; padding:14px; background:#0f172a; color:#fff; border:none; border-radius:8px; cursor:pointer;">
+                🛒 Add to Cart & Open Drawer ($899.00)
               </button>
             </div>
 
@@ -193,20 +226,84 @@
       </div>
     </div>
 
-    <!-- TAB 2: ADMIN MODULE MANAGER VIEW -->
+    <!-- TAB 2: CART DRAWER TEST VIEW -->
+    <div id="view-cart" class="harness-tab-pane" style="display:none;">
+      <div class="test-status-banner">
+        <span>⚡</span>
+        <div>
+          <strong>Slide-Out Cart Drawer Controls:</strong> Click the button below to slide out the AJAX cart drawer. Test quantity adjustments (+/-), complementary cross-sell add-ons (gift wrap, polishing cloth), free-shipping meter calculation, and debounced order notes.
+        </div>
+      </div>
+      <div class="product-view-card">
+        <div class="action-toolbar">
+          <button type="button" class="btn-test-action suresalez-cart-trigger">
+            🛒 Slide Out Cart Drawer (1 item)
+          </button>
+          <span style="font-size:13px; color:#64748b;">Or press the floating cart trigger anytime.</span>
+        </div>
+        <p style="font-size:14px; color:#475569; line-height:1.6;">
+          The SureSalez Cart Drawer features a dynamic threshold calculating remaining balance against a $150.00 free delivery mark. It slides smoothly from the right with a backdrop blur and handles full client-side state recalculations.
+        </p>
+      </div>
+    </div>
+
+    <!-- TAB 3: CHECKOUT PAGE VIEW -->
+    <div id="view-checkout" class="harness-tab-pane" style="display:none;">
+      <div class="test-status-banner">
+        <span>🔒</span>
+        <div>
+          <strong>Express Multi-Step Checkout:</strong> Test the 3-step checkout flow (1. Contact Information &rarr; 2. Shipping & Regional Hubs &rarr; 3. Payment & Store Credit). Field Customizer has suppressed redundant fields (Company, Address line 2) to eliminate mobile friction.
+        </div>
+      </div>
+      <div class="product-view-card">
+        <!-- Mount Anchor for Checkout Engine -->
+        <div id="suresalez-checkout-mount"></div>
+      </div>
+    </div>
+
+    <!-- TAB 4: STORE CREDIT WALLET VIEW -->
+    <div id="view-wallet" class="harness-tab-pane" style="display:none;">
+      <div class="test-status-banner">
+        <span>💳</span>
+        <div>
+          <strong>Customer Store Credit Wallet:</strong> Displays available balance, VIP cashback earnings, and an immutable transaction ledger with credit/debit audit trails.
+        </div>
+      </div>
+      <div class="product-view-card">
+        <!-- Mount Anchor for Wallet Module -->
+        <div id="suresalez-wallet-mount"></div>
+      </div>
+    </div>
+
+    <!-- TAB 5: 1-CLICK POST-PURCHASE UPSELL MODAL DEMO -->
+    <div id="view-upsell" class="harness-tab-pane" style="display:none;">
+      <div class="test-status-banner">
+        <span>🎯</span>
+        <div>
+          <strong>1-Click Post-Purchase Upsell:</strong> Intercepts order completion prior to the thank-you page. Displays an urgent countdown timer offer (35% off Milanese Loop) with one-click acceptance that appends directly to the master order without forcing re-entry of card credentials.
+        </div>
+      </div>
+      <div class="product-view-card">
+        <button type="button" class="btn-test-action" id="trigger-upsell-manual" style="background:#10b981;">
+          ⚡ Simulate Order Placement & Trigger Post-Purchase Upsell
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB 6: ADMIN MODULE MANAGER VIEW -->
     <div id="view-admin" class="harness-tab-pane" style="display:none;">
       <div class="suresalez-admin-wrap" style="margin:0;">
         <header class="suresalez-header-bar">
           <div class="suresalez-brand">
             <span class="brand-icon">⚙</span>
             <div>
-              <h1 style="color:#ffffff;">SureSalez Core <span class="badge-version">v1.0.0</span></h1>
+              <h1 style="color:#ffffff;">SureSalez Core <span class="badge-version">v1.1.0</span></h1>
               <p class="subtitle">Decoupled Modular Enterprise E-Commerce Engine</p>
             </div>
           </div>
           <div class="suresalez-status-pill">
             <span class="status-dot green"></span>
-            <span>4 of 13 Modules Active</span>
+            <span>6 of 13 Modules Active</span>
           </div>
         </header>
 
@@ -218,7 +315,42 @@
         </div>
 
         <div class="suresalez-module-category">
-          <h2>Catalog & Merchandising</h2>
+          <h2>Checkout &amp; Cart (Sprint 02)</h2>
+          <div class="suresalez-module-grid">
+            <div class="suresalez-module-card active">
+              <div class="card-header">
+                <h3>Checkout Extensibility, Cart Drawer & 1-Click Upsells</h3>
+                <label class="suresalez-switch">
+                  <input type="checkbox" checked class="suresalez-toggle-input" data-module-id="checkout-engine">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <p class="module-desc">AJAX slide-out cart drawer with free shipping progress, single-page/multi-step checkout with field customizer, 1-click post-purchase upsells, and abandoned cart recovery.</p>
+              <div class="card-footer">
+                <span class="module-id-badge"><code>checkout-engine</code></span>
+                <span class="runtime-badge loaded">Active & Enqueued</span>
+              </div>
+            </div>
+
+            <div class="suresalez-module-card active">
+              <div class="card-header">
+                <h3>Store Credit Wallet & Cashback</h3>
+                <label class="suresalez-switch">
+                  <input type="checkbox" checked class="suresalez-toggle-input" data-module-id="wallet">
+                  <span class="slider round"></span>
+                </label>
+              </div>
+              <p class="module-desc">Digital customer wallet, transaction history ledger, and 1-click partial or full payment application at checkout.</p>
+              <div class="card-footer">
+                <span class="module-id-badge"><code>wallet</code></span>
+                <span class="runtime-badge loaded">Active & Enqueued</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="suresalez-module-category">
+          <h2>Catalog &amp; Merchandising (Sprint 01)</h2>
           <div class="suresalez-module-grid">
             <div class="suresalez-module-card active">
               <div class="card-header">
@@ -253,7 +385,7 @@
         </div>
 
         <div class="suresalez-module-category">
-          <h2>Inventory & Fulfillment</h2>
+          <h2>Inventory &amp; Fulfillment (Sprint 01)</h2>
           <div class="suresalez-module-grid">
             <div class="suresalez-module-card active">
               <div class="card-header">
@@ -273,7 +405,7 @@
         </div>
 
         <div class="suresalez-module-category">
-          <h2>Trust & Social Proof</h2>
+          <h2>Trust &amp; Social Proof (Sprint 01)</h2>
           <div class="suresalez-module-grid">
             <div class="suresalez-module-card active">
               <div class="card-header">
@@ -294,7 +426,7 @@
       </div>
     </div>
 
-    <!-- TAB 3: SCHEMA JSON-LD INSPECTOR -->
+    <!-- TAB 7: SCHEMA JSON-LD INSPECTOR -->
     <div id="view-schema" class="harness-tab-pane" style="display:none;">
       <h2 style="font-size:20px; font-weight:700; margin:0 0 12px 0;">Automated Schema.org Structured Data Output</h2>
       <p style="color:#64748b; font-size:14px; margin-bottom:16px;">Verified JSON-LD payload automatically injected into the HTML document &lt;head&gt; for Google Rich Results:</p>
@@ -302,6 +434,10 @@
     </div>
 
   </main>
+
+  <!-- Global Anchors -->
+  <div id="suresalez-cart-drawer-mount"></div>
+  <div id="suresalez-post-purchase-modal-mount"></div>
 
   <!-- Seed Mock Data for Component Hydration -->
   <script>
@@ -402,18 +538,6 @@
           is_verified_buyer: 1,
           helpful_count: 67,
           created_at: "2026-10-10 14:32:00"
-        },
-        {
-          id: 2,
-          author_name: "Claire de Montfort",
-          rating: 5,
-          title: "Arrived in Frankfurt in less than 24 hours",
-          content: "Ordered from the European distribution center. Delivered with comprehensive certificates of origin and warranty cards. Outstanding purchase experience.",
-          pros: "Fast EU fulfillment, beautiful dial aesthetics, light on the wrist",
-          cons: "None",
-          is_verified_buyer: 1,
-          helpful_count: 31,
-          created_at: "2026-10-08 09:15:00"
         }
       ],
       questions: [
@@ -426,11 +550,74 @@
               id: 101,
               author_name: "SureSalez Product Engineering",
               is_merchant: 1,
-              answer: "Yes, the lug width is an industry-standard 22mm with quick-release spring bars. You can effortlessly interchange any standard 22mm strap or bracelet without proprietary tools."
+              answer: "Yes, the lug width is an industry-standard 22mm with quick-release spring bars."
             }
           ]
         }
       ]
+    };
+
+    // Sprint 02 Data
+    window.SureSalezWalletData = {
+      userId: 1,
+      balance: 75.00,
+      currency: "USD",
+      symbol: "$",
+      transactions: [
+        {
+          id: 101,
+          type: "credit",
+          amount: 100.00,
+          currency: "USD",
+          balance_after: 100.00,
+          reference_type: "cashback",
+          reference_id: "ORD-98210",
+          notes: "VIP Tier 10% Purchase Cashback Reward",
+          created_at: "2026-09-30 11:20:00"
+        },
+        {
+          id: 102,
+          type: "debit",
+          amount: 25.00,
+          currency: "USD",
+          balance_after: 75.00,
+          reference_type: "checkout",
+          reference_id: "ORD-98440",
+          notes: "Store Credit Applied at Checkout",
+          created_at: "2026-10-11 16:45:00"
+        }
+      ]
+    };
+
+    window.SureSalezCheckoutData = {
+      cart: {
+        items: [
+          {
+            id: 101,
+            title: "Apex Pro Chronograph — Titanium Edition",
+            variant: "Midnight Slate / Titanium Link",
+            price: 899.00,
+            quantity: 1,
+            image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=300&q=80"
+          }
+        ],
+        addons: { gift_wrap: false, polishing_cloth: false },
+        order_notes: "",
+        subtotal: 899.00,
+        addon_total: 0.00,
+        total: 899.00,
+        shipping_threshold: 150.00,
+        shipping_progress: 100,
+        shipping_remaining: 0,
+        free_shipping: true,
+        item_count: 1
+      },
+      config: {
+        layout: "multi_step",
+        suppress_company: true,
+        suppress_address_2: true,
+        enable_express_pay: true
+      }
     };
 
     // Tab Navigation
@@ -440,7 +627,8 @@
         document.querySelectorAll('.harness-tab-pane').forEach(p => p.style.display = 'none');
         btn.classList.add('active');
         const target = btn.getAttribute('data-target');
-        document.getElementById(target).style.display = 'block';
+        const pane = document.getElementById(target);
+        if (pane) pane.style.display = 'block';
       });
     });
 
@@ -456,25 +644,30 @@
         "@type": "AggregateRating",
         "ratingValue": "4.9",
         "reviewCount": "48"
-      },
-      "review": [
-        {
-          "@type": "Review",
-          "reviewRating": { "@type": "Rating", "ratingValue": "5" },
-          "author": { "@type": "Person", "name": "Dr. Nicholas Thorne" },
-          "headline": "Precision engineering at its highest caliber",
-          "reviewBody": "We outfitted our extreme environmental exploration team with this chronograph..."
-        }
-      ]
+      }
     };
     document.getElementById('schema-payload-display').textContent = JSON.stringify(schemaExample, null, 2);
+
+    // Manual Upsell Trigger for Demo Tab
+    const manualUpsellBtn = document.getElementById('trigger-upsell-manual');
+    if (manualUpsellBtn) {
+      manualUpsellBtn.addEventListener('click', () => {
+        document.dispatchEvent(new CustomEvent('suresalez:order_completed', {
+          detail: { order_id: 98452, total: 899.00 }
+        }));
+      });
+    }
   </script>
 
-  <!-- Load Module Scripts -->
+  <!-- Load Module Scripts (Sprint 01 + Sprint 02) -->
   <script src="../plugins/suresalez-core/modules/catalog-pim/assets/js/catalog-pim.js"></script>
   <script src="../plugins/suresalez-core/modules/multi-location-inventory/assets/js/multi-location-inventory.js"></script>
   <script src="../plugins/suresalez-core/modules/visual-swatches/assets/js/visual-swatches.js"></script>
   <script src="../plugins/suresalez-core/modules/reviews-qa/assets/js/reviews-qa.js"></script>
+  <script src="../plugins/suresalez-core/modules/wallet/assets/js/wallet.js"></script>
+  <script src="../plugins/suresalez-core/modules/checkout-engine/assets/js/cart-drawer.js"></script>
+  <script src="../plugins/suresalez-core/modules/checkout-engine/assets/js/checkout.js"></script>
+  <script src="../plugins/suresalez-core/modules/checkout-engine/assets/js/upsell-modal.js"></script>
 
 </body>
 </html>

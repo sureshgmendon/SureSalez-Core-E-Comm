@@ -1,0 +1,162 @@
+/**
+ * SureSalez Store Credit Wallet Stylesheet
+ */
+
+:root {
+    --ss-wallet-primary: #0f172a;
+    --ss-wallet-accent: #2563eb;
+    --ss-wallet-success: #10b981;
+    --ss-wallet-bg: #f8fafc;
+    --ss-wallet-border: #e2e8f0;
+}
+
+.suresalez-wallet-card {
+    background: #ffffff;
+    border: 1px solid var(--ss-wallet-border);
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    margin-bottom: 24px;
+}
+
+.suresalez-wallet-hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: #ffffff;
+    padding: 24px 28px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+}
+
+.suresalez-wallet-balance-wrap .label {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #94a3b8;
+    margin-bottom: 4px;
+}
+
+.suresalez-wallet-balance-wrap .balance-amount {
+    font-size: 32px;
+    font-weight: 800;
+    color: #ffffff;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.suresalez-wallet-balance-wrap .currency-code {
+    font-size: 14px;
+    color: #38bdf8;
+    font-weight: 600;
+}
+
+.suresalez-wallet-badge {
+    background: rgba(16, 185, 129, 0.2);
+    border: 1px solid rgba(16, 185, 129, 0.4);
+    color: #34d399;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* Transactions Table */
+.suresalez-wallet-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+}
+
+.suresalez-wallet-table th {
+    text-align: left;
+    padding: 12px 14px;
+    color: #64748b;
+    font-weight: 600;
+    border-bottom: 2px solid var(--ss-wallet-border);
+}
+
+.suresalez-wallet-table td {
+    padding: 14px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #0f172a;
+}
+
+.suresalez-type-pill {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.suresalez-type-pill.credit {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.suresalez-type-pill.debit {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+/* Checkout Wallet Application Widget */
+.suresalez-checkout-wallet-box {
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.suresalez-checkout-wallet-box.applied {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+}
+
+.suresalez-wallet-info h4 {
+    margin: 0 0 4px 0;
+    font-size: 14px;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.suresalez-wallet-info p {
+    margin: 0;
+    font-size: 12.5px;
+    color: #475569;
+}
+
+.suresalez-wallet-btn {
+    background: #10b981;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.suresalez-wallet-btn:hover {
+    background: #059669;
+}
+
+.suresalez-wallet-btn.remove {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.suresalez-wallet-btn.remove:hover {
+    background: #cbd5e1;
+    color: #0f172a;
+}

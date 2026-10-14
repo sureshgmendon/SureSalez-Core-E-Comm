@@ -93,7 +93,14 @@ final class Core {
         $manager->register_module(new \SureSalez\Modules\VisualSwatches\Visual_Swatches_Module());
         $manager->register_module(new \SureSalez\Modules\ReviewsQA\Reviews_QA_Module());
 
-        // Sprint 02-10 module placeholders (scaffolded for architectural completion)
+        // Sprint 02 Modules
+        require_once SURESALEZ_PATH . 'modules/checkout-engine/class-checkout-engine-module.php';
+        require_once SURESALEZ_PATH . 'modules/wallet/class-wallet-module.php';
+
+        $manager->register_module(new \SureSalez\Modules\CheckoutEngine\Checkout_Engine_Module());
+        $manager->register_module(new \SureSalez\Modules\Wallet\Wallet_Module());
+
+        // Sprint 03-10 module placeholders (scaffolded for architectural completion)
         $this->register_roadmap_modules($manager);
     }
 
@@ -105,12 +112,6 @@ final class Core {
      */
     private function register_roadmap_modules(Module_Manager $manager): void {
         $roadmap_defs = [
-            'checkout-upsell' => [
-                'name'     => 'Checkout Extensibility & 1-Click Upsells',
-                'desc'     => 'Friction-free checkout, post-purchase 1-click upsells, cart drawer, and customer wallet.',
-                'category' => 'Checkout & Cart',
-                'default'  => false,
-            ],
             'localization-compliance' => [
                 'name'     => 'Global Multi-Currency & Tax Compliance',
                 'desc'     => 'Real-time FX rates, EU VAT reverse charge, India GST, US sales tax, and landed cost duty estimation.',

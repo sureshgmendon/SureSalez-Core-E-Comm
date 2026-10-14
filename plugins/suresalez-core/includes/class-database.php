@@ -22,7 +22,7 @@ class Database {
     /**
      * Database version.
      */
-    public const DB_VERSION = '1.0.0';
+    public const DB_VERSION = '1.1.0';
 
     /**
      * Option key storing current schema version.
@@ -158,10 +158,75 @@ class Database {
         ) {$charset_collate};";
         dbDelta($sql_answers);
 
+        // 7. Store Credit Wallet Transactions Ledger Table (Sprint 02)
+        $table_wallet = $wpdb->prefix . 'suresalez_wallet_transactions';
+        $sql_wallet = "CREATE TABLE {$table_wallet} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            user_id bigint(20) unsigned NOT NULL,
+            type varchar(20) NOT NULL,
+            amount decimal(10,2) NOT NULL,
+            currency varchar(3) DEFAULT 'USD' NOT NULL,
+            balance_after decimal(10,2) NOT NULL,
+            reference_type varchar(50) DEFAULT 'manual' NOT NULL,
+            reference_id varchar(100) DEFAULT '' NOT NULL,
+            notes varchar(255) DEFAULT '' NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_user_id (user_id),
+            KEY idx_type (type),
+            KEY idx_reference (reference_type, reference_id)
+        ) {$charset_collate};";
+        dbDelta($sql_wallet);
+
+        // 8. Abandoned Checkouts & Recovery Table (Sprint 02)
+        $table_abandoned = $wpdb->prefix . 'suresalez_abandoned_checkouts';
+        $sql_abandoned = "CREATE TABLE {$table_abandoned} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            user_id bigint(20) unsigned DEFAULT 0 NOT NULL,
+            cart_token varchar(64) NOT NULL,
+            cart_contents longtext NOT NULL,
+            customer_email varchar(100) DEFAULT '' NOT NULL,
+            customer_phone varchar(30) DEFAULT '' NOT NULL,
+            cart_total decimal(10,2) DEFAULT 0.00 NOT NULL,
+            currency varchar(3) DEFAULT 'USD' NOT NULL,
+            status varchar(30) DEFAULT 'abandoned' NOT NULL,
+            recovery_token varchar(64) NOT NULL,
+            reminder_count tinyint(1) DEFAULT 0 NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_cart_token (cart_token),
+            KEY idx_recovery_token (recovery_token),
+            KEY idx_status_created (status, created_at),
+            KEY idx_customer_email (customer_email)
+        ) {$charset_collate};";
+        dbDelta($sql_abandoned);
+
+        // 9. Post-Purchase 1-Click Upsell Offers Table (Sprint 02)
+        $table_offers = $wpdb->prefix . 'suresalez_post_purchase_offers';
+        $sql_offers = "CREATE TABLE {$table_offers} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            title varchar(191) NOT NULL,
+            trigger_product_ids text NOT NULL,
+            offer_product_id bigint(20) unsigned NOT NULL,
+            discount_type varchar(20) DEFAULT 'percentage' NOT NULL,
+            discount_value decimal(10,2) NOT NULL,
+            urgency_timer_seconds int(11) DEFAULT 300 NOT NULL,
+            status varchar(20) DEFAULT 'active' NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_status (status),
+            KEY idx_offer_product (offer_product_id)
+        ) {$charset_collate};";
+        dbDelta($sql_offers);
+
         update_option(self::DB_VERSION_KEY, self::DB_VERSION);
 
         // Seed 10 warehouse fulfillment locations
         self::seed_inventory_locations();
+
+        // Seed post-purchase offers
+        self::seed_post_purchase_offers();
     }
 
     /**
@@ -299,6 +364,53 @@ class Database {
                     'created_at'    => current_time('mysql'),
                 ],
                 ['%s', '%s', '%s', '%s', '%s', '%s', '%s', '%d', '%d', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed high-converting 1-Click Post-Purchase Upsell Offers.
+     *
+     * @return void
+     */
+    public static function seed_post_purchase_offers(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_post_purchase_offers';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $offers = [
+            [
+                'title'                 => 'Exclusive 35% Off: Grade 5 Titanium Milanese Deployment Loop',
+                'trigger_product_ids'   => json_encode([101, 102, 103]),
+                'offer_product_id'      => 201,
+                'discount_type'         => 'percentage',
+                'discount_value'        => 35.00,
+                'urgency_timer_seconds' => 300,
+                'status'                => 'active',
+                'created_at'            => current_time('mysql'),
+            ],
+            [
+                'title'                 => 'Add Precision Ultrasonic Polishing & Microfiber Care Kit for $29 (Save 40%)',
+                'trigger_product_ids'   => json_encode([101, 102, 104]),
+                'offer_product_id'      => 202,
+                'discount_type'         => 'fixed',
+                'discount_value'        => 20.00,
+                'urgency_timer_seconds' => 180,
+                'status'                => 'active',
+                'created_at'            => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($offers as $offer) {
+            $wpdb->insert(
+                $table,
+                $offer,
+                ['%s', '%s', '%d', '%s', '%f', '%d', '%s', '%s']
             );
         }
     }

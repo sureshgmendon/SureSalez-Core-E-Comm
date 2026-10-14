@@ -1,8 +1,8 @@
 ---
 title: "Sprint 02: Checkout Extensibility, 1-Click Upsells, Cart Drawer & Wallet"
 sprint: 2
-status: "planned"
-tags: ["checkout", "upsells", "cart", "wallet"]
+status: "active"
+tags: ["checkout", "upsells", "cart", "wallet", "recovery", "cron"]
 ---
 
 # Sprint 02: Checkout Extensibility, 1-Click Upsells, Cart Drawer & Wallet

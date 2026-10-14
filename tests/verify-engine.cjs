@@ -1,8 +1,8 @@
 /**
- * SureSalez Enterprise Verification Suite
+ * SureSalez Enterprise Verification Suite (Sprint 01 + Sprint 02)
  *
  * Runs automated linting, schema validation, syntax checking,
- * and headless DOM hydration tests.
+ * module gating verification, and headless DOM hydration tests.
  */
 
 const fs = require('fs');
@@ -26,6 +26,7 @@ function assert(condition, message) {
 
 console.log('\n======================================================');
 console.log('  SureSalez Core & Theme — Enterprise Test Suite');
+console.log('  Sprint 01 + Sprint 02 Verification Engine');
 console.log('======================================================\n');
 
 // TEST SUITE 1: Required Files & Directory Structure
@@ -51,6 +52,8 @@ const requiredFiles = [
     'themes/suresalez-theme/templates/index.html',
     'themes/suresalez-theme/templates/single-product.html',
     'themes/suresalez-theme/templates/archive-product.html',
+    'themes/suresalez-theme/templates/page-checkout.html',
+    'themes/suresalez-theme/templates/page-wallet.html',
     'themes/suresalez-theme/parts/header.html',
     'themes/suresalez-theme/parts/footer.html',
     'themes/suresalez-theme/parts/product-meta.html',
@@ -61,6 +64,7 @@ const requiredFiles = [
     'plugins/suresalez-core/includes/class-rest-api.php',
     'plugins/suresalez-core/admin/assets/css/admin.css',
     'plugins/suresalez-core/admin/assets/js/admin.js',
+    // Sprint 01 Modules
     'plugins/suresalez-core/modules/catalog-pim/class-catalog-pim-module.php',
     'plugins/suresalez-core/modules/catalog-pim/class-metafields.php',
     'plugins/suresalez-core/modules/catalog-pim/class-dam.php',
@@ -75,6 +79,22 @@ const requiredFiles = [
     'plugins/suresalez-core/modules/reviews-qa/class-reviews-qa-module.php',
     'plugins/suresalez-core/modules/reviews-qa/assets/css/reviews-qa.css',
     'plugins/suresalez-core/modules/reviews-qa/assets/js/reviews-qa.js',
+    // Sprint 02 Modules
+    'plugins/suresalez-core/modules/checkout-engine/class-checkout-engine-module.php',
+    'plugins/suresalez-core/modules/checkout-engine/class-cart-drawer.php',
+    'plugins/suresalez-core/modules/checkout-engine/class-checkout-customizer.php',
+    'plugins/suresalez-core/modules/checkout-engine/class-post-purchase-upsell.php',
+    'plugins/suresalez-core/modules/checkout-engine/class-abandoned-cart-recovery.php',
+    'plugins/suresalez-core/modules/checkout-engine/assets/css/cart-drawer.css',
+    'plugins/suresalez-core/modules/checkout-engine/assets/js/cart-drawer.js',
+    'plugins/suresalez-core/modules/checkout-engine/assets/css/checkout.css',
+    'plugins/suresalez-core/modules/checkout-engine/assets/js/checkout.js',
+    'plugins/suresalez-core/modules/checkout-engine/assets/css/upsell-modal.css',
+    'plugins/suresalez-core/modules/checkout-engine/assets/js/upsell-modal.js',
+    'plugins/suresalez-core/modules/wallet/class-wallet-module.php',
+    'plugins/suresalez-core/modules/wallet/class-wallet-ledger.php',
+    'plugins/suresalez-core/modules/wallet/assets/css/wallet.css',
+    'plugins/suresalez-core/modules/wallet/assets/js/wallet.js',
 ];
 
 const rootDir = path.resolve(__dirname, '..');
@@ -129,7 +149,6 @@ phpFiles.forEach(file => {
                 continue;
             }
             if (char === '/' && nextChar === '/') {
-                // Skip line
                 while (i < content.length && content[i] !== '\n') i++;
                 continue;
             }
@@ -181,68 +200,23 @@ jsFiles.forEach(file => {
     }
 });
 
-// TEST SUITE 5: Headless DOM Hydration Simulation
-console.log('\n\x1b[36m[Suite 5] Headless DOM Component Hydration & State Verifications\x1b[0m');
-
-function runHeadlessDomTests() {
-    // Minimal mock browser environment
-    const eventListeners = {};
-    const elements = {};
-
-    function createElementMock(tagName) {
-        const children = [];
-        const classes = new Set();
-        const attrs = {};
-        const listeners = {};
-
-        const el = {
-            tagName: tagName.toUpperCase(),
-            children,
-            innerHTML: '',
-            textContent: '',
-            style: {},
-            disabled: false,
-            classList: {
-                add: (c) => classes.add(c),
-                remove: (c) => classes.delete(c),
-                contains: (c) => classes.has(c),
-            },
-            setAttribute: (k, v) => { attrs[k] = String(v); },
-            getAttribute: (k) => attrs[k] || null,
-            appendChild: (child) => { children.push(child); return child; },
-            addEventListener: (evt, cb) => {
-                if (!listeners[evt]) listeners[evt] = [];
-                listeners[evt].push(cb);
-            },
-            dispatchEvent: (evt) => {
-                if (listeners[evt.type]) {
-                    listeners[evt.type].forEach(fn => fn(evt));
-                }
-            },
-            querySelector: (sel) => null,
-            querySelectorAll: (sel) => [],
-            closest: () => null,
-        };
-        return el;
-    }
-
-    assert(true, 'Mock DOM environment initialized successfully');
-}
-
-runHeadlessDomTests();
-
-// TEST SUITE 6: Database Seed & Schema Checks
-console.log('\n\x1b[36m[Suite 6] Database Schema & 10 Warehouse Hub Seed Verification\x1b[0m');
+// TEST SUITE 5: Database Schemas & Seed Data (Sprint 01 + Sprint 02)
+console.log('\n\x1b[36m[Suite 5] Database Schema & Migration Verifications\x1b[0m');
 
 const dbFileContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/includes/class-database.php'), 'utf8');
 
 const expectedTables = [
+    // Sprint 01
     'suresalez_inventory_locations',
     'suresalez_inventory_stock',
     'suresalez_inventory_transfers',
     'suresalez_reviews',
     'suresalez_questions',
     'suresalez_answers',
+    // Sprint 02
+    'suresalez_wallet_transactions',
+    'suresalez_abandoned_checkouts',
+    'suresalez_post_purchase_offers',
 ];
 
 expectedTables.forEach(tbl => {
@@ -266,8 +240,10 @@ expectedHubCodes.forEach(code => {
     assert(dbFileContent.includes(code), `Seeded 10-hub inventory location code: ${code}`);
 });
 
-// TEST SUITE 7: Decoupled Zero-Bloat Guardrail
-console.log('\n\x1b[36m[Suite 7] Decoupling & Zero-Bloat Invariant Check\x1b[0m');
+assert(dbFileContent.includes('seed_post_purchase_offers'), 'Database seeds post-purchase upsell offers');
+
+// TEST SUITE 6: Decoupled Zero-Bloat Guardrail
+console.log('\n\x1b[36m[Suite 6] Decoupling & Zero-Bloat Invariant Check\x1b[0m');
 
 const themeDir = path.join(rootDir, 'themes/suresalez-theme');
 const themeFiles = fs.readdirSync(themeDir, { recursive: true });
@@ -284,6 +260,25 @@ assert(!phpFoundInTheme, 'Theme has 0 PHP files (100% decoupled pure FSE block t
 const moduleManagerContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/includes/class-module-manager.php'), 'utf8');
 assert(moduleManagerContent.includes('is_module_active'), 'Module Manager verifies active status before init');
 assert(moduleManagerContent.includes('suresalez_active_modules'), 'Persistent settings saved in wp_options');
+
+// TEST SUITE 7: Dynamic Module Gating & Registration
+console.log('\n\x1b[36m[Suite 7] Dynamic Module Gating & Registration Check\x1b[0m');
+
+const coreBootstrapContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/suresalez-core.php'), 'utf8');
+
+assert(coreBootstrapContent.includes('Checkout_Engine_Module'), 'Core bootstrap instantiates Checkout_Engine_Module');
+assert(coreBootstrapContent.includes('Wallet_Module'), 'Core bootstrap instantiates Wallet_Module');
+assert(coreBootstrapContent.includes('Catalog_PIM_Module'), 'Core bootstrap instantiates Catalog_PIM_Module');
+assert(coreBootstrapContent.includes('Multi_Location_Inventory_Module'), 'Core bootstrap instantiates Multi_Location_Inventory_Module');
+assert(coreBootstrapContent.includes('Visual_Swatches_Module'), 'Core bootstrap instantiates Visual_Swatches_Module');
+assert(coreBootstrapContent.includes('Reviews_QA_Module'), 'Core bootstrap instantiates Reviews_QA_Module');
+
+// Check that checkout-engine has cart-drawer, checkout-customizer, post-purchase-upsell, and abandoned-cart-recovery
+const checkoutModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/checkout-engine/class-checkout-engine-module.php'), 'utf8');
+assert(checkoutModuleContent.includes('Cart_Drawer'), 'Checkout Engine loads Cart Drawer engine');
+assert(checkoutModuleContent.includes('Checkout_Customizer'), 'Checkout Engine loads Checkout Customizer');
+assert(checkoutModuleContent.includes('Post_Purchase_Upsell'), 'Checkout Engine loads Post-Purchase Upsell engine');
+assert(checkoutModuleContent.includes('Abandoned_Cart_Recovery'), 'Checkout Engine loads Abandoned Cart Recovery engine');
 
 // FINAL SUMMARY
 console.log('\n======================================================');

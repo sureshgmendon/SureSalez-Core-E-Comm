@@ -1,0 +1,168 @@
+/**
+ * SureSalez Recurring Subscriptions Stylesheet.
+ *
+ * @package SureSalez\Modules\POSSubscriptions
+ */
+
+.suresalez-subscriptions-container {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 24px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #1e293b;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    margin: 24px 0;
+}
+
+.sub-header {
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+}
+.sub-header h2 {
+    margin: 0 0 6px 0;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+.sub-header p {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.9rem;
+}
+
+/* Subscribe & Save PDP Widget */
+.suresalez-sub-widget {
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    padding: 16px;
+    margin: 16px 0;
+    background: #f8fafc;
+}
+.sub-option-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-bottom: 8px;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+}
+.sub-option-row.active {
+    border-color: #0284c7;
+    background: #f0f9ff;
+}
+
+.sub-discount-badge {
+    background: #22c55e;
+    color: #ffffff;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+/* Subscription Management Cards */
+.sub-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+}
+
+.sub-card {
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    padding: 18px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sub-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.sub-product-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+}
+
+.sub-status-pill {
+    padding: 3px 10px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+.sub-status-pill.active {
+    background: #dcfce7;
+    color: #15803d;
+}
+.sub-status-pill.paused {
+    background: #fef3c7;
+    color: #b45309;
+}
+.sub-status-pill.dunning {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+.sub-status-pill.cancelled {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.sub-details {
+    font-size: 0.85rem;
+    color: #475569;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.sub-actions {
+    display: flex;
+    gap: 8px;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 14px;
+}
+
+.sub-btn {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    color: #334155;
+    transition: all 0.15s ease;
+    text-align: center;
+}
+.sub-btn:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+}
+
+.sub-btn-primary {
+    background: #0284c7;
+    color: #ffffff;
+    border-color: #0284c7;
+}
+.sub-btn-primary:hover {
+    background: #0369a1;
+}
+
+.sub-btn-danger {
+    color: #dc2626;
+    border-color: #fca5a5;
+}
+.sub-btn-danger:hover {
+    background: #fee2e2;
+}

@@ -22,7 +22,7 @@ class Database {
     /**
      * Database version.
      */
-    public const DB_VERSION = '1.6.0';
+    public const DB_VERSION = '1.7.0';
 
     /**
      * Option key storing current schema version.
@@ -590,6 +590,117 @@ class Database {
         ) {$charset_collate};";
         dbDelta($sql_b2b_orders);
 
+        // 31. POS Registers Table (Sprint 08)
+        $table_pos_registers = $wpdb->prefix . 'suresalez_pos_registers';
+        $sql_pos_registers = "CREATE TABLE {$table_pos_registers} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            location_id bigint(20) unsigned NOT NULL,
+            register_name varchar(100) NOT NULL,
+            cashier_user_id bigint(20) unsigned DEFAULT 0 NOT NULL,
+            opening_cash decimal(14,2) DEFAULT 0.00 NOT NULL,
+            closing_cash decimal(14,2) DEFAULT 0.00 NOT NULL,
+            status varchar(20) DEFAULT 'open' NOT NULL,
+            opened_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            closed_at datetime DEFAULT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_loc_status (location_id, status),
+            KEY idx_cashier (cashier_user_id)
+        ) {$charset_collate};";
+        dbDelta($sql_pos_registers);
+
+        // 32. POS Transactions & Tender Table (Sprint 08)
+        $table_pos_tx = $wpdb->prefix . 'suresalez_pos_transactions';
+        $sql_pos_tx = "CREATE TABLE {$table_pos_tx} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            register_id bigint(20) unsigned NOT NULL,
+            order_id bigint(20) unsigned NOT NULL,
+            payment_method varchar(30) DEFAULT 'cash' NOT NULL,
+            amount_tendered decimal(14,2) DEFAULT 0.00 NOT NULL,
+            change_due decimal(14,2) DEFAULT 0.00 NOT NULL,
+            receipt_number varchar(64) NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_receipt (receipt_number),
+            KEY idx_register_order (register_id, order_id)
+        ) {$charset_collate};";
+        dbDelta($sql_pos_tx);
+
+        // 33. Multi-Vendor Marketplace Profiles Table (Sprint 08)
+        $table_vendors = $wpdb->prefix . 'suresalez_marketplace_vendors';
+        $sql_vendors = "CREATE TABLE {$table_vendors} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            user_id bigint(20) unsigned NOT NULL,
+            store_name varchar(191) NOT NULL,
+            slug varchar(100) NOT NULL,
+            commission_rate decimal(5,2) DEFAULT 15.00 NOT NULL,
+            balance_available decimal(14,2) DEFAULT 0.00 NOT NULL,
+            balance_pending decimal(14,2) DEFAULT 0.00 NOT NULL,
+            payout_method_details longtext DEFAULT NULL,
+            status varchar(20) DEFAULT 'active' NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_vendor_user (user_id),
+            UNIQUE KEY uk_slug (slug),
+            KEY idx_status (status)
+        ) {$charset_collate};";
+        dbDelta($sql_vendors);
+
+        // 34. Multi-Vendor Commission Splits Ledger Table (Sprint 08)
+        $table_commissions = $wpdb->prefix . 'suresalez_vendor_commissions';
+        $sql_commissions = "CREATE TABLE {$table_commissions} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            order_id bigint(20) unsigned NOT NULL,
+            vendor_id bigint(20) unsigned NOT NULL,
+            line_item_id bigint(20) unsigned DEFAULT 0 NOT NULL,
+            gross_amount decimal(14,2) DEFAULT 0.00 NOT NULL,
+            commission_fee decimal(14,2) DEFAULT 0.00 NOT NULL,
+            net_vendor_payout decimal(14,2) DEFAULT 0.00 NOT NULL,
+            status varchar(20) DEFAULT 'pending' NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_order_vendor (order_id, vendor_id),
+            KEY idx_vendor_status (vendor_id, status)
+        ) {$charset_collate};";
+        dbDelta($sql_commissions);
+
+        // 35. Native Subscriptions Table (Sprint 08)
+        $table_subscriptions = $wpdb->prefix . 'suresalez_subscriptions';
+        $sql_subscriptions = "CREATE TABLE {$table_subscriptions} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            subscription_token varchar(64) NOT NULL,
+            customer_id bigint(20) unsigned NOT NULL,
+            product_id bigint(20) unsigned NOT NULL,
+            variation_id bigint(20) unsigned DEFAULT 0 NOT NULL,
+            billing_interval varchar(20) DEFAULT 'monthly' NOT NULL,
+            discount_percentage decimal(5,2) DEFAULT 10.00 NOT NULL,
+            next_renewal_date datetime NOT NULL,
+            status varchar(20) DEFAULT 'active' NOT NULL,
+            card_token_hash varchar(64) DEFAULT '' NOT NULL,
+            created_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            updated_at datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            UNIQUE KEY uk_sub_token (subscription_token),
+            KEY idx_cust_status (customer_id, status),
+            KEY idx_renewal (next_renewal_date, status)
+        ) {$charset_collate};";
+        dbDelta($sql_subscriptions);
+
+        // 36. Subscription Renewal & Dunning Logs Table (Sprint 08)
+        $table_sub_logs = $wpdb->prefix . 'suresalez_subscription_logs';
+        $sql_sub_logs = "CREATE TABLE {$table_sub_logs} (
+            id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+            subscription_id bigint(20) unsigned NOT NULL,
+            renewal_order_id bigint(20) unsigned DEFAULT 0 NOT NULL,
+            attempt_count int(11) DEFAULT 1 NOT NULL,
+            status varchar(20) DEFAULT 'success' NOT NULL,
+            error_message text DEFAULT NULL,
+            attempted_at datetime DEFAULT CURRENT_TIMESTAMP NOT NULL,
+            PRIMARY KEY  (id),
+            KEY idx_sub_attempt (subscription_id, attempt_count),
+            KEY idx_status (status)
+        ) {$charset_collate};";
+        dbDelta($sql_sub_logs);
+
         update_option(self::DB_VERSION_KEY, self::DB_VERSION);
 
         // Seed 10 warehouse fulfillment locations
@@ -621,6 +732,12 @@ class Database {
         self::seed_b2b_users();
         self::seed_b2b_pricelists();
         self::seed_b2b_quotes();
+
+        // Seed POS registers, vendors, commissions & subscriptions (Sprint 08)
+        self::seed_pos_registers();
+        self::seed_marketplace_vendors();
+        self::seed_vendor_commissions();
+        self::seed_subscriptions();
     }
 
     /**
@@ -1806,6 +1923,208 @@ class Database {
                 $table,
                 $q,
                 ['%s', '%d', '%d', '%s', '%f', '%f', '%f', '%s', '%s', '%s', '%s', '%s', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed Initial POS Registers.
+     *
+     * @return void
+     */
+    public static function seed_pos_registers(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_pos_registers';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $registers = [
+            [
+                'location_id'     => 1, // US-EAST-01
+                'register_name'   => 'Register 01 - Manhattan 5th Ave Boutique',
+                'cashier_user_id' => 5,
+                'opening_cash'    => 500.00,
+                'closing_cash'    => 0.00,
+                'status'          => 'open',
+                'opened_at'       => current_time('mysql'),
+                'closed_at'       => null,
+            ],
+            [
+                'location_id'     => 5, // EU-WEST-01
+                'register_name'   => 'Register 01 - London Bond Street Flagship',
+                'cashier_user_id' => 6,
+                'opening_cash'    => 400.00,
+                'closing_cash'    => 0.00,
+                'status'          => 'open',
+                'opened_at'       => current_time('mysql'),
+                'closed_at'       => null,
+            ],
+        ];
+
+        foreach ($registers as $r) {
+            $wpdb->insert(
+                $table,
+                $r,
+                ['%d', '%s', '%d', '%f', '%f', '%s', '%s', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed Marketplace Vendors.
+     *
+     * @return void
+     */
+    public static function seed_marketplace_vendors(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_marketplace_vendors';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $vendors = [
+            [
+                'user_id'               => 20,
+                'store_name'            => 'Horology Master Atelier',
+                'slug'                  => 'horology-master',
+                'commission_rate'       => 15.00,
+                'balance_available'     => 3450.00,
+                'balance_pending'       => 820.00,
+                'payout_method_details' => wp_json_encode([
+                    'type'         => 'stripe_connect',
+                    'account_id'   => 'acct_1HoroMasterAtelier99',
+                    'currency'     => 'USD',
+                ]),
+                'status'                => 'active',
+                'created_at'            => current_time('mysql'),
+            ],
+            [
+                'user_id'               => 21,
+                'store_name'            => 'Bespoke Leatherworks Milan',
+                'slug'                  => 'bespoke-leather',
+                'commission_rate'       => 12.50,
+                'balance_available'     => 1890.00,
+                'balance_pending'       => 340.00,
+                'payout_method_details' => wp_json_encode([
+                    'type'         => 'bank_iban',
+                    'iban'         => 'IT60X0542811101000000123456',
+                    'currency'     => 'EUR',
+                ]),
+                'status'                => 'active',
+                'created_at'            => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($vendors as $v) {
+            $wpdb->insert(
+                $table,
+                $v,
+                ['%d', '%s', '%s', '%f', '%f', '%f', '%s', '%s', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed Vendor Commissions.
+     *
+     * @return void
+     */
+    public static function seed_vendor_commissions(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_vendor_commissions';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $commissions = [
+            [
+                'order_id'          => 501,
+                'vendor_id'         => 1,
+                'line_item_id'      => 101,
+                'gross_amount'      => 899.00,
+                'commission_fee'    => 134.85,
+                'net_vendor_payout' => 764.15,
+                'status'            => 'available',
+                'created_at'        => current_time('mysql'),
+            ],
+            [
+                'order_id'          => 502,
+                'vendor_id'         => 2,
+                'line_item_id'      => 102,
+                'gross_amount'      => 190.00,
+                'commission_fee'    => 23.75,
+                'net_vendor_payout' => 166.25,
+                'status'            => 'pending',
+                'created_at'        => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($commissions as $c) {
+            $wpdb->insert(
+                $table,
+                $c,
+                ['%d', '%d', '%d', '%f', '%f', '%f', '%s', '%s']
+            );
+        }
+    }
+
+    /**
+     * Seed Sample Recurring Subscriptions.
+     *
+     * @return void
+     */
+    public static function seed_subscriptions(): void {
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'suresalez_subscriptions';
+
+        $count = (int) $wpdb->get_var("SELECT COUNT(*) FROM {$table}");
+        if ($count > 0) {
+            return;
+        }
+
+        $subscriptions = [
+            [
+                'subscription_token'  => 'sub_tok_lux_8811',
+                'customer_id'         => 10,
+                'product_id'          => 101,
+                'variation_id'        => 0,
+                'billing_interval'    => 'monthly',
+                'discount_percentage' => 10.00,
+                'next_renewal_date'   => date('Y-m-d H:i:s', strtotime('+30 days')),
+                'status'              => 'active',
+                'card_token_hash'     => 'tok_hash_visa_4242',
+                'created_at'          => current_time('mysql'),
+            ],
+            [
+                'subscription_token'  => 'sub_tok_strap_9922',
+                'customer_id'         => 11,
+                'product_id'          => 102,
+                'variation_id'        => 0,
+                'billing_interval'    => 'quarterly',
+                'discount_percentage' => 15.00,
+                'next_renewal_date'   => date('Y-m-d H:i:s', strtotime('+90 days')),
+                'status'              => 'active',
+                'card_token_hash'     => 'tok_hash_mc_5555',
+                'created_at'          => current_time('mysql'),
+            ],
+        ];
+
+        foreach ($subscriptions as $s) {
+            $wpdb->insert(
+                $table,
+                $s,
+                ['%s', '%d', '%d', '%d', '%s', '%f', '%s', '%s', '%s', '%s']
             );
         }
     }

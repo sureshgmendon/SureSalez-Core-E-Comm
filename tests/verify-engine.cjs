@@ -144,6 +144,17 @@ const requiredFiles = [
     'plugins/suresalez-core/modules/b2b-wholesale/assets/js/bulk-order.js',
     'plugins/suresalez-core/modules/b2b-wholesale/assets/css/rfq-portal.css',
     'plugins/suresalez-core/modules/b2b-wholesale/assets/js/rfq-portal.js',
+    // Sprint 08 Modules
+    'plugins/suresalez-core/modules/pos-subscriptions/class-pos-subscriptions-module.php',
+    'plugins/suresalez-core/modules/pos-subscriptions/class-pos-terminal.php',
+    'plugins/suresalez-core/modules/pos-subscriptions/class-marketplace-vendor.php',
+    'plugins/suresalez-core/modules/pos-subscriptions/class-subscription-engine.php',
+    'plugins/suresalez-core/modules/pos-subscriptions/assets/css/pos-screen.css',
+    'plugins/suresalez-core/modules/pos-subscriptions/assets/js/pos-screen.js',
+    'plugins/suresalez-core/modules/pos-subscriptions/assets/css/vendor-portal.css',
+    'plugins/suresalez-core/modules/pos-subscriptions/assets/js/vendor-portal.js',
+    'plugins/suresalez-core/modules/pos-subscriptions/assets/css/subscription-portal.css',
+    'plugins/suresalez-core/modules/pos-subscriptions/assets/js/subscription-portal.js',
 ];
 
 const rootDir = path.resolve(__dirname, '..');
@@ -292,6 +303,13 @@ const expectedTables = [
     'suresalez_b2b_pricelists',
     'suresalez_b2b_quotes',
     'suresalez_b2b_orders',
+    // Sprint 08
+    'suresalez_pos_registers',
+    'suresalez_pos_transactions',
+    'suresalez_marketplace_vendors',
+    'suresalez_vendor_commissions',
+    'suresalez_subscriptions',
+    'suresalez_subscription_logs',
 ];
 
 expectedTables.forEach(tbl => {
@@ -352,6 +370,18 @@ assert(coreBootstrapContent.includes('CRM_Automations_Module'), 'Core bootstrap 
 assert(coreBootstrapContent.includes('Omnichannel_AI_Module'), 'Core bootstrap instantiates Omnichannel_AI_Module');
 assert(coreBootstrapContent.includes('Fulfillment_RMA_Module'), 'Core bootstrap instantiates Fulfillment_RMA_Module');
 assert(coreBootstrapContent.includes('B2B_Wholesale_Module'), 'Core bootstrap instantiates B2B_Wholesale_Module');
+assert(coreBootstrapContent.includes('POS_Subscriptions_Module'), 'Core bootstrap instantiates POS_Subscriptions_Module');
+
+// Check that POS Subscriptions module loads sub-components
+const posModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/pos-subscriptions/class-pos-subscriptions-module.php'), 'utf8');
+assert(posModuleContent.includes('POS_Terminal'), 'POS Subscriptions Module loads POS Terminal engine');
+assert(posModuleContent.includes('Marketplace_Vendor'), 'POS Subscriptions Module loads Marketplace Vendor engine');
+assert(posModuleContent.includes('Subscription_Engine'), 'POS Subscriptions Module loads Subscription Engine');
+
+assert(dbFileContent.includes('seed_pos_registers'), 'Database seeds default POS registers');
+assert(dbFileContent.includes('seed_marketplace_vendors'), 'Database seeds sample marketplace vendors');
+assert(dbFileContent.includes('seed_vendor_commissions'), 'Database seeds default vendor commissions');
+assert(dbFileContent.includes('seed_subscriptions'), 'Database seeds recurring subscriptions');
 
 // Check that B2B Wholesale module loads sub-components
 const b2bModuleContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/modules/b2b-wholesale/class-b2b-wholesale-module.php'), 'utf8');

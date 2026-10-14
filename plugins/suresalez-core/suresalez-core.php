@@ -120,7 +120,11 @@ final class Core {
         require_once SURESALEZ_PATH . 'modules/b2b-wholesale/class-b2b-wholesale-module.php';
         $manager->register_module(new \SureSalez\Modules\B2BWholesale\B2B_Wholesale_Module());
 
-        // Sprint 08-10 module placeholders (scaffolded for architectural completion)
+        // Sprint 08 Modules
+        require_once SURESALEZ_PATH . 'modules/pos-subscriptions/class-pos-subscriptions-module.php';
+        $manager->register_module(new \SureSalez\Modules\POSSubscriptions\POS_Subscriptions_Module());
+
+        // Sprint 09-10 module placeholders (scaffolded for architectural completion)
         $this->register_roadmap_modules($manager);
     }
 
@@ -132,12 +136,6 @@ final class Core {
      */
     private function register_roadmap_modules(Module_Manager $manager): void {
         $roadmap_defs = [
-            'pos-marketplace-subscriptions' => [
-                'name'     => 'In-Store POS, Marketplace & Subscriptions',
-                'desc'     => 'Progressive Web App retail POS, multi-vendor commission payouts, and recurring subscription billing.',
-                'category' => 'Commerce Channels',
-                'default'  => false,
-            ],
             'loyalty-mobile-apis' => [
                 'name'     => 'Loyalty Points, 301 Redirects & Headless Mobile APIs',
                 'desc'     => 'Gamified VIP tiers, sub-millisecond regex 301 redirects, and high-performance headless mobile REST/GraphQL APIs.',

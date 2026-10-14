@@ -32,6 +32,10 @@
   <!-- Sprint 07 CSS -->
   <link rel="stylesheet" href="../plugins/suresalez-core/modules/b2b-wholesale/assets/css/bulk-order.css">
   <link rel="stylesheet" href="../plugins/suresalez-core/modules/b2b-wholesale/assets/css/rfq-portal.css">
+  <!-- Sprint 08 CSS -->
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/pos-subscriptions/assets/css/pos-screen.css">
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/pos-subscriptions/assets/css/vendor-portal.css">
+  <link rel="stylesheet" href="../plugins/suresalez-core/modules/pos-subscriptions/assets/css/subscription-portal.css">
 
   <style>
     body {
@@ -172,7 +176,7 @@
   <header class="harness-nav">
     <h1>
       <span>⚡ SureSalez E-Commerce Verification Harness</span>
-      <span class="harness-badge">Sprint 01 - 07 Live</span>
+      <span class="harness-badge">Sprint 01 - 08 Live</span>
     </h1>
     <div class="tab-pills">
       <button class="tab-pill-btn active" data-target="view-product">Product & Buy Box</button>
@@ -185,6 +189,7 @@
       <button class="tab-pill-btn" data-target="view-omnichannel">Omnichannel, Reels &amp; AI</button>
       <button class="tab-pill-btn" data-target="view-fulfillment-rma">Order Routing &amp; RMA</button>
       <button class="tab-pill-btn" data-target="view-b2b-wholesale">B2B Wholesale &amp; RFQ</button>
+      <button class="tab-pill-btn" data-target="view-pos-subscriptions">POS &amp; Subscriptions</button>
       <button class="tab-pill-btn" data-target="view-admin">Module Manager Admin</button>
       <button class="tab-pill-btn" data-target="view-schema">Schema.org JSON-LD</button>
     </div>
@@ -1061,6 +1066,45 @@
       </div>
     </div>
 
+    <!-- TAB: SPRINT 08 POS, MARKETPLACE & SUBSCRIPTIONS -->
+    <div id="view-pos-subscriptions" class="harness-tab-pane" style="display:none;">
+      <div style="background: #ffffff; border-radius: 12px; padding: 20px 24px; margin-bottom: 24px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h2 style="margin: 0 0 6px 0; font-size: 20px; font-weight: 800; color: #0f172a;">
+            Sprint 08: In-Store Touch POS, Multi-Vendor Marketplace &amp; Subscriptions
+          </h2>
+          <p style="margin: 0; font-size: 14px; color: #64748b;">
+            Omnichannel retail cashier terminal, multi-vendor cart partitioning with commission deduction, and native recurring Subscribe &amp; Save replenishment billing.
+          </p>
+        </div>
+        <span class="harness-badge" style="background: #0284c7;">Sprint 08 Active</span>
+      </div>
+
+      <!-- In-Store POS Touch Terminal Mount -->
+      <div class="product-view-card" style="margin-bottom: 24px; padding: 24px;">
+        <h3 style="font-size: 16px; font-weight: 700; margin-top: 0; color: #0f172a;">
+          🖥️ In-Store Touch POS Cashier Terminal
+        </h3>
+        <div id="suresalez-pos-screen-mount"></div>
+      </div>
+
+      <!-- Multi-Vendor Marketplace Portal Mount -->
+      <div class="product-view-card" style="margin-bottom: 24px; padding: 24px;">
+        <h3 style="font-size: 16px; font-weight: 700; margin-top: 0; color: #0f172a;">
+          🏪 Multi-Vendor Marketplace &amp; Payout Ledger
+        </h3>
+        <div id="suresalez-vendor-portal-mount"></div>
+      </div>
+
+      <!-- Native Recurring Subscriptions Mount -->
+      <div class="product-view-card" style="padding: 24px;">
+        <h3 style="font-size: 16px; font-weight: 700; margin-top: 0; color: #0f172a;">
+          🔄 Native "Subscribe &amp; Save" Replenishment Engine
+        </h3>
+        <div id="suresalez-subscriptions-mount"></div>
+      </div>
+    </div>
+
   </main>
 
   <!-- Global Anchors -->
@@ -1873,9 +1917,24 @@ SS-201,"Milanese Magnetic Mesh Strap - Grade 5 Titanium","Titanium woven band wi
       },
       isB2B: true
     };
+
+    window.suresalezPOSData = {
+      restUrl: '/wp-json/suresalez/v1/',
+      nonce: 'wp_rest_nonce_sprint08',
+      registerId: 1,
+      registerName: 'Register 01 - Manhattan 5th Ave Flagship',
+      locationCode: 'US-EAST-01',
+      defaultTaxRate: 0.0825,
+      catalogProducts: [
+        { id: 101, sku: 'LUM-CHRONO-01', name: 'Luminor Chrono Automatic', price: 899.00, category: 'Watches', barcode: '8901234567890' },
+        { id: 102, sku: 'LUM-STRAP-BLK', name: 'Horween Leather Strap 22mm', price: 95.00, category: 'Accessories', barcode: '8901234567891' },
+        { id: 103, sku: 'LUM-TOOL-01', name: 'Titanium Spring Bar Tool', price: 45.00, category: 'Tools', barcode: '8901234567892' },
+        { id: 104, sku: 'LUM-CARE-KIT', name: 'Ultrasonic Polishing Care Kit', price: 29.00, category: 'Care', barcode: '8901234567893' }
+      ]
+    };
   </script>
 
-  <!-- Load Module Scripts (Sprint 01 + Sprint 02 + Sprint 03 + Sprint 04 + Sprint 05 + Sprint 06 + Sprint 07) -->
+  <!-- Load Module Scripts (Sprint 01 + Sprint 02 + Sprint 03 + Sprint 04 + Sprint 05 + Sprint 06 + Sprint 07 + Sprint 08) -->
   <script src="../plugins/suresalez-core/modules/catalog-pim/assets/js/catalog-pim.js"></script>
   <script src="../plugins/suresalez-core/modules/multi-location-inventory/assets/js/multi-location-inventory.js"></script>
   <script src="../plugins/suresalez-core/modules/visual-swatches/assets/js/visual-swatches.js"></script>
@@ -1893,6 +1952,9 @@ SS-201,"Milanese Magnetic Mesh Strap - Grade 5 Titanium","Titanium woven band wi
   <script src="../plugins/suresalez-core/modules/fulfillment-rma/assets/js/tracking-widget.js"></script>
   <script src="../plugins/suresalez-core/modules/b2b-wholesale/assets/js/bulk-order.js"></script>
   <script src="../plugins/suresalez-core/modules/b2b-wholesale/assets/js/rfq-portal.js"></script>
+  <script src="../plugins/suresalez-core/modules/pos-subscriptions/assets/js/pos-screen.js"></script>
+  <script src="../plugins/suresalez-core/modules/pos-subscriptions/assets/js/vendor-portal.js"></script>
+  <script src="../plugins/suresalez-core/modules/pos-subscriptions/assets/js/subscription-portal.js"></script>
 
 </body>
 </html>

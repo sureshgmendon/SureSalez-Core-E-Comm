@@ -1,0 +1,119 @@
+{
+  "theme_name": "SureSalez Theme",
+  "version": "1.9.0",
+  "description": "Commercial FSE design-token preset for SureSalez luxury retail and imitation jewelry storefronts.",
+  "settings": {
+    "layout": {
+      "contentSize": "1200px",
+      "wideSize": "1440px"
+    },
+    "color": {
+      "palette": [
+        {
+          "slug": "primary",
+          "color": "#0f172a",
+          "name": "Primary Deep Slate"
+        },
+        {
+          "slug": "primary-hover",
+          "color": "#1e293b",
+          "name": "Primary Hover"
+        },
+        {
+          "slug": "accent",
+          "color": "#3b82f6",
+          "name": "Electric Blue Accent"
+        },
+        {
+          "slug": "accent-light",
+          "color": "#eff6ff",
+          "name": "Accent Light"
+        },
+        {
+          "slug": "success",
+          "color": "#10b981",
+          "name": "Success Green"
+        },
+        {
+          "slug": "warning",
+          "color": "#f59e0b",
+          "name": "Warning Amber"
+        },
+        {
+          "slug": "foreground",
+          "color": "#0f172a",
+          "name": "Foreground Text"
+        },
+        {
+          "slug": "foreground-muted",
+          "color": "#64748b",
+          "name": "Muted Text"
+        },
+        {
+          "slug": "background",
+          "color": "#ffffff",
+          "name": "Pure White Background"
+        },
+        {
+          "slug": "surface",
+          "color": "#f8fafc",
+          "name": "Light Gray Surface"
+        },
+        {
+          "slug": "border",
+          "color": "#e2e8f0",
+          "name": "Subtle Border"
+        }
+      ]
+    },
+    "typography": {
+      "fontFamilies": [
+        {
+          "fontFamily": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+          "slug": "system",
+          "name": "System UI / Modern Clean"
+        },
+        {
+          "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
+          "slug": "sans",
+          "name": "Inter Modern"
+        },
+        {
+          "fontFamily": "'Playfair Display', Georgia, serif",
+          "slug": "serif",
+          "name": "Playfair Luxury Serif"
+        }
+      ],
+      "fontSizes": [
+        { "slug": "xs", "size": "0.75rem", "name": "Extra Small" },
+        { "slug": "sm", "size": "0.875rem", "name": "Small" },
+        { "slug": "md", "size": "1rem", "name": "Medium (Base)" },
+        { "slug": "lg", "size": "1.25rem", "name": "Large" },
+        { "slug": "xl", "size": "1.5rem", "name": "Extra Large" },
+        { "slug": "2xl", "size": "2rem", "name": "2X Large" },
+        { "slug": "3xl", "size": "2.5rem", "name": "3X Large" },
+        { "slug": "4xl", "size": "3rem", "name": "Display 4X Large" }
+      ]
+    },
+    "custom": {
+      "suresalez": {
+        "cartDrawer": {
+          "enabled": true,
+          "freeShippingThreshold": 150.0,
+          "freeShippingThresholdINR": 4999.0,
+          "crossSellProducts": ["CHN-001", "EAR-002"]
+        },
+        "visualSwatches": {
+          "shape": "round",
+          "size": "36px",
+          "showTooltip": true
+        },
+        "reviews": {
+          "verifiedBadge": true,
+          "enableQnA": true,
+          "perPage": 10
+        }
+      }
+    }
+  }
+}

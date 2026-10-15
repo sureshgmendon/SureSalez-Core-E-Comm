@@ -1,0 +1,66 @@
+================================================================================
+SURESALEZ ENTERPRISE COMMERCE SUITE — COMMERCIAL MARKETPLACE LICENSE TERMS
+================================================================================
+
+This document outlines the commercial terms granted under purchases made via 
+Envato Market / ThemeForest / CodeCanyon or authorized commercial distributors.
+
+--------------------------------------------------------------------------------
+1. REGULAR LICENSE
+--------------------------------------------------------------------------------
+The Regular License grants you, the purchaser, an ongoing, non-exclusive, 
+worldwide license to make use of the digital work (SureSalez Core & SureSalez Theme).
+
+You are licensed to:
+- Use the item to create one single End Product for yourself or for one client.
+- The End Product can be distributed freely, but end users cannot be charged for 
+  access or subscription to the End Product itself (non-SaaS, standard retail).
+- Modify or manipulate the item, or combine the item with other works.
+
+You cannot:
+- Re-distribute the item or its source code as stock, in a tool or template, or 
+  with source files.
+- Use the item in more than one production domain or client installation without 
+  purchasing additional licenses.
+- Charge end users for access to or use of the item on a recurring SaaS basis 
+  (see Extended License below).
+
+--------------------------------------------------------------------------------
+2. EXTENDED LICENSE
+--------------------------------------------------------------------------------
+The Extended License grants you all the permissions of the Regular License, plus:
+
+You are licensed to:
+- Create one single End Product where end users are charged to access or use the 
+  software (e.g. multi-tenant SaaS e-commerce platforms, paid multi-vendor 
+  marketplaces, subscription portals).
+- Utilize the SureSalez Multi-Store Tenant Management and Reseller Billing modules 
+  in a commercial, revenue-generating multi-tenant deployment.
+
+You cannot:
+- Re-distribute or re-sell the standalone SureSalez theme or plugin archives 
+  on competing digital asset marketplaces.
+
+--------------------------------------------------------------------------------
+3. OPEN SOURCE (GPL) SPLIT LICENSING
+--------------------------------------------------------------------------------
+SureSalez Core and SureSalez Theme adhere to WordPress 100% GPL guidelines:
+- All PHP source code files inherit the GNU General Public License v2.0 
+  (see LICENSE.txt).
+- Proprietary assets including documentation, custom imagery, logos, design tokens, 
+  and sample demonstration datasets remain protected under commercial marketplace 
+  copyright terms unless explicitly designated otherwise.
+
+--------------------------------------------------------------------------------
+4. SUPPORT ENTITLEMENTS
+--------------------------------------------------------------------------------
+- Standard item support includes 6 months of technical support from the date of 
+  purchase, extendable to 12 months.
+- Support covers: answering technical questions about features and configuration, 
+  bug fixes, and assistance with reported defects in standard WordPress environments.
+- Support does not cover: third-party plugin conflict resolution, custom bespoke 
+  feature programming, or root server administrative configuration.
+
+For customer support inquiries, visit:
+https://suresalez.io/support or email support@suresalez.io
+================================================================================

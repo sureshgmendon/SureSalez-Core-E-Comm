@@ -1,0 +1,77 @@
+{
+  "preset_name": "SureSalez Recommended Omnichannel Store Preset",
+  "version": "1.9.0",
+  "description": "Recommended active module configuration balancing luxury retail features, conversion optimization, and zero-bloat performance.",
+  "modules": {
+    "catalog-pim": {
+      "enabled": true,
+      "label": "Catalog, PIM & Digital Asset Management",
+      "description": "Custom metafields (EAN, UPC, Brand, Specs), 360 viewer, rich jewelry specifications."
+    },
+    "multi-location-inventory": {
+      "enabled": true,
+      "label": "Multi-Location Inventory (10 Global Hubs)",
+      "description": "Multi-warehouse inventory routing, location-aware stock allocation."
+    },
+    "visual-swatches": {
+      "enabled": true,
+      "label": "Visual Variation Swatches",
+      "description": "Color, metal finish, and image swatches replacing standard HTML select dropdowns."
+    },
+    "reviews-qa": {
+      "enabled": true,
+      "label": "Verified Reviews & Community Q&A",
+      "description": "Customer reviews with verified buyer badges, upvoting, and product Q&A forum."
+    },
+    "checkout-engine": {
+      "enabled": true,
+      "label": "Checkout Extensibility & Cart Drawer",
+      "description": "Slide-out AJAX cart drawer, dynamic free shipping bar, 1-click post-purchase upsell modals."
+    },
+    "wallet": {
+      "enabled": true,
+      "label": "Store Credit Wallet Ledger",
+      "description": "Transactional store credit wallet with 1-click checkout deduction."
+    },
+    "localization": {
+      "enabled": true,
+      "label": "Global Localization & Indian GST Engine",
+      "description": "Geo-IP multi-currency switcher, CGST/SGST/IGST tax calculation, HSN 7117 support, LUT export zero-rating."
+    },
+    "crm-automations": {
+      "enabled": true,
+      "label": "CRM 360 & Flow Visual Automation Engine",
+      "description": "Dynamic customer segments, transactional SMS/email dispatchers, trigger-condition-action workflow canvas."
+    },
+    "omnichannel-ai": {
+      "enabled": true,
+      "label": "Omnichannel Feeds, AI Assistant & Reels",
+      "description": "Google/Meta/TikTok product catalog syndication feeds, conversational AI sales assistant, shoppable reels."
+    },
+    "fulfillment-rma": {
+      "enabled": true,
+      "label": "Order Routing & Self-Service RMA Portal",
+      "description": "Intelligent split-shipments, supplier dropship PO dispatcher, automated returns & restocking."
+    },
+    "b2b-wholesale": {
+      "enabled": true,
+      "label": "B2B Wholesale Commerce & RFQ Quotes",
+      "description": "Corporate buyer seats, tiered volume price lists, bulk CSV order matrix, negotiation RFQ engine."
+    },
+    "pos-subscriptions": {
+      "enabled": true,
+      "label": "Touch POS Register & Subscriptions",
+      "description": "In-store cashier POS interface, barcode scanner support, multi-vendor commission splits, recurring subscriptions."
+    },
+    "loyalty-mobile-api": {
+      "enabled": true,
+      "label": "Gamified Loyalty, 301 Redirects & Mobile APIs",
+      "description": "Bronze-to-Platinum VIP points, dual-sided referral rewards, automated 301 SEO redirects, headless mobile REST API."
+    },
+    "enterprise-scale": {
+      "enabled": true,
+      "label": "Multi-Store Organization Admin & Scale",
+      "description": "Multi-tenant store switcher, cross-store catalog sync, reseller SaaS billing meter, SAML SSO, flash-drop queue."
+    }
+  }
+}

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SureSalez Core & Theme — Enterprise Commerce Documentation</title>
+  <link rel="stylesheet" href="assets/docs.css">
+</head>
+<body>
+
+  <!-- Sidebar Navigation -->
+  <aside class="docs-sidebar">
+    <div class="sidebar-header">
+      <a href="#" class="brand-badge">
+        <span class="brand-icon">⚡</span>
+        <span>SureSalez</span>
+      </a>
+      <div>
+        <span class="version-pill">Release v1.9.0 (Commercial)</span>
+      </div>
+    </div>
+
+    <div class="sidebar-search">
+      <input type="text" id="docs-search" class="search-input" placeholder="Search documentation...">
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-group-title">Getting Started</div>
+      <ul class="nav-links">
+        <li class="nav-item active"><a href="#introduction">Introduction & Architecture</a></li>
+        <li class="nav-item"><a href="#system-requirements">System Requirements</a></li>
+        <li class="nav-item"><a href="#installation-guide">Installation Guide</a></li>
+        <li class="nav-item"><a href="#module-manager">Module Manager (Zero-Bloat)</a></li>
+      </ul>
+
+      <div class="nav-group-title">Feature Configuration</div>
+      <ul class="nav-links">
+        <li class="nav-item"><a href="#cart-upsells">Cart Drawer & 1-Click Upsells</a></li>
+        <li class="nav-item"><a href="#currency-localization">Multi-Currency & Geolocation</a></li>
+        <li class="nav-item"><a href="#tax-gst-compliance">Indian GST & LUT Export Compliance</a></li>
+        <li class="nav-item"><a href="#b2b-wholesale">B2B Wholesale & RFQ Engine</a></li>
+        <li class="nav-item"><a href="#pos-subscriptions">In-Store POS & Subscriptions</a></li>
+        <li class="nav-item"><a href="#omnichannel-ai">Omnichannel & AI Chat Commerce</a></li>
+        <li class="nav-item"><a href="#enterprise-scale">Multi-Store & Tenant Billing</a></li>
+      </ul>
+
+      <div class="nav-group-title">Maintenance & Developer</div>
+      <ul class="nav-links">
+        <li class="nav-item"><a href="#troubleshooting">Troubleshooting & FAQ</a></li>
+        <li class="nav-item"><a href="#developer-apis">REST APIs & Webhooks</a></li>
+        <li class="nav-item"><a href="#licensing">Licensing & Support</a></li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-footer">
+      &copy; 2026 SureSalez Engineering.<br>All rights reserved.
+    </div>
+  </aside>
+
+  <!-- Main Content Area -->
+  <main class="docs-main">
+    <header class="top-bar">
+      <div class="top-bar-title">Official Product Documentation</div>
+      <div class="top-bar-actions">
+        <a href="../sample-data/demo-products.json" class="btn btn-outline" download>Download Sample Data</a>
+        <a href="#installation-guide" class="btn btn-primary">Get Started</a>
+      </div>
+    </header>
+
+    <div class="content-wrapper">
+
+      <!-- SECTION 1: Introduction -->
+      <section id="introduction" class="doc-section">
+        <div class="section-header">
+          <h1>SureSalez Enterprise Commerce Suite</h1>
+          <p>Next-generation, decoupled e-commerce architecture engineered for WordPress Full Site Editing (FSE) and high-concurrency enterprise retail.</p>
+        </div>
+
+        <div class="callout callout-success">
+          <div class="callout-title">Architecture Invariant</div>
+          <p>SureSalez enforces strict decoupling: <strong>SureSalez Core</strong> powers all business logic, database tables, and REST APIs, while <strong>SureSalez Theme</strong> remains a 100% logic-free FSE block theme with zero PHP files for maximum rendering speed and security.</p>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h4>⚡ Ultra-Fast FSE Theme</h4>
+            <p>100% pure block theme with zero PHP runtime overhead. Style definitions governed directly by modern <code>theme.json</code> design tokens.</p>
+          </div>
+          <div class="feature-card">
+            <h4>🛡️ Decoupled Core Engine</h4>
+            <p>46 dedicated InnoDB database tables supporting high transactional volumes, immutable audit logs, and complex pricing matrices.</p>
+          </div>
+          <div class="feature-card">
+            <h4>🎛️ Zero-Bloat Modular Gating</h4>
+            <p>Every feature lives in an isolated module. Disabled modules inject 0 hooks, instantiate 0 PHP classes, and enqueue 0 KB of client assets.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: System Requirements -->
+      <section id="system-requirements" class="doc-section">
+        <div class="section-header">
+          <h2>1. System Requirements</h2>
+          <p>Ensure your server or hosting environment complies with these minimum baseline specifications prior to installation.</p>
+        </div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Component</th>
+                <th>Minimum Requirement</th>
+                <th>Recommended Production Specification</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>PHP Version</strong></td>
+                <td><span class="badge badge-green">PHP 8.1</span></td>
+                <td>PHP 8.2 or 8.3 (opcache enabled, JIT configured)</td>
+              </tr>
+              <tr>
+                <td><strong>Database Server</strong></td>
+                <td>MySQL 5.7+ / MariaDB 10.4+</td>
+                <td>MySQL 8.0+ or MariaDB 10.6+ with InnoDB engine</td>
+              </tr>
+              <tr>
+                <td><strong>WordPress Core</strong></td>
+                <td>WordPress 6.3+</td>
+                <td>WordPress 6.6+ (Full Site Editing support)</td>
+              </tr>
+              <tr>
+                <td><strong>WooCommerce</strong></td>
+                <td>WooCommerce 8.0+</td>
+                <td>WooCommerce 8.5+ with High-Performance Order Storage (HPOS)</td>
+              </tr>
+              <tr>
+                <td><strong>PHP Memory Limit</strong></td>
+                <td>256 MB</td>
+                <td>512 MB+ (for high-volume batch sync & flash drops)</td>
+              </tr>
+              <tr>
+                <td><strong>PHP Extensions</strong></td>
+                <td colspan="2"><code>curl</code>, <code>openssl</code>, <code>bcmath</code>, <code>mbstring</code>, <code>json</code>, <code>zip</code>, <code>intl</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION 3: Installation Guide -->
+      <section id="installation-guide" class="doc-section">
+        <div class="section-header">
+          <h2>2. Installation Guide</h2>
+          <p>SureSalez comes with two installable packages located in <code>installable-archives/</code>: the presentation theme and the engine plugin.</p>
+        </div>
+
+        <h3>Method A: WordPress Admin Dashboard (Recommended)</h3>
+        
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h4>Install & Activate SureSalez Theme</h4>
+          <p>In your WordPress admin dashboard, navigate to <strong>Appearance &rarr; Themes &rarr; Add New Theme &rarr; Upload Theme</strong>.</p>
+          <p>Choose <code>installable-archives/suresalez-theme.zip</code>, click <strong>Install Now</strong>, and select <strong>Activate</strong>.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h4>Install & Activate SureSalez Core Plugin</h4>
+          <p>Navigate to <strong>Plugins &rarr; Add New Plugin &rarr; Upload Plugin</strong>.</p>
+          <p>Choose <code>installable-archives/suresalez-core.zip</code>, click <strong>Install Now</strong>, and select <strong>Activate Plugin</strong>.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h4>Database Migration & Schema Provisioning</h4>
+          <p>Upon activation, SureSalez Core automatically provisions 46 custom database tables (schema v1.9.0) using WordPress <code>dbDelta()</code> with composite InnoDB indexes. No manual SQL scripts required.</p>
+        </div>
+
+        <h3>Method B: FTP / cPanel Manual Deployment</h3>
+        <p>If installing on a headless server or via SFTP:</p>
+        <ol>
+          <li>Unzip <code>suresalez-theme.zip</code> and upload the <code>suresalez-theme/</code> folder directly into <code>/wp-content/themes/</code>.</li>
+          <li>Unzip <code>suresalez-core.zip</code> and upload the <code>suresalez-core/</code> folder directly into <code>/wp-content/plugins/</code>.</li>
+          <li>Set file permissions to <code>755</code> for directories and <code>644</code> for files.</li>
+          <li>Log into <code>/wp-admin</code> and activate the theme and plugin from their respective management screens.</li>
+        </ol>
+      </section>
+
+      <!-- SECTION 4: Module Manager -->
+      <section id="module-manager" class="doc-section">
+        <div class="section-header">
+          <h2>3. SureSalez Module Manager Guide (Zero-Bloat)</h2>
+          <p>SureSalez Core introduces a dynamic lifecycle architecture. Enable only what your business requires to maintain sub-100ms response times.</p>
+        </div>
+
+        <p>Navigate to <strong>SureSalez &rarr; Modules</strong> in your WordPress administrative sidebar to toggle any of the 10 core capability engines:</p>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Module Key</th>
+                <th>Feature Scope</th>
+                <th>Database Tables</th>
+                <th>Recommended Default</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>catalog-pim</code></td>
+                <td>PIM Specs, EAN/UPC, 10 Inventory Locations, Variation Swatches, Reviews & Q&A</td>
+                <td>6 tables</td>
+                <td><span class="badge badge-green">ENABLED</span></td>
+              </tr>
+              <tr>
+                <td><code>checkout-engine</code></td>
+                <td>Slide-out Cart Drawer, Multi-Step Checkout, 1-Click Post-Purchase Upsell</td>
+                <td>3 tables</td>
+                <td><span class="badge badge-green">ENABLED</span></td>
+              </tr>
+              <tr>
+                <td><code>localization</code></td>
+                <td>Multi-Currency Switcher, Geo-IP Router, Automated Indian GST & LUT Engine</td>
+                <td>2 tables</td>
+                <td><span class="badge badge-green">ENABLED</span></td>
+              </tr>
+              <tr>
+                <td><code>crm-automations</code></td>
+                <td>Customer 360, Segment Rule Evaluator, Visual Flow Automation Canvas</td>
+                <td>6 tables</td>
+                <td><span class="badge badge-green">ENABLED</span></td>
+              </tr>
+              <tr>
+                <td><code>omnichannel-ai</code></td>
+                <td>Google/Meta/TikTok Feeds, Conversational AI Sales Assistant, Shoppable Reels</td>
+                <td>5 tables</td>
+                <td><span class="badge badge-blue">OPTIONAL</span></td>
+              </tr>
+              <tr>
+                <td><code>fulfillment-rma</code></td>
+                <td>Intelligent Warehouse Routing, Multi-Split Shipments, Self-Service RMA Portal</td>
+                <td>6 tables</td>
+                <td><span class="badge badge-blue">OPTIONAL</span></td>
+              </tr>
+              <tr>
+                <td><code>b2b-wholesale</code></td>
+                <td>Corporate Organization Seats, Tiered Price Lists, Bulk CSV Order Matrix, RFQ Quotes</td>
+                <td>6 tables</td>
+                <td><span class="badge badge-purple">B2B STORES</span></td>
+              </tr>
+              <tr>
+                <td><code>pos-subscriptions</code></td>
+                <td>Touch POS Register, Cashier Shifts, Multi-Vendor Marketplace Split-Pay, Subscriptions</td>
+                <td>6 tables</td>
+                <td><span class="badge badge-purple">RETAIL & SUBS</span></td>
+              </tr>
+              <tr>
+                <td><code>loyalty-mobile-api</code></td>
+                <td>VIP Loyalty Tiers, Referral Code Bonus, Automated 301 Redirects, Headless Mobile REST</td>
+                <td>5 tables</td>
+                <td><span class="badge badge-green">ENABLED</span></td>
+              </tr>
+              <tr>
+                <td><code>enterprise-scale</code></td>
+                <td>Multi-Store Org Admin, Tenant Reseller SaaS Billing, SAML SSO, Async Queue</td>
+                <td>5 tables</td>
+                <td><span class="badge badge-purple">ENTERPRISE</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION 5: Cart & Upsells -->
+      <section id="cart-upsells" class="doc-section">
+        <div class="section-header">
+          <h2>4. Slide-Out Cart Drawer & 1-Click Upsells</h2>
+          <p>Boost your average order value (AOV) with high-converting cart slide drawers and friction-free post-purchase upsell modals.</p>
+        </div>
+
+        <h3>Free Shipping Progress Bar</h3>
+        <p>The cart drawer calculates cart subtotals and renders a dynamic progress bar toward your free shipping threshold ($150 / ₹5,000 default):</p>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span>PHP Filter Hook — Adjust Free Shipping Threshold</span>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <pre><code>add_filter('suresalez_free_shipping_threshold', function($threshold, $currency) {
+    if ($currency === 'INR') {
+        return 4999.00; // ₹4,999 for India
+    }
+    return 150.00; // $150 for International
+}, 10, 2);</code></pre>
+        </div>
+
+        <h3>1-Click Post-Purchase Countdown Upsell</h3>
+        <p>Intercepts the checkout completion event prior to the order received page, rendering an urgent 5-minute countdown modal with a one-click payment token authorization.</p>
+      </section>
+
+      <!-- SECTION 6: Multi-Currency & Geolocation -->
+      <section id="currency-localization" class="doc-section">
+        <div class="section-header">
+          <h2>5. Multi-Currency Switcher & Geolocation</h2>
+          <p>Deliver native shopping experiences globally with automated IP country detection and retail charm rounding.</p>
+        </div>
+
+        <p>SureSalez Core inspects edge proxy headers in priority order: <code>CF-IPCountry</code> (Cloudflare), <code>X-Geo-Country</code>, <code>GEOIP_COUNTRY_CODE</code>, falling back to client <code>Accept-Language</code> headers.</p>
+
+        <h3>Supported Retail Charm Rounding Modes</h3>
+        <ul>
+          <li><strong><code>dot_99</code></strong>: Rounds prices to the nearest 99 cents (e.g., $14.99, $49.99).</li>
+          <li><strong><code>dot_00</code></strong>: Rounds cleanly to even whole decimals (e.g., $25.00).</li>
+          <li><strong><code>nearest_integer</code></strong>: Standard retail rounding for zero-decimal currencies like JPY and KRW.</li>
+        </ul>
+      </section>
+
+      <!-- SECTION 7: Indian GST & LUT Compliance -->
+      <section id="tax-gst-compliance" class="doc-section">
+        <div class="section-header">
+          <h2>6. Indian GST (CGST/SGST/IGST) & LUT Export Compliance</h2>
+          <p>Comprehensive tax engine built specifically for domestic and cross-border jewelry and retail commerce.</p>
+        </div>
+
+        <div class="callout callout-info">
+          <div class="callout-title">HSN Code 7117 (Imitation Jewelry) Support</div>
+          <p>Imitation jewelry governed under HSN 7117 carries a statutory <strong>3.0% GST rate</strong> (1.5% CGST + 1.5% SGST for intra-state sales, or 3% IGST for inter-state deliveries), distinct from the standard 18% consumer goods slab.</p>
+        </div>
+
+        <h3>Tax Splitting Logic</h3>
+        <ul>
+          <li><strong>Intra-State Transactions</strong> (e.g., Merchant Karnataka &rarr; Customer Karnataka): Exactly 50% CGST + 50% SGST.</li>
+          <li><strong>Inter-State Transactions</strong> (e.g., Merchant Karnataka &rarr; Customer Maharashtra): 100% IGST.</li>
+          <li><strong>International Cross-Border Orders</strong>: Evaluated under <strong>Letter of Undertaking (LUT)</strong> export provisions for <strong>Zero-Rated 0.0% GST</strong> with export invoice declaration headers.</li>
+        </ul>
+      </section>
+
+      <!-- SECTION 8: B2B Wholesale -->
+      <section id="b2b-wholesale" class="doc-section">
+        <div class="section-header">
+          <h2>7. B2B Wholesale Commerce & RFQ Quote Engine</h2>
+          <p>Convert your storefront into an enterprise B2B portal with corporate seats, tiered price lists, and quote negotiations.</p>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature-card">
+            <h4>🏢 Corporate Organization Seats</h4>
+            <p>Parent company accounts with designated billing buyers, purchasing managers, and automated spend limits.</p>
+          </div>
+          <div class="feature-card">
+            <h4>📊 Bulk CSV Matrix Upload</h4>
+            <p>High-volume order form accepting SKU + Quantity matrices or CSV uploads for instant 100+ line item ordering.</p>
+          </div>
+          <div class="feature-card">
+            <h4>💬 RFQ Quote Builder</h4>
+            <p>Self-service request-for-quote workflow enabling buyers to negotiate bulk lot pricing with back-office sales reps.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 9: In-Store POS & Subscriptions -->
+      <section id="pos-subscriptions" class="doc-section">
+        <div class="section-header">
+          <h2>8. In-Store Touch POS & Recurring Subscriptions</h2>
+          <p>Bridge online and physical retail with hardware-integrated touch POS registers and automated subscription recurring billing.</p>
+        </div>
+
+        <h3>POS Features</h3>
+        <ul>
+          <li>Touch-screen catalog grid with instant barcode scanner support (USB / Bluetooth HID).</li>
+          <li>Cashier shift management with opening float reconciliation and end-of-day Z-report cash tallying.</li>
+          <li>Offline fallback mode with local storage queue and automatic cloud sync on reconnection.</li>
+        </ul>
+
+        <h3>Subscription Intervals</h3>
+        <p>Supports flexible recurring schedules: Weekly, Bi-Weekly, Monthly, and Quarterly with automatic dunning retries and self-service customer pause/skip portal.</p>
+      </section>
+
+      <!-- SECTION 10: Omnichannel & AI -->
+      <section id="omnichannel-ai" class="doc-section">
+        <div class="section-header">
+          <h2>9. Omnichannel Feeds & AI Chat Commerce</h2>
+          <p>Syndicate catalog feeds to Google Merchant Center, Meta, and TikTok, while delivering conversational sales guidance.</p>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">
+            <span>Live Feed Endpoints</span>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <pre><code>GET /wp-json/suresalez/v1/feeds/google-merchant
+GET /wp-json/suresalez/v1/feeds/meta-catalog
+GET /wp-json/suresalez/v1/feeds/tiktok-catalog
+GET /wp-json/suresalez/v1/ai/openapi.json</code></pre>
+        </div>
+      </section>
+
+      <!-- SECTION 11: Multi-Store & Scale -->
+      <section id="enterprise-scale" class="doc-section">
+        <div class="section-header">
+          <h2>10. Multi-Store Organization Admin & Tenant Billing</h2>
+          <p>Enterprise orchestration supporting multi-store retail groups, SaaS reseller billing, and SAML 2.0 / Okta SSO.</p>
+        </div>
+
+        <h3>High-Scale Queueing & Rate Limiting</h3>
+        <p>SureSalez Core scale engine handles flash checkout traffic surges with token-bucket rate limiting (default 3,000 req/min with 500% burst allowance) and signed HMAC-SHA256 outbound webhook dispatching with exponential backoff.</p>
+      </section>
+
+      <!-- SECTION 12: Troubleshooting -->
+      <section id="troubleshooting" class="doc-section">
+        <div class="section-header">
+          <h2>11. Troubleshooting & Frequently Asked Questions</h2>
+          <p>Diagnostic solutions for common server configuration challenges.</p>
+        </div>
+
+        <h3>Q: I see a 404 error when accessing REST API endpoints.</h3>
+        <p><strong>Fix</strong>: Navigate to <strong>Settings &rarr; Permalinks</strong> in WordPress and click <strong>Save Changes</strong> to flush WordPress rewrite rules. Ensure your web server (Nginx or Apache) allows rewrite rules (<code>try_files $uri $uri/ /index.php?$args;</code> in Nginx or <code>AllowOverride All</code> in Apache).</p>
+
+        <h3>Q: How do I resolve "Allowed memory size exhausted" during large CSV imports?</h3>
+        <p><strong>Fix</strong>: Increase your PHP memory allocation by adding the following directive to your <code>wp-config.php</code> file:</p>
+        <div class="code-block">
+          <div class="code-header">
+            <span>wp-config.php</span>
+            <button class="copy-btn">Copy</button>
+          </div>
+          <pre><code>define('WP_MEMORY_LIMIT', '512M');
+define('WP_MAX_MEMORY_LIMIT', '1024M');</code></pre>
+        </div>
+
+        <h3>Q: Are CORS headers enabled for Headless Mobile App requests?</h3>
+        <p><strong>Fix</strong>: Yes. When the <code>loyalty-mobile-api</code> or <code>enterprise-scale</code> module is active, SureSalez automatically dispatches <code>Access-Control-Allow-Origin: *</code> and supports preflight <code>OPTIONS</code> requests on all <code>/wp-json/suresalez/v1/</code> routes.</p>
+      </section>
+
+      <!-- SECTION 13: Developer APIs -->
+      <section id="developer-apis" class="doc-section">
+        <div class="section-header">
+          <h2>12. Developer APIs & Extensibility</h2>
+          <p>SureSalez Core exposes an extensive REST API surface authenticated via WordPress nonces or Enterprise API Keys.</p>
+        </div>
+
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>HTTP Method</th>
+                <th>Endpoint Route</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>POST</code></td>
+                <td><code>/wp-json/suresalez/v1/cart/items</code></td>
+                <td>AJAX add-to-cart with swatch variation resolution</td>
+              </tr>
+              <tr>
+                <td><code>POST</code></td>
+                <td><code>/wp-json/suresalez/v1/checkout/upsell/accept</code></td>
+                <td>1-click append upsell offer to authorized order</td>
+              </tr>
+              <tr>
+                <td><code>GET</code></td>
+                <td><code>/wp-json/suresalez/v1/currency/current</code></td>
+                <td>Retrieve geolocated currency and retail exchange rates</td>
+              </tr>
+              <tr>
+                <td><code>POST</code></td>
+                <td><code>/wp-json/suresalez/v1/ai/chat</code></td>
+                <td>Natural language conversational product assistant</td>
+              </tr>
+              <tr>
+                <td><code>POST</code></td>
+                <td><code>/wp-json/suresalez/v1/b2b/rfq</code></td>
+                <td>Submit wholesale Request for Quote</td>
+              </tr>
+              <tr>
+                <td><code>POST</code></td>
+                <td><code>/wp-json/suresalez/v1/tenants/sync-catalog</code></td>
+                <td>Push master catalog to multi-store child tenants</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- SECTION 14: Licensing & Support -->
+      <section id="licensing" class="doc-section">
+        <div class="section-header">
+          <h2>13. Licensing & Commercial Support</h2>
+          <p>SureSalez Enterprise Commerce Suite is distributed under dual commercial and open-source terms.</p>
+        </div>
+
+        <p>Refer to <code>licensing/LICENSE.txt</code> for the complete GNU General Public License v2 (GPL-2.0-or-later) terms governing all PHP codebase files, and <code>licensing/ENVATO-LICENSE-TERMS.txt</code> for commercial marketplace single and extended license entitlements.</p>
+
+        <div class="callout callout-info">
+          <div class="callout-title">Enterprise Commercial Support</div>
+          <p>For dedicated enterprise deployment assistance, custom ERP integrations, or high-throughput Redis cluster setups, contact our engineering support desk at <strong>support@suresalez.io</strong>.</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="assets/docs.js"></script>
+</body>
+</html>

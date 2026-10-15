@@ -1,0 +1,2165 @@
+{
+  "version": "1.9.0",
+  "catalog_name": "SureSalez Haute Imitation Jewelry Demo Fixture",
+  "total_skus": 50,
+  "currency_support": [
+    "USD",
+    "INR",
+    "EUR",
+    "GBP",
+    "AED"
+  ],
+  "default_hsn": "7117",
+  "products": [
+    {
+      "id": 1,
+      "sku": "CHN-001",
+      "title": "Royal Kundan Layered Cuban Chain",
+      "category": "Chains",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 26.69,
+          "sale": 22.69
+        },
+        "INR": {
+          "regular": 2222,
+          "sale": 1889
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 32,
+        "eu-distribution": 20,
+        "in-atelier": 61,
+        "apac-singapore": 24
+      },
+      "is_featured": false,
+      "rating_average": 4.3,
+      "review_count": 25,
+      "weight_grams": 15.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 2,
+      "sku": "CHN-002",
+      "title": "Choker Collar Herringbone Chain",
+      "category": "Chains",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 28.39,
+          "sale": 24.13
+        },
+        "INR": {
+          "regular": 2363,
+          "sale": 2009
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 39,
+        "eu-distribution": 25,
+        "in-atelier": 72,
+        "apac-singapore": 28
+      },
+      "is_featured": false,
+      "rating_average": 4.3,
+      "review_count": 38,
+      "weight_grams": 19,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 3,
+      "sku": "CHN-003",
+      "title": "Rope Twist 24k Matte Gold Chain",
+      "category": "Chains",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 30.09,
+          "sale": 25.58
+        },
+        "INR": {
+          "regular": 2505,
+          "sale": 2129
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 46,
+        "eu-distribution": 30,
+        "in-atelier": 83,
+        "apac-singapore": 32
+      },
+      "is_featured": false,
+      "rating_average": 4.4,
+      "review_count": 51,
+      "weight_grams": 22.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 4,
+      "sku": "CHN-004",
+      "title": "Figaro Link Diamond-Cut Chain",
+      "category": "Chains",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 31.79,
+          "sale": 27.02
+        },
+        "INR": {
+          "regular": 2647,
+          "sale": 2250
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 53,
+        "eu-distribution": 35,
+        "in-atelier": 94,
+        "apac-singapore": 36
+      },
+      "is_featured": true,
+      "rating_average": 4.5,
+      "review_count": 64,
+      "weight_grams": 26,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 5,
+      "sku": "CHN-005",
+      "title": "Box Link Sleek Titanium Plated Chain",
+      "category": "Chains",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 33.49,
+          "sale": 28.47
+        },
+        "INR": {
+          "regular": 2788,
+          "sale": 2370
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 60,
+        "eu-distribution": 40,
+        "in-atelier": 105,
+        "apac-singapore": 40
+      },
+      "is_featured": false,
+      "rating_average": 4.6,
+      "review_count": 77,
+      "weight_grams": 29.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 6,
+      "sku": "CHN-006",
+      "title": "Wheat Braid Antique Silver Chain",
+      "category": "Chains",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 35.19,
+          "sale": 29.91
+        },
+        "INR": {
+          "regular": 2930,
+          "sale": 2491
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 67,
+        "eu-distribution": 45,
+        "in-atelier": 116,
+        "apac-singapore": 44
+      },
+      "is_featured": false,
+      "rating_average": 4.6,
+      "review_count": 90,
+      "weight_grams": 33,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 7,
+      "sku": "CHN-007",
+      "title": "Singapore Sparkle Filigree Chain",
+      "category": "Chains",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 36.89,
+          "sale": 31.36
+        },
+        "INR": {
+          "regular": 3071,
+          "sale": 2610
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 74,
+        "eu-distribution": 50,
+        "in-atelier": 127,
+        "apac-singapore": 48
+      },
+      "is_featured": false,
+      "rating_average": 4.7,
+      "review_count": 103,
+      "weight_grams": 36.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 8,
+      "sku": "CHN-008",
+      "title": "Byzantine Sovereign Statement Chain",
+      "category": "Chains",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 38.59,
+          "sale": 32.8
+        },
+        "INR": {
+          "regular": 3213,
+          "sale": 2731
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 81,
+        "eu-distribution": 55,
+        "in-atelier": 138,
+        "apac-singapore": 52
+      },
+      "is_featured": true,
+      "rating_average": 4.8,
+      "review_count": 21,
+      "weight_grams": 40,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 9,
+      "sku": "CHN-009",
+      "title": "Mariner Anchor Heavyweight Chain",
+      "category": "Chains",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 40.29,
+          "sale": 34.25
+        },
+        "INR": {
+          "regular": 3354,
+          "sale": 2851
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 88,
+        "eu-distribution": 60,
+        "in-atelier": 149,
+        "apac-singapore": 56
+      },
+      "is_featured": false,
+      "rating_average": 4.8,
+      "review_count": 34,
+      "weight_grams": 43.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 10,
+      "sku": "CHN-010",
+      "title": "Snake Skin Minimalist Collar Chain",
+      "category": "Chains",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 41.99,
+          "sale": 35.69
+        },
+        "INR": {
+          "regular": 3496,
+          "sale": 2972
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 95,
+        "eu-distribution": 65,
+        "in-atelier": 160,
+        "apac-singapore": 60
+      },
+      "is_featured": false,
+      "rating_average": 4.9,
+      "review_count": 47,
+      "weight_grams": 47,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 11,
+      "sku": "CHN-011",
+      "title": "Curb Link Micro-Pave Crystal Chain",
+      "category": "Chains",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 43.69,
+          "sale": 37.14
+        },
+        "INR": {
+          "regular": 3637,
+          "sale": 3091
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 102,
+        "eu-distribution": 70,
+        "in-atelier": 171,
+        "apac-singapore": 64
+      },
+      "is_featured": false,
+      "rating_average": 5,
+      "review_count": 60,
+      "weight_grams": 50.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 12,
+      "sku": "CHN-012",
+      "title": "Franco Link Bold Hip-Hop Chain",
+      "category": "Chains",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 45.39,
+          "sale": 38.58
+        },
+        "INR": {
+          "regular": 3779,
+          "sale": 3212
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 29,
+        "eu-distribution": 15,
+        "in-atelier": 182,
+        "apac-singapore": 68
+      },
+      "is_featured": true,
+      "rating_average": 4.2,
+      "review_count": 73,
+      "weight_grams": 54,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 13,
+      "sku": "CHN-013",
+      "title": "Paperclip Modern Geometric Chain",
+      "category": "Chains",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 47.09,
+          "sale": 40.03
+        },
+        "INR": {
+          "regular": 3920,
+          "sale": 3332
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 36,
+        "eu-distribution": 20,
+        "in-atelier": 193,
+        "apac-singapore": 22
+      },
+      "is_featured": false,
+      "rating_average": 4.3,
+      "review_count": 86,
+      "weight_grams": 12.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 14,
+      "sku": "EAR-014",
+      "title": "Solitaire Baguette Diamond-Cut Huggie Earrings",
+      "category": "Earrings",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 48.79,
+          "sale": 41.47
+        },
+        "INR": {
+          "regular": 4062,
+          "sale": 3453
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 43,
+        "eu-distribution": 25,
+        "in-atelier": 54,
+        "apac-singapore": 26
+      },
+      "is_featured": false,
+      "rating_average": 4.4,
+      "review_count": 99,
+      "weight_grams": 16,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 15,
+      "sku": "EAR-015",
+      "title": "Jhumka Traditional Temple Bell Earrings",
+      "category": "Earrings",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 50.49,
+          "sale": 42.92
+        },
+        "INR": {
+          "regular": 4203,
+          "sale": 3573
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 50,
+        "eu-distribution": 30,
+        "in-atelier": 65,
+        "apac-singapore": 30
+      },
+      "is_featured": false,
+      "rating_average": 4.5,
+      "review_count": 17,
+      "weight_grams": 19.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 16,
+      "sku": "EAR-016",
+      "title": "Chandelier Cascading Austrian Crystal Earrings",
+      "category": "Earrings",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 52.19,
+          "sale": 44.36
+        },
+        "INR": {
+          "regular": 4345,
+          "sale": 3693
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 57,
+        "eu-distribution": 35,
+        "in-atelier": 76,
+        "apac-singapore": 34
+      },
+      "is_featured": true,
+      "rating_average": 4.5,
+      "review_count": 30,
+      "weight_grams": 23,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 17,
+      "sku": "EAR-017",
+      "title": "Hoop Micro-Pave CZ Endless Earrings",
+      "category": "Earrings",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 53.89,
+          "sale": 45.81
+        },
+        "INR": {
+          "regular": 4486,
+          "sale": 3813
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 64,
+        "eu-distribution": 40,
+        "in-atelier": 87,
+        "apac-singapore": 38
+      },
+      "is_featured": false,
+      "rating_average": 4.6,
+      "review_count": 43,
+      "weight_grams": 26.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 18,
+      "sku": "EAR-018",
+      "title": "Stud Princess-Cut Cubic Zirconia Earrings",
+      "category": "Earrings",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 55.59,
+          "sale": 47.25
+        },
+        "INR": {
+          "regular": 4628,
+          "sale": 3934
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 71,
+        "eu-distribution": 45,
+        "in-atelier": 98,
+        "apac-singapore": 42
+      },
+      "is_featured": false,
+      "rating_average": 4.7,
+      "review_count": 56,
+      "weight_grams": 30,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 19,
+      "sku": "EAR-019",
+      "title": "Drop Teardrop Emerald Simulant Earrings",
+      "category": "Earrings",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 57.29,
+          "sale": 48.7
+        },
+        "INR": {
+          "regular": 4769,
+          "sale": 4054
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 78,
+        "eu-distribution": 50,
+        "in-atelier": 109,
+        "apac-singapore": 46
+      },
+      "is_featured": false,
+      "rating_average": 4.7,
+      "review_count": 69,
+      "weight_grams": 33.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 20,
+      "sku": "EAR-020",
+      "title": "Ear Climber Celestial Constellation Studs",
+      "category": "Earrings",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 58.99,
+          "sale": 50.14
+        },
+        "INR": {
+          "regular": 4911,
+          "sale": 4174
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 85,
+        "eu-distribution": 55,
+        "in-atelier": 120,
+        "apac-singapore": 50
+      },
+      "is_featured": true,
+      "rating_average": 4.8,
+      "review_count": 82,
+      "weight_grams": 37,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 21,
+      "sku": "EAR-021",
+      "title": "Threader Dangle Delicate Box Chain Earrings",
+      "category": "Earrings",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 60.69,
+          "sale": 51.59
+        },
+        "INR": {
+          "regular": 5052,
+          "sale": 4294
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 92,
+        "eu-distribution": 60,
+        "in-atelier": 131,
+        "apac-singapore": 54
+      },
+      "is_featured": false,
+      "rating_average": 4.9,
+      "review_count": 95,
+      "weight_grams": 40.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 22,
+      "sku": "EAR-022",
+      "title": "Kundan Chandbali Crescent Moon Earrings",
+      "category": "Earrings",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 62.39,
+          "sale": 53.03
+        },
+        "INR": {
+          "regular": 5194,
+          "sale": 4415
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 99,
+        "eu-distribution": 65,
+        "in-atelier": 142,
+        "apac-singapore": 58
+      },
+      "is_featured": false,
+      "rating_average": 4.9,
+      "review_count": 13,
+      "weight_grams": 44,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 23,
+      "sku": "EAR-023",
+      "title": "Polki Uncut Glass Heritage Drop Earrings",
+      "category": "Earrings",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 64.09,
+          "sale": 54.48
+        },
+        "INR": {
+          "regular": 5335,
+          "sale": 4535
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 26,
+        "eu-distribution": 70,
+        "in-atelier": 153,
+        "apac-singapore": 62
+      },
+      "is_featured": false,
+      "rating_average": 4.2,
+      "review_count": 26,
+      "weight_grams": 47.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 24,
+      "sku": "EAR-024",
+      "title": "Bar Minimalist Sleek Rose Gold Earrings",
+      "category": "Earrings",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 65.79,
+          "sale": 55.92
+        },
+        "INR": {
+          "regular": 5477,
+          "sale": 4655
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 33,
+        "eu-distribution": 15,
+        "in-atelier": 164,
+        "apac-singapore": 66
+      },
+      "is_featured": true,
+      "rating_average": 4.3,
+      "review_count": 39,
+      "weight_grams": 51,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 25,
+      "sku": "EAR-025",
+      "title": "Floral Blossom Enamel Stud Earrings",
+      "category": "Earrings",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 67.49,
+          "sale": 57.37
+        },
+        "INR": {
+          "regular": 5619,
+          "sale": 4776
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 40,
+        "eu-distribution": 20,
+        "in-atelier": 175,
+        "apac-singapore": 20
+      },
+      "is_featured": false,
+      "rating_average": 4.4,
+      "review_count": 52,
+      "weight_grams": 54.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 26,
+      "sku": "BNG-026",
+      "title": "Meenakari Floral Filigree Openable Bangle",
+      "category": "Bangles/Bracelets",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 69.19,
+          "sale": 58.81
+        },
+        "INR": {
+          "regular": 5760,
+          "sale": 4896
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 47,
+        "eu-distribution": 25,
+        "in-atelier": 186,
+        "apac-singapore": 24
+      },
+      "is_featured": false,
+      "rating_average": 4.4,
+      "review_count": 65,
+      "weight_grams": 13,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 27,
+      "sku": "BNG-027",
+      "title": "Tennis Bracelet Round Brilliant CZ Stones",
+      "category": "Bangles/Bracelets",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 70.89,
+          "sale": 60.26
+        },
+        "INR": {
+          "regular": 5902,
+          "sale": 5017
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 54,
+        "eu-distribution": 30,
+        "in-atelier": 197,
+        "apac-singapore": 28
+      },
+      "is_featured": false,
+      "rating_average": 4.5,
+      "review_count": 78,
+      "weight_grams": 16.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 28,
+      "sku": "BNG-028",
+      "title": "Kada Heavyweight Carved Royal Bangle",
+      "category": "Bangles/Bracelets",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 72.59,
+          "sale": 61.7
+        },
+        "INR": {
+          "regular": 6043,
+          "sale": 5137
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 61,
+        "eu-distribution": 35,
+        "in-atelier": 58,
+        "apac-singapore": 32
+      },
+      "is_featured": true,
+      "rating_average": 4.6,
+      "review_count": 91,
+      "weight_grams": 20,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 29,
+      "sku": "BNG-029",
+      "title": "Charm Bracelet Celestial Astrology Charms",
+      "category": "Bangles/Bracelets",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 74.29,
+          "sale": 63.15
+        },
+        "INR": {
+          "regular": 6185,
+          "sale": 5257
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 68,
+        "eu-distribution": 40,
+        "in-atelier": 69,
+        "apac-singapore": 36
+      },
+      "is_featured": false,
+      "rating_average": 4.6,
+      "review_count": 104,
+      "weight_grams": 23.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 30,
+      "sku": "BNG-030",
+      "title": "Cuff Hammered Texture Broad Bangle",
+      "category": "Bangles/Bracelets",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 75.99,
+          "sale": 64.59
+        },
+        "INR": {
+          "regular": 6326,
+          "sale": 5377
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 75,
+        "eu-distribution": 45,
+        "in-atelier": 80,
+        "apac-singapore": 40
+      },
+      "is_featured": false,
+      "rating_average": 4.7,
+      "review_count": 22,
+      "weight_grams": 27,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 31,
+      "sku": "BNG-031",
+      "title": "Kundan Antique Bridal Chooda Bangle Pair",
+      "category": "Bangles/Bracelets",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 77.69,
+          "sale": 66.04
+        },
+        "INR": {
+          "regular": 6468,
+          "sale": 5498
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 82,
+        "eu-distribution": 50,
+        "in-atelier": 91,
+        "apac-singapore": 44
+      },
+      "is_featured": false,
+      "rating_average": 4.8,
+      "review_count": 35,
+      "weight_grams": 30.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 32,
+      "sku": "BNG-032",
+      "title": "Bolo Slider Adjustable Friendship Bracelet",
+      "category": "Bangles/Bracelets",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 79.39,
+          "sale": 67.48
+        },
+        "INR": {
+          "regular": 6609,
+          "sale": 5618
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 89,
+        "eu-distribution": 55,
+        "in-atelier": 102,
+        "apac-singapore": 48
+      },
+      "is_featured": true,
+      "rating_average": 4.8,
+      "review_count": 48,
+      "weight_grams": 34,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 33,
+      "sku": "BNG-033",
+      "title": "Interlocking Russian Trinity Bangles Set",
+      "category": "Bangles/Bracelets",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 81.09,
+          "sale": 68.93
+        },
+        "INR": {
+          "regular": 6751,
+          "sale": 5738
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 96,
+        "eu-distribution": 60,
+        "in-atelier": 113,
+        "apac-singapore": 52
+      },
+      "is_featured": false,
+      "rating_average": 4.9,
+      "review_count": 61,
+      "weight_grams": 37.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 34,
+      "sku": "BNG-034",
+      "title": "Twisted Rope Dual-Tone Cable Bangle",
+      "category": "Bangles/Bracelets",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 82.79,
+          "sale": 70.37
+        },
+        "INR": {
+          "regular": 6892,
+          "sale": 5858
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 103,
+        "eu-distribution": 65,
+        "in-atelier": 124,
+        "apac-singapore": 56
+      },
+      "is_featured": false,
+      "rating_average": 5,
+      "review_count": 74,
+      "weight_grams": 41,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 35,
+      "sku": "BNG-035",
+      "title": "Bangle Set Traditional Matte Antique Velvet",
+      "category": "Bangles/Bracelets",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 84.49,
+          "sale": 71.82
+        },
+        "INR": {
+          "regular": 7034,
+          "sale": 5979
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 30,
+        "eu-distribution": 70,
+        "in-atelier": 135,
+        "apac-singapore": 60
+      },
+      "is_featured": false,
+      "rating_average": 4.3,
+      "review_count": 87,
+      "weight_grams": 44.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 36,
+      "sku": "BNG-036",
+      "title": "Link Chain Chunky Toggle Clasp Bracelet",
+      "category": "Bangles/Bracelets",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 86.19,
+          "sale": 73.26
+        },
+        "INR": {
+          "regular": 7175,
+          "sale": 6099
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 37,
+        "eu-distribution": 15,
+        "in-atelier": 146,
+        "apac-singapore": 64
+      },
+      "is_featured": true,
+      "rating_average": 4.3,
+      "review_count": 100,
+      "weight_grams": 48,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 37,
+      "sku": "BNG-037",
+      "title": "Beaded Gemstone Stretch Stack Bracelet",
+      "category": "Bangles/Bracelets",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 87.89,
+          "sale": 74.71
+        },
+        "INR": {
+          "regular": 7317,
+          "sale": 6219
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 44,
+        "eu-distribution": 20,
+        "in-atelier": 157,
+        "apac-singapore": 68
+      },
+      "is_featured": false,
+      "rating_average": 4.4,
+      "review_count": 18,
+      "weight_grams": 51.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 38,
+      "sku": "BNG-038",
+      "title": "Magnetic Therapy Copper & Brass Bracelet",
+      "category": "Bangles/Bracelets",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 89.59,
+          "sale": 76.15
+        },
+        "INR": {
+          "regular": 7458,
+          "sale": 6339
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 51,
+        "eu-distribution": 25,
+        "in-atelier": 168,
+        "apac-singapore": 22
+      },
+      "is_featured": false,
+      "rating_average": 4.5,
+      "review_count": 31,
+      "weight_grams": 55,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 39,
+      "sku": "PND-039",
+      "title": "Emerald Cut Solitaire Halo Locket Pendant",
+      "category": "Pendants",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 26.29,
+          "sale": 22.35
+        },
+        "INR": {
+          "regular": 2189,
+          "sale": 1861
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 58,
+        "eu-distribution": 30,
+        "in-atelier": 179,
+        "apac-singapore": 26
+      },
+      "is_featured": false,
+      "rating_average": 4.5,
+      "review_count": 44,
+      "weight_grams": 13.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 40,
+      "sku": "PND-040",
+      "title": "Lord Ganesha Filigree Spiritual Pendant",
+      "category": "Pendants",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 27.99,
+          "sale": 23.79
+        },
+        "INR": {
+          "regular": 2330,
+          "sale": 1981
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 65,
+        "eu-distribution": 35,
+        "in-atelier": 190,
+        "apac-singapore": 30
+      },
+      "is_featured": true,
+      "rating_average": 4.6,
+      "review_count": 57,
+      "weight_grams": 17,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 41,
+      "sku": "PND-041",
+      "title": "Evil Eye Protective Enamel Medallion Pendant",
+      "category": "Pendants",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 29.69,
+          "sale": 25.24
+        },
+        "INR": {
+          "regular": 2472,
+          "sale": 2101
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 72,
+        "eu-distribution": 40,
+        "in-atelier": 51,
+        "apac-singapore": 34
+      },
+      "is_featured": false,
+      "rating_average": 4.7,
+      "review_count": 70,
+      "weight_grams": 20.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 42,
+      "sku": "PND-042",
+      "title": "Tree of Life Celtic Knotwork Pendant",
+      "category": "Pendants",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 31.39,
+          "sale": 26.68
+        },
+        "INR": {
+          "regular": 2613,
+          "sale": 2221
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 79,
+        "eu-distribution": 45,
+        "in-atelier": 62,
+        "apac-singapore": 38
+      },
+      "is_featured": false,
+      "rating_average": 4.7,
+      "review_count": 83,
+      "weight_grams": 24,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 43,
+      "sku": "PND-043",
+      "title": "Heart Pavé Floating Zirconia Pendant",
+      "category": "Pendants",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 33.09,
+          "sale": 28.13
+        },
+        "INR": {
+          "regular": 2755,
+          "sale": 2342
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 86,
+        "eu-distribution": 50,
+        "in-atelier": 73,
+        "apac-singapore": 42
+      },
+      "is_featured": false,
+      "rating_average": 4.8,
+      "review_count": 96,
+      "weight_grams": 27.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 44,
+      "sku": "PND-044",
+      "title": "Vintage Locket Engraved Floral Keepsake",
+      "category": "Pendants",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 34.79,
+          "sale": 29.57
+        },
+        "INR": {
+          "regular": 2896,
+          "sale": 2462
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 93,
+        "eu-distribution": 55,
+        "in-atelier": 84,
+        "apac-singapore": 46
+      },
+      "is_featured": true,
+      "rating_average": 4.9,
+      "review_count": 14,
+      "weight_grams": 31,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 45,
+      "sku": "PND-045",
+      "title": "Sunburst Celestial Ray Coin Pendant",
+      "category": "Pendants",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 36.49,
+          "sale": 31.02
+        },
+        "INR": {
+          "regular": 3038,
+          "sale": 2582
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 100,
+        "eu-distribution": 60,
+        "in-atelier": 95,
+        "apac-singapore": 50
+      },
+      "is_featured": false,
+      "rating_average": 5,
+      "review_count": 27,
+      "weight_grams": 34.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 46,
+      "sku": "PND-046",
+      "title": "Peacock Royal Meenakari Artwork Pendant",
+      "category": "Pendants",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 38.19,
+          "sale": 32.46
+        },
+        "INR": {
+          "regular": 3179,
+          "sale": 2702
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 27,
+        "eu-distribution": 65,
+        "in-atelier": 106,
+        "apac-singapore": 54
+      },
+      "is_featured": false,
+      "rating_average": 4.2,
+      "review_count": 40,
+      "weight_grams": 38,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 47,
+      "sku": "PND-047",
+      "title": "Teardrop Ruby Simulant Classic Pendant",
+      "category": "Pendants",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 39.89,
+          "sale": 33.91
+        },
+        "INR": {
+          "regular": 3321,
+          "sale": 2823
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 34,
+        "eu-distribution": 70,
+        "in-atelier": 117,
+        "apac-singapore": 58
+      },
+      "is_featured": false,
+      "rating_average": 4.3,
+      "review_count": 53,
+      "weight_grams": 41.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 48,
+      "sku": "PND-048",
+      "title": "Geometric Hexagon Contemporary Prism Pendant",
+      "category": "Pendants",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 41.59,
+          "sale": 35.35
+        },
+        "INR": {
+          "regular": 3462,
+          "sale": 2943
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 41,
+        "eu-distribution": 15,
+        "in-atelier": 128,
+        "apac-singapore": 62
+      },
+      "is_featured": true,
+      "rating_average": 4.4,
+      "review_count": 66,
+      "weight_grams": 45,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 49,
+      "sku": "PND-049",
+      "title": "Om Sacred Mantra Brushed Silver Pendant",
+      "category": "Pendants",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 43.29,
+          "sale": 36.8
+        },
+        "INR": {
+          "regular": 3604,
+          "sale": 3063
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 48,
+        "eu-distribution": 20,
+        "in-atelier": 139,
+        "apac-singapore": 66
+      },
+      "is_featured": false,
+      "rating_average": 4.4,
+      "review_count": 79,
+      "weight_grams": 48.5,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    },
+    {
+      "id": 50,
+      "sku": "PND-050",
+      "title": "Infinity Love Intertwined Ribbon Pendant",
+      "category": "Pendants",
+      "hsn_code": "7117",
+      "hsn_description": "Imitation jewellery - of base metal whether or not plated with precious metal",
+      "gst_rate_percent": 3,
+      "cgst_percent": 1.5,
+      "sgst_percent": 1.5,
+      "igst_percent": 3,
+      "finishes_available": [
+        "24K Yellow Gold",
+        "925 Sterling Silver",
+        "Rose Gold"
+      ],
+      "default_finish": "24K Yellow Gold",
+      "pricing": {
+        "USD": {
+          "regular": 44.99,
+          "sale": 38.24
+        },
+        "INR": {
+          "regular": 3745,
+          "sale": 3183
+        }
+      },
+      "stock_by_hub": {
+        "us-flagship": 55,
+        "eu-distribution": 25,
+        "in-atelier": 150,
+        "apac-singapore": 20
+      },
+      "is_featured": false,
+      "rating_average": 4.5,
+      "review_count": 92,
+      "weight_grams": 52,
+      "dimensions_cm": {
+        "length": 15,
+        "width": 2,
+        "height": 1.5
+      }
+    }
+  ]
+}

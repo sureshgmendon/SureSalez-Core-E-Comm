@@ -372,15 +372,66 @@ console.log('\n\x1b[36m[Suite 6] Decoupling & Zero-Bloat Invariant Check\x1b[0m'
 
 const themeDir = path.join(rootDir, 'themes/suresalez-theme');
 const themeFiles = fs.readdirSync(themeDir, { recursive: true });
-let phpFoundInTheme = false;
+let forbiddenPhpFound = false;
 
 themeFiles.forEach(tf => {
     if (typeof tf === 'string' && tf.endsWith('.php')) {
-        phpFoundInTheme = true;
+        const normalized = tf.replace(/\\/g, '/');
+        if (!normalized.startsWith('patterns/')) {
+            forbiddenPhpFound = true;
+        }
     }
 });
 
-assert(!phpFoundInTheme, 'Theme has 0 PHP files (100% decoupled pure FSE block theme)');
+assert(!forbiddenPhpFound, 'Theme has 0 PHP logic files outside patterns/ (100% decoupled pure FSE block theme)');
+
+// Validate 20 FSE Block Patterns (10 Headers, 10 Footers)
+const patternsDir = path.join(themeDir, 'patterns');
+assert(fs.existsSync(patternsDir), 'Patterns directory exists in theme');
+
+const patternFiles = fs.readdirSync(patternsDir);
+const headerPatterns = patternFiles.filter(f => f.startsWith('header-') && f.endsWith('.php'));
+const footerPatterns = patternFiles.filter(f => f.startsWith('footer-') && f.endsWith('.php'));
+
+assert(headerPatterns.length === 10, `Theme contains exactly 10 Header patterns (found: ${headerPatterns.length})`);
+assert(footerPatterns.length === 10, `Theme contains exactly 10 Footer patterns (found: ${footerPatterns.length})`);
+
+let patternLogicViolations = 0;
+let patternHeaderErrors = 0;
+
+patternFiles.forEach(pf => {
+    const pContent = fs.readFileSync(path.join(patternsDir, pf), 'utf8');
+    
+    // Check zero executable PHP logic
+    const phpBlocks = pContent.match(/<\?php[\s\S]*?\?>/g) || [];
+    if (phpBlocks.length > 1) {
+        patternLogicViolations++;
+    } else if (phpBlocks.length === 1) {
+        const stripped = phpBlocks[0].replace(/<\?php|\?>|\/\*[\s\S]*?\*\/|\s+/g, '');
+        if (stripped.length > 0) {
+            patternLogicViolations++;
+        }
+    }
+
+    // Check WordPress FSE Replaceability headers
+    if (pf.startsWith('header-')) {
+        if (!/Categories:\s*header/i.test(pContent) || !/Block Types:\s*core\/template-part\/header/i.test(pContent)) {
+            patternHeaderErrors++;
+        }
+    } else if (pf.startsWith('footer-')) {
+        if (!/Categories:\s*footer/i.test(pContent) || !/Block Types:\s*core\/template-part\/footer/i.test(pContent)) {
+            patternHeaderErrors++;
+        }
+    }
+
+    // Check valid block comments
+    if (!pContent.includes('<!-- wp:') || !pContent.includes('<!-- /wp:')) {
+        patternHeaderErrors++;
+    }
+});
+
+assert(patternLogicViolations === 0, 'All FSE block patterns contain strictly ZERO executable PHP logic');
+assert(patternHeaderErrors === 0, 'All FSE block patterns declare valid WordPress FSE replaceability headers and block markup');
 
 const moduleManagerContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/includes/class-module-manager.php'), 'utf8');
 assert(moduleManagerContent.includes('is_module_active'), 'Module Manager verifies active status before init');

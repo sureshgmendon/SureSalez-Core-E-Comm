@@ -350,6 +350,7 @@ function checkThemeForPhp(dir) {
     for (const entry of entries) {
         const full = path.join(dir, entry.name);
         if (entry.isDirectory()) {
+            if (entry.name === 'patterns') continue;
             checkThemeForPhp(full);
         } else if (entry.name.endsWith('.php')) {
             throw new Error(`Forbidden PHP file discovered in theme: ${full}`);

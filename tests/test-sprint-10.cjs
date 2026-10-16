@@ -372,6 +372,7 @@ function findPhpFiles(dir) {
     const fullPath = path.join(dir, file);
     const stat = fs.statSync(fullPath);
     if (stat && stat.isDirectory()) {
+      if (file === 'patterns') return;
       results = results.concat(findPhpFiles(fullPath));
     } else if (file.endsWith('.php')) {
       results.push(fullPath);

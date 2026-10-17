@@ -17,8 +17,13 @@
       "palette": [
         {
           "slug": "primary",
-          "color": "#0f172a",
+          "color": "#0a0f1d",
           "name": "Primary Deep Slate"
+        },
+        {
+          "slug": "slate-dark",
+          "color": "#0a0f1d",
+          "name": "Slate Dark (Oura / Paul Smith)"
         },
         {
           "slug": "primary-hover",
@@ -47,7 +52,7 @@
         },
         {
           "slug": "foreground",
-          "color": "#0f172a",
+          "color": "#0a0f1d",
           "name": "Foreground Text"
         },
         {
@@ -58,12 +63,22 @@
         {
           "slug": "background",
           "color": "#ffffff",
-          "name": "Background Pure"
+          "name": "Pure White Background"
+        },
+        {
+          "slug": "stone-neutral",
+          "color": "#f8fafc",
+          "name": "Stone Neutral"
         },
         {
           "slug": "background-alt",
           "color": "#f8fafc",
           "name": "Subtle Background"
+        },
+        {
+          "slug": "muted-border",
+          "color": "#e2e8f0",
+          "name": "Muted Border"
         },
         {
           "slug": "border-subtle",
@@ -76,17 +91,47 @@
       "fluid": true,
       "fontFamilies": [
         {
-          "fontFamily": "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-          "name": "Sans Serif (Inter)",
+          "fontFamily": "\"Plus Jakarta Sans\", \"Inter\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+          "name": "Heading (Jakarta / Grotesque)",
+          "slug": "heading"
+        },
+        {
+          "fontFamily": "\"Inter\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif",
+          "name": "Sans (Inter)",
           "slug": "sans"
         },
         {
-          "fontFamily": "'JetBrains Mono', Consolas, Monaco, monospace",
+          "fontFamily": "\"JetBrains Mono\", Consolas, Monaco, monospace",
           "name": "Monospace",
           "slug": "mono"
         }
       ],
       "fontSizes": [
+        {
+          "name": "Hero Display",
+          "size": "clamp(2.75rem, 6vw, 4.75rem)",
+          "slug": "hero-display"
+        },
+        {
+          "name": "Heading XL",
+          "size": "clamp(2rem, 4vw, 3rem)",
+          "slug": "heading-xl"
+        },
+        {
+          "name": "Heading LG",
+          "size": "clamp(1.5rem, 3vw, 2.25rem)",
+          "slug": "heading-lg"
+        },
+        {
+          "name": "Body",
+          "size": "1rem",
+          "slug": "body"
+        },
+        {
+          "name": "Caption Mono",
+          "size": "0.75rem",
+          "slug": "caption-mono"
+        },
         {
           "name": "XS",
           "size": "0.75rem",
@@ -164,6 +209,11 @@
           "name": "12",
           "size": "3rem",
           "slug": "80"
+        },
+        {
+          "name": "16",
+          "size": "4rem",
+          "slug": "90"
         }
       ]
     }
@@ -175,7 +225,7 @@
     },
     "typography": {
       "fontFamily": "var(--wp--preset--font-family--sans)",
-      "fontSize": "var(--wp--preset--font-size--medium)",
+      "fontSize": "var(--wp--preset--font-size--body)",
       "lineHeight": "1.6"
     },
     "elements": {
@@ -185,19 +235,20 @@
           "text": "#ffffff"
         },
         "border": {
-          "radius": "8px"
+          "radius": "9999px"
         },
         "spacing": {
           "padding": {
-            "top": "0.75rem",
-            "bottom": "0.75rem",
-            "left": "1.5rem",
-            "right": "1.5rem"
+            "top": "0.85rem",
+            "bottom": "0.85rem",
+            "left": "1.75rem",
+            "right": "1.75rem"
           }
         },
         "typography": {
           "fontWeight": "600",
-          "fontSize": "0.9375rem"
+          "fontSize": "0.9375rem",
+          "letterSpacing": "0.01em"
         }
       },
       "link": {
@@ -212,23 +263,29 @@
       },
       "h1": {
         "typography": {
-          "fontSize": "var(--wp--preset--font-size--3-xl)",
+          "fontFamily": "var(--wp--preset--font-family--heading)",
+          "fontSize": "var(--wp--preset--font-size--hero-display)",
           "fontWeight": "800",
-          "lineHeight": "1.2"
+          "lineHeight": "1.1",
+          "letterSpacing": "-0.035em"
         }
       },
       "h2": {
         "typography": {
-          "fontSize": "var(--wp--preset--font-size--2-xl)",
+          "fontFamily": "var(--wp--preset--font-family--heading)",
+          "fontSize": "var(--wp--preset--font-size--heading-xl)",
           "fontWeight": "700",
-          "lineHeight": "1.25"
+          "lineHeight": "1.2",
+          "letterSpacing": "-0.025em"
         }
       },
       "h3": {
         "typography": {
-          "fontSize": "var(--wp--preset--font-size--xl)",
+          "fontFamily": "var(--wp--preset--font-family--heading)",
+          "fontSize": "var(--wp--preset--font-size--heading-lg)",
           "fontWeight": "600",
-          "lineHeight": "1.3"
+          "lineHeight": "1.3",
+          "letterSpacing": "-0.02em"
         }
       }
     }

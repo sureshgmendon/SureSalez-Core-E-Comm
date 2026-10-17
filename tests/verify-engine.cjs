@@ -195,6 +195,16 @@ try {
     assert(themeData.settings && themeData.settings.color && Array.isArray(themeData.settings.color.palette), 'theme.json declares custom color palette');
     assert(themeData.settings.typography && Array.isArray(themeData.settings.typography.fontSizes), 'theme.json declares fluid typography scale');
     assert(themeData.styles && themeData.styles.elements && themeData.styles.elements.button, 'theme.json styles buttons with design tokens');
+
+    // Oura & Paul Smith design system token assertions
+    const hasJakartaHeading = themeData.settings.typography.fontFamilies && themeData.settings.typography.fontFamilies.some(f => f.slug === 'heading' && f.fontFamily.includes('Plus Jakarta Sans'));
+    assert(hasJakartaHeading, 'theme.json registers Plus Jakarta Sans grotesque heading font family');
+
+    const hasHeroDisplay = themeData.settings.typography.fontSizes.some(s => s.slug === 'hero-display' && s.size.includes('clamp'));
+    assert(hasHeroDisplay, 'theme.json registers fluid clamp hero-display font scale');
+
+    const hasSlateDark = themeData.settings.color.palette.some(c => c.slug === 'slate-dark' && c.color === '#0a0f1d');
+    assert(hasSlateDark, 'theme.json registers luxury neutral Slate Dark token (#0a0f1d)');
 } catch (err) {
     assert(false, `theme.json failed JSON parse: ${err.message}`);
 }
@@ -432,6 +442,24 @@ patternFiles.forEach(pf => {
 
 assert(patternLogicViolations === 0, 'All FSE block patterns contain strictly ZERO executable PHP logic');
 assert(patternHeaderErrors === 0, 'All FSE block patterns declare valid WordPress FSE replaceability headers and block markup');
+
+// Validate Paul Smith & Oura Style Hero Block Patterns
+const heroEditorialPath = path.join(patternsDir, 'hero-01-editorial-split.php');
+assert(fs.existsSync(heroEditorialPath), 'Hero pattern exists: hero-01-editorial-split.php');
+const heroEditorialContent = fs.readFileSync(heroEditorialPath, 'utf8');
+assert(heroEditorialContent.includes('hero-editorial-split'), 'hero-01 declares slug suresalez-theme/hero-editorial-split');
+assert(/Categories:\s*banner,\s*featured/i.test(heroEditorialContent), 'hero-01 declares Categories: banner, featured');
+
+const heroImmersivePath = path.join(patternsDir, 'hero-02-minimal-immersive.php');
+assert(fs.existsSync(heroImmersivePath), 'Hero pattern exists: hero-02-minimal-immersive.php');
+const heroImmersiveContent = fs.readFileSync(heroImmersivePath, 'utf8');
+assert(heroImmersiveContent.includes('hero-minimal-immersive'), 'hero-02 declares slug suresalez-theme/hero-minimal-immersive');
+assert(/Categories:\s*banner,\s*featured/i.test(heroImmersiveContent), 'hero-02 declares Categories: banner, featured');
+
+// Validate index.html wires Paul Smith editorial hero pattern
+const indexPath = path.join(themeDir, 'templates/index.html');
+const indexContent = fs.readFileSync(indexPath, 'utf8');
+assert(indexContent.includes('wp:pattern {"slug":"suresalez-theme/hero-editorial-split"}'), 'index.html wires hero-editorial-split pattern below header');
 
 const moduleManagerContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/includes/class-module-manager.php'), 'utf8');
 assert(moduleManagerContent.includes('is_module_active'), 'Module Manager verifies active status before init');

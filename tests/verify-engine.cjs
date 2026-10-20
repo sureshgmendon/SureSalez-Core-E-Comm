@@ -456,10 +456,16 @@ const heroImmersiveContent = fs.readFileSync(heroImmersivePath, 'utf8');
 assert(heroImmersiveContent.includes('hero-minimal-immersive'), 'hero-02 declares slug suresalez-theme/hero-minimal-immersive');
 assert(/Categories:\s*banner,\s*featured/i.test(heroImmersiveContent), 'hero-02 declares Categories: banner, featured');
 
-// Validate index.html wires Paul Smith editorial hero pattern
+const heroVideoImagePath = path.join(patternsDir, 'hero-03-video-image-split.php');
+assert(fs.existsSync(heroVideoImagePath), 'Hero pattern exists: hero-03-video-image-split.php');
+const heroVideoImageContent = fs.readFileSync(heroVideoImagePath, 'utf8');
+assert(heroVideoImageContent.includes('hero-video-image-split'), 'hero-03 declares slug suresalez-theme/hero-video-image-split');
+assert(/Categories:\s*banner,\s*featured/i.test(heroVideoImageContent), 'hero-03 declares Categories: banner, featured');
+
+// Validate index.html wires hero pattern below header
 const indexPath = path.join(themeDir, 'templates/index.html');
 const indexContent = fs.readFileSync(indexPath, 'utf8');
-assert(indexContent.includes('wp:pattern {"slug":"suresalez-theme/hero-editorial-split"}'), 'index.html wires hero-editorial-split pattern below header');
+assert(indexContent.includes('wp:pattern {"slug":"suresalez-theme/hero-video-image-split"}'), 'index.html wires hero-video-image-split pattern below header');
 
 const moduleManagerContent = fs.readFileSync(path.join(rootDir, 'plugins/suresalez-core/includes/class-module-manager.php'), 'utf8');
 assert(moduleManagerContent.includes('is_module_active'), 'Module Manager verifies active status before init');

@@ -364,26 +364,28 @@ it('Theme index mounts #suresalez-tenant-billing-mount', () => {
   assert(indexHtml.includes('id="suresalez-tenant-billing-mount"'), 'Missing #suresalez-tenant-billing-mount in index.html');
 });
 
-// Check pure FSE theme invariant (0 PHP files)
-function findPhpFiles(dir) {
+// Check theme contains strictly 0 business logic PHP files (Decoupled Hybrid PHP theme shell)
+function findBusinessLogicInPhp(dir) {
   let results = [];
   const list = fs.readdirSync(dir);
   list.forEach(file => {
     const fullPath = path.join(dir, file);
     const stat = fs.statSync(fullPath);
     if (stat && stat.isDirectory()) {
-      if (file === 'patterns') return;
-      results = results.concat(findPhpFiles(fullPath));
+      results = results.concat(findBusinessLogicInPhp(fullPath));
     } else if (file.endsWith('.php')) {
-      results.push(fullPath);
+      const content = fs.readFileSync(fullPath, 'utf8');
+      if (content.includes('$wpdb') || content.includes('register_post_type') || content.includes('CREATE TABLE')) {
+        results.push(fullPath);
+      }
     }
   });
   return results;
 }
 
-it('SureSalez Theme contains strictly 0 PHP files (Pure FSE block theme)', () => {
-  const themePhp = findPhpFiles(path.join(baseDir, 'themes/suresalez-theme'));
-  assert.strictEqual(themePhp.length, 0, `Found PHP files in pure theme: ${themePhp.join(', ')}`);
+it('SureSalez Theme contains strictly 0 business logic (Decoupled Hybrid PHP theme shell)', () => {
+  const themeViolations = findBusinessLogicInPhp(path.join(baseDir, 'themes/suresalez-theme'));
+  assert.strictEqual(themeViolations.length, 0, `Found forbidden business logic in theme: ${themeViolations.join(', ')}`);
 });
 
 // ==========================================

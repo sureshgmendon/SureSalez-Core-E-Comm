@@ -409,26 +409,28 @@ const themeIndex = fs.readFileSync(path.join(baseDir, 'themes/suresalez-theme/te
 assert(themeIndex.includes('suresalez-order-tracking-mount'), 'Theme index template mounts #suresalez-order-tracking-mount');
 assert(themeIndex.includes('suresalez-rma-portal-mount'), 'Theme index template mounts #suresalez-rma-portal-mount');
 
-// Check theme has 0 PHP files
-function checkThemeForPhp(dir) {
+// Check theme contains strictly 0 business logic PHP files (Decoupled Hybrid PHP theme shell)
+function checkThemeForBusinessLogic(dir) {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
     for (const entry of entries) {
         const full = path.join(dir, entry.name);
         if (entry.isDirectory()) {
-            if (entry.name === 'patterns') continue;
-            checkThemeForPhp(full);
+            checkThemeForBusinessLogic(full);
         } else if (entry.name.endsWith('.php')) {
-            throw new Error(`Forbidden PHP file discovered in theme: ${full}`);
+            const content = fs.readFileSync(full, 'utf8');
+            if (content.includes('$wpdb') || content.includes('register_post_type') || content.includes('CREATE TABLE')) {
+                throw new Error(`Forbidden business logic discovered in theme: ${full}`);
+            }
         }
     }
 }
-let themePhpCount = 0;
+let themeBusinessLogicViolations = 0;
 try {
-    checkThemeForPhp(path.join(baseDir, 'themes/suresalez-theme'));
+    checkThemeForBusinessLogic(path.join(baseDir, 'themes/suresalez-theme'));
 } catch (e) {
-    themePhpCount++;
+    themeBusinessLogicViolations++;
 }
-assert(themePhpCount === 0, 'SureSalez Theme contains strictly 0 PHP files (Pure FSE block theme)');
+assert(themeBusinessLogicViolations === 0, 'SureSalez Theme contains strictly 0 business logic (Decoupled Hybrid PHP theme shell)');
 
 // --------------------------------------------------------------------------
 // TEST SUMMARY

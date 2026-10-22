@@ -14,10 +14,198 @@ Text Domain: suresalez-theme
 Tags: full-site-editing, e-commerce, block-patterns, custom-colors, custom-spacing
 */
 
-/* Minimal reset and custom properties fallback */
+/* Minimal reset and custom properties fallback (Kadence Core Tokens) */
 :root {
   --suresalez-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --suresalez-font-heading: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --suresalez-font-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Kadence Defensive Layout Tokens */
+  --global-content-width: 1440px;
+  --global-content-edge-padding: 1.5rem;
+  --global-content-edge-padding-mobile: 1rem;
+  --header-logo-height: 60px;
+  --header-mobile-logo-height: 42px;
+
+  /* Global Color Palette (Oura / Paul Smith Luxury Tokens) */
+  --global-palette1: #0a0f1d;
+  --global-palette2: #1e293b;
+  --global-palette3: #3b82f6;
+  --global-palette4: #eff6ff;
+  --global-palette5: #10b981;
+  --global-palette6: #64748b;
+  --global-palette7: #e2e8f0;
+  --global-palette8: #f8fafc;
+  --global-palette9: #ffffff;
+
+  /* Button Tokens */
+  --global-palette-btn-bg: #0a0f1d;
+  --global-palette-btn-bg-hover: #1e293b;
+  --global-palette-btn: #ffffff;
+  --global-palette-btn-hover: #ffffff;
+  --global-palette-highlight: #3b82f6;
+
+  /* Spacing */
+  --global-xs-spacing: 0.5rem;
+  --global-sm-spacing: 0.75rem;
+  --global-md-spacing: 1.5rem;
+  --global-lg-spacing: 2rem;
+  --global-xl-spacing: 3rem;
+  --global-xxl-spacing: 4rem;
+}
+
+/* ==========================================================================
+   Kadence Defensive Boundaries: Core Layout Mechanics
+   ========================================================================== */
+
+/* 1. Defensive Boundary: Centered Desktop Width & Mobile Content Edge Padding */
+.site-container,
+.site-header-row-layout-contained,
+.site-footer-row-layout-contained,
+.entry-hero-layout-contained,
+.suresalez-header-container,
+.suresalez-site-container {
+  width: 100%;
+  max-width: var(--global-content-width, 1440px);
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: var(--global-content-edge-padding, 1.5rem);
+  padding-right: var(--global-content-edge-padding, 1.5rem);
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 767px) {
+  .site-container,
+  .site-header-row-layout-contained,
+  .site-footer-row-layout-contained,
+  .entry-hero-layout-contained,
+  .suresalez-header-container,
+  .suresalez-site-container {
+    padding-left: var(--global-content-edge-padding-mobile, 1rem);
+    padding-right: var(--global-content-edge-padding-mobile, 1rem);
+  }
+}
+
+/* 2. Defensive Boundary: Strict Logo Clamp (High-Res / Retina Logos NEVER Blow Up) */
+.custom-logo-link,
+.site-branding a.brand,
+.site-branding .custom-logo-link,
+.suresalez-header-brand,
+.suresalez-mobile-brand {
+  display: inline-flex;
+  align-items: center;
+  max-height: inherit;
+  line-height: 1;
+}
+
+.custom-logo-link img,
+.site-branding img,
+img.custom-logo,
+.suresalez-header-brand img,
+.suresalez-brand-logo img,
+.suresalez-mobile-col-center img {
+  max-height: var(--header-logo-height, 60px) !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  display: block !important;
+}
+
+@media screen and (max-width: 767px) {
+  .custom-logo-link img,
+  .site-branding img,
+  img.custom-logo,
+  .suresalez-header-brand img,
+  .suresalez-brand-logo img,
+  .suresalez-mobile-col-center img {
+    max-height: var(--header-mobile-logo-height, 42px) !important;
+  }
+}
+
+/* 3. Kadence 3-Column Header Architecture & Flex/Grid Column Direction Switches */
+.site-header-row,
+.suresalez-header-3col {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  width: 100%;
+  gap: var(--global-md-spacing, 1.5rem);
+  box-sizing: border-box;
+}
+
+.site-header-row.site-header-row-center-column {
+  grid-template-columns: 1fr auto 1fr;
+}
+
+.site-header-section {
+  display: flex;
+  align-items: center;
+  max-height: inherit;
+  min-width: 0;
+}
+
+/* Column 1: Left (Nav Left) */
+.site-header-section-left,
+.suresalez-header-col-left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+/* Column 2: Center (Clamped Logo Center) */
+.site-header-section-center,
+.suresalez-header-col-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Column 3: Right (Account, Cart, Actions Right) */
+.site-header-section-right,
+.suresalez-header-col-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: right;
+  gap: 1.25rem;
+}
+
+/* Direction Switches: Horizontal on Desktop (>= 768px), Vertical Stack on Mobile (< 768px) */
+@media screen and (min-width: 768px) {
+  #main-header,
+  .suresalez-header-desktop {
+    display: block !important;
+  }
+  #mobile-header,
+  .suresalez-header-mobile {
+    display: none !important;
+  }
+  .site-header-row-switch,
+  .suresalez-stack-responsive {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  #main-header,
+  .suresalez-header-desktop {
+    display: none !important;
+  }
+  #mobile-header,
+  .suresalez-header-mobile {
+    display: block !important;
+  }
+  .site-header-row-switch,
+  .suresalez-stack-responsive {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 
 /* Core Layout Reset for 100% Full-Viewport & Edge-to-Edge Alignment */
@@ -417,13 +605,11 @@ img {
 }
 
 .suresalez-header-container {
-  max-width: var(--wp--style--global--wide-size, 1440px);
+  max-width: var(--global-content-width, 1440px);
   margin: 0 auto;
-  padding: 1rem 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
+  padding: 0.85rem var(--global-content-edge-padding, 1.5rem);
+  box-sizing: border-box;
+  width: 100%;
 }
 
 /* Desktop Header (>= 768px) */

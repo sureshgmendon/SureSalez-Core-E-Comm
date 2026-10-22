@@ -28,4 +28,23 @@ if (!defined('ABSPATH')) {
 </a>
 
 <div id="page" class="site-wrapper">
-  <?php get_template_part('parts/headers/header-main'); ?>
+  <?php
+  /**
+   * Semantic Header Action Hooks (Kadence Core Architecture)
+   *
+   * Hooked by default: suresalez_render_default_header -> parts/headers/header-main
+   */
+  do_action('suresalez_before_header');
+  do_action('kadence_before_header');
+
+  if (has_action('suresalez_header')) {
+      do_action('suresalez_header');
+  } elseif (has_action('kadence_header')) {
+      do_action('kadence_header');
+  } else {
+      get_template_part('parts/headers/header-main');
+  }
+
+  do_action('suresalez_after_header');
+  do_action('kadence_after_header');
+  ?>

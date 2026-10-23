@@ -1,0 +1,734 @@
+/**
+ * Kadence Interactive Components & UI System
+ * Product Cards, Variation Swatches, Slide-Out Drawers, Navigation Dropdowns, Badges
+ */
+
+/* -------------------------------------------------------------
+ * 1. Brand Logo & Typography Elements
+ * ------------------------------------------------------------- */
+.brand-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--global-palette3);
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+}
+
+.brand-logo span {
+  color: var(--global-palette1);
+  margin-left: 2px;
+}
+
+/* -------------------------------------------------------------
+ * 2. Navigation Menus & Underline Animations
+ * ------------------------------------------------------------- */
+.header-navigation ul.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--global-lg-spacing);
+}
+
+.header-navigation .menu-item {
+  position: relative;
+}
+
+.header-navigation .menu-item a {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--global-palette4);
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.5rem 0;
+  position: relative;
+  transition: color var(--global-transition-fast);
+}
+
+.header-navigation .menu-item a:hover,
+.header-navigation .menu-item.current-menu-item > a {
+  color: var(--global-palette-highlight);
+}
+
+/* Modern Underline Indicator */
+.header-navigation .menu-item a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--global-palette-highlight);
+  transform: scale(0, 1) translate(-50%, 0);
+  transform-origin: center;
+  transition: transform var(--global-transition-normal);
+}
+
+.header-navigation .menu-item:hover > a::after,
+.header-navigation .menu-item.current-menu-item > a::after {
+  transform: scale(1, 1) translate(-50%, 0);
+}
+
+/* Submenu Dropdowns */
+.header-navigation .sub-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  background: var(--global-palette9);
+  list-style: none;
+  margin: 0;
+  padding: 0.5rem 0;
+  box-shadow: var(--global-box-shadow-lg);
+  border-radius: var(--global-border-radius);
+  border: 1px solid var(--global-palette7);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all var(--global-transition-normal);
+  z-index: 1000;
+}
+
+.header-navigation .menu-item:hover > .sub-menu,
+.header-navigation .menu-item.menu-item--toggled-on > .sub-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.header-navigation .sub-menu li a {
+  padding: 0.6rem 1.25rem;
+  display: block;
+  font-size: 0.875rem;
+  color: var(--global-palette4);
+}
+
+.header-navigation .sub-menu li a:hover {
+  background: var(--global-palette8);
+  color: var(--global-palette1);
+}
+
+.header-navigation .sub-menu li a::after {
+  display: none;
+}
+
+.dropdown-nav-special-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 4px;
+  display: inline-flex;
+  align-items: center;
+  color: currentColor;
+}
+
+.dropdown-nav-special-toggle svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  transition: transform var(--global-transition-fast);
+}
+
+.menu-item.menu-item--toggled-on > a .dropdown-nav-special-toggle svg {
+  transform: rotate(180deg);
+}
+
+/* -------------------------------------------------------------
+ * 3. Buttons & Interactive Controls
+ * ------------------------------------------------------------- */
+.button,
+button.button,
+a.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--global-border-radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  text-decoration: none;
+  background-color: var(--global-palette-btn-bg);
+  color: var(--global-palette-btn);
+  transition: all var(--global-transition-fast);
+}
+
+.button:hover {
+  background-color: var(--global-palette-btn-bg-hover);
+  color: var(--global-palette-btn-hover);
+  box-shadow: var(--global-box-shadow-sm);
+}
+
+.button-secondary {
+  background-color: var(--global-palette-btn-sec-bg);
+  color: var(--global-palette-btn-sec);
+}
+
+.button-secondary:hover {
+  background-color: var(--global-palette-btn-sec-bg-hover);
+  color: var(--global-palette-btn-sec-hover);
+}
+
+.button-outline {
+  background-color: transparent;
+  border-color: var(--global-palette1);
+  color: var(--global-palette1);
+}
+
+.button-outline:hover {
+  background-color: var(--global-palette1);
+  color: #ffffff;
+}
+
+/* Icon Buttons (Search & Cart) */
+.header-cart-button,
+.search-toggle-open,
+.menu-toggle-open {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  color: var(--global-palette3);
+  position: relative;
+  transition: color var(--global-transition-fast);
+}
+
+.header-cart-button:hover,
+.search-toggle-open:hover,
+.menu-toggle-open:hover {
+  color: var(--global-palette1);
+}
+
+.header-cart-button svg,
+.search-toggle-open svg,
+.menu-toggle-open svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor;
+}
+
+.header-cart-total {
+  position: absolute;
+  top: 0px;
+  right: -2px;
+  background: var(--global-palette1);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 2px var(--global-palette9);
+}
+
+/* -------------------------------------------------------------
+ * 4. Badges System
+ * ------------------------------------------------------------- */
+.onsale,
+.badge-out-of-stock,
+.badge-custom {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 5;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.25rem 0.65rem;
+  border-radius: 20px;
+  line-height: 1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+.onsale {
+  background: var(--global-palette13);
+  color: #ffffff;
+}
+
+.badge-out-of-stock {
+  background: var(--global-palette6);
+  color: #ffffff;
+}
+
+.badge-custom {
+  background: var(--global-palette1);
+  color: #ffffff;
+}
+
+/* -------------------------------------------------------------
+ * 5. WooCommerce Product Catalog Grid & Cards
+ * ------------------------------------------------------------- */
+.woocommerce ul.products {
+  display: grid;
+  grid-template-columns: repeat(var(--woo-columns-desktop), minmax(0, 1fr));
+  gap: var(--woo-grid-gap);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media screen and (max-width: 1024px) {
+  .woocommerce ul.products {
+    grid-template-columns: repeat(var(--woo-columns-tablet), minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media screen and (max-width: 719px) {
+  .woocommerce ul.products {
+    grid-template-columns: repeat(var(--woo-columns-mobile), minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+
+.woocommerce ul.products li.product {
+  background: var(--global-palette9);
+  border: 1px solid var(--global-palette7);
+  border-radius: var(--global-border-radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--global-transition-normal), box-shadow var(--global-transition-normal), border-color var(--global-transition-normal);
+}
+
+.woocommerce ul.products li.product:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--global-box-shadow-lg);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Image Wrap & Hover Swap */
+.product-thumbnail-wrap {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  background: var(--global-palette8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-thumbnail-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity var(--global-transition-normal), transform var(--global-transition-normal);
+}
+
+.product-thumbnail-wrap img.secondary-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.woocommerce ul.products li.product:hover .product-thumbnail-wrap img.secondary-image {
+  opacity: 1;
+}
+
+.woocommerce ul.products li.product:hover .product-thumbnail-wrap img.primary-image {
+  transform: scale(1.04);
+}
+
+/* Quick View Button */
+.kadence-quick-view-btn {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  opacity: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+  color: var(--global-palette3);
+  border: none;
+  border-radius: var(--global-border-radius-full);
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--global-box-shadow-md);
+  transition: all var(--global-transition-fast);
+  white-space: nowrap;
+  z-index: 6;
+}
+
+.kadence-quick-view-btn:hover {
+  background: var(--global-palette1);
+  color: #ffffff;
+}
+
+.woocommerce ul.products li.product:hover .kadence-quick-view-btn {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* Details Section */
+.product-details {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.product-category {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--global-palette6);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.25rem;
+}
+
+.woocommerce-loop-product__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.woocommerce-loop-product__title a {
+  text-decoration: none;
+  color: var(--global-palette3);
+  transition: color var(--global-transition-fast);
+}
+
+.woocommerce-loop-product__title a:hover {
+  color: var(--global-palette1);
+}
+
+.star-rating {
+  color: var(--global-palette15);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+  letter-spacing: 2px;
+}
+
+.price {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--global-palette3);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.price del {
+  color: var(--global-palette6);
+  font-weight: 400;
+  font-size: 0.9rem;
+}
+
+.price ins {
+  color: var(--global-palette13);
+  text-decoration: none;
+}
+
+/* Variation Swatches */
+.kadence-swatches-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.kadence-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  outline: 1px solid var(--global-palette6);
+  outline-offset: 1px;
+  background-color: var(--swatch-color, #ccc);
+  cursor: pointer;
+  position: relative;
+  padding: 0;
+  transition: all var(--global-transition-fast);
+}
+
+.kadence-swatch:hover,
+.kadence-swatch.is-selected {
+  outline-color: var(--global-palette1);
+  outline-width: 2px;
+  transform: scale(1.15);
+}
+
+.kadence-swatch-tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: var(--global-palette3);
+  color: #ffffff;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--global-transition-fast);
+}
+
+.kadence-swatch:hover .kadence-swatch-tooltip {
+  opacity: 1;
+}
+
+.product-action-wrap {
+  margin-top: auto;
+}
+
+.product-action-wrap .button {
+  width: 100%;
+  font-size: 0.875rem;
+  padding: 0.65rem 1rem;
+}
+
+/* -------------------------------------------------------------
+ * 6. Off-Canvas Slide-Out Drawers
+ * ------------------------------------------------------------- */
+.popup-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100000;
+  visibility: hidden;
+  pointer-events: none;
+  transition: visibility var(--global-transition-normal);
+}
+
+.popup-drawer.show-drawer {
+  visibility: visible;
+  pointer-events: all;
+}
+
+.drawer-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity var(--global-transition-normal);
+}
+
+.popup-drawer.active .drawer-overlay {
+  opacity: 1;
+}
+
+.drawer-inner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  max-width: 420px;
+  background: var(--global-palette9);
+  box-shadow: -5px 0 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--global-transition-slow);
+}
+
+/* Right-sided drawer */
+.popup-drawer.popup-drawer-side-right .drawer-inner {
+  right: 0;
+  transform: translateX(100%);
+}
+
+.popup-drawer.active.popup-drawer-side-right .drawer-inner {
+  transform: translateX(0%);
+}
+
+/* Left-sided drawer */
+.popup-drawer.popup-drawer-side-left .drawer-inner {
+  left: 0;
+  transform: translateX(-100%);
+}
+
+.popup-drawer.active.popup-drawer-side-left .drawer-inner {
+  transform: translateX(0%);
+}
+
+.drawer-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--global-palette7);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.drawer-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--global-palette3);
+}
+
+.drawer-toggle.cart-toggle-close,
+.drawer-toggle.menu-toggle-close,
+.drawer-toggle.search-toggle-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+  color: var(--global-palette5);
+  border-radius: 4px;
+}
+
+.drawer-toggle.cart-toggle-close:hover,
+.drawer-toggle.menu-toggle-close:hover,
+.drawer-toggle.search-toggle-close:hover {
+  color: var(--global-palette3);
+  background: var(--global-palette7);
+}
+
+.drawer-content {
+  padding: 1.5rem;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+/* Mini Cart Drawer Layout */
+.mini-cart-item-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.mini-cart-item {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--global-palette7);
+}
+
+.mini-cart-thumb img {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: var(--global-border-radius);
+  background: var(--global-palette8);
+}
+
+.mini-cart-details h4 {
+  margin: 0 0 0.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.mini-cart-details .mini-cart-meta {
+  font-size: 0.8rem;
+  color: var(--global-palette5);
+  margin-bottom: 0.25rem;
+}
+
+.mini-cart-details .mini-cart-price {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--global-palette3);
+}
+
+.mini-cart-remove {
+  background: none;
+  border: none;
+  color: var(--global-palette6);
+  cursor: pointer;
+  padding: 0.25rem;
+  font-size: 1.1rem;
+}
+
+.mini-cart-remove:hover {
+  color: var(--global-palette13);
+}
+
+.mini-cart-footer {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--global-palette7);
+}
+
+.mini-cart-subtotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+.mini-cart-footer .button {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+/* Fullscreen Search Drawer */
+#search-drawer .drawer-inner {
+  max-width: 100%;
+  background: rgba(15, 23, 42, 0.96);
+  backdrop-filter: blur(12px);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#search-drawer .drawer-header {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  border: none;
+}
+
+#search-drawer .search-toggle-close {
+  color: #ffffff;
+}
+
+.search-modal-form {
+  max-width: 680px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.search-modal-form input[type="search"] {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  font-size: 1.75rem;
+  color: #ffffff;
+  padding: 0.75rem 0;
+  outline: none;
+  transition: border-color var(--global-transition-fast);
+}
+
+.search-modal-form input[type="search"]:focus {
+  border-bottom-color: var(--global-palette1);
+}
+
+.search-modal-form input[type="search"]::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}

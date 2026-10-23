@@ -1,0 +1,117 @@
+/**
+ * Kadence Design System Tokens & Global CSS Variables
+ * Reverse-Engineered from Kadence Theme & Shop Kit
+ */
+
+:root {
+  /* -------------------------------------------------------------
+   * 1. The Kadence 15-Color Semantic Palette
+   * ------------------------------------------------------------- */
+  --global-palette1: #2b6cb0; /* Primary Accent / Brand Color */
+  --global-palette2: #215387; /* Accent Alt / Button Hover */
+  --global-palette3: #1a202c; /* Strongest Text / Primary Headings */
+  --global-palette4: #2d3748; /* Strong Text / Body Text */
+  --global-palette5: #4a5568; /* Medium Text / Secondary & Meta */
+  --global-palette6: #718096; /* Subtle Text / Borders / Dividers */
+  --global-palette7: #edf2f7; /* Subtle Background / Pill Containers */
+  --global-palette8: #f7fafc; /* Lighter Background / Card Surfaces */
+  --global-palette9: #ffffff; /* Clean White Surface */
+  --global-palette9rgb: 255, 255, 255;
+  --global-palette10: oklch(from var(--global-palette1) calc(l + 0.10 * (1 - l)) calc(c * 1.00) calc(h + 180) / 100%); /* Perceptual Complement */
+  --global-palette11: #13612e; /* Notice / Success */
+  --global-palette12: #1159af; /* Notice / Info */
+  --global-palette13: #b82105; /* Notice / Alert & Sale Badges */
+  --global-palette14: #f7630c; /* Notice / Warning & Low Stock */
+  --global-palette15: #f5a524; /* Notice / Star Rating & Highlights */
+
+  /* -------------------------------------------------------------
+   * 2. Semantic Role Assignments
+   * ------------------------------------------------------------- */
+  --global-palette-highlight: var(--global-palette1);
+  --global-palette-highlight-alt: var(--global-palette2);
+  --global-palette-highlight-alt2: var(--global-palette9);
+
+  /* Buttons */
+  --global-palette-btn-bg: var(--global-palette1);
+  --global-palette-btn-bg-hover: var(--global-palette2);
+  --global-palette-btn: #ffffff;
+  --global-palette-btn-hover: #ffffff;
+
+  --global-palette-btn-sec-bg: var(--global-palette7);
+  --global-palette-btn-sec-bg-hover: var(--global-palette6);
+  --global-palette-btn-sec: var(--global-palette3);
+  --global-palette-btn-sec-hover: #ffffff;
+
+  --global-palette-btn-out-bg: transparent;
+  --global-palette-btn-out-bg-hover: var(--global-palette1);
+  --global-palette-btn-out: var(--global-palette1);
+  --global-palette-btn-out-hover: #ffffff;
+
+  /* -------------------------------------------------------------
+   * 3. Typography Tokens & Fluid Scales
+   * ------------------------------------------------------------- */
+  --global-body-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --global-heading-font-family: inherit;
+  --global-primary-nav-font-family: inherit;
+  --global-fallback-font: sans-serif;
+  --global-display-fallback-font: sans-serif;
+
+  --global-font-size-small: 0.875rem;   /* 14px */
+  --global-font-size-medium: 1rem;       /* 16px */
+  --global-font-size-large: 1.25rem;     /* 20px */
+  --global-font-size-larger: 1.5rem;     /* 24px */
+  --global-font-size-xxlarge: 2rem;      /* 32px */
+
+  --global-font-weight-normal: 400;
+  --global-font-weight-medium: 500;
+  --global-font-weight-semibold: 600;
+  --global-font-weight-bold: 700;
+
+  /* -------------------------------------------------------------
+   * 4. Layout, Container & Grid Geometry
+   * ------------------------------------------------------------- */
+  --global-content-width: 1290px;
+  --global-content-wide-width: calc(1290px + 200px);
+  --global-content-narrow-width: 840px;
+  --global-content-edge-padding: 1.5rem;
+  --global-content-boxed-padding: 2rem;
+  --global-calc-content-width: calc(var(--global-content-width) - (2 * var(--global-content-edge-padding)));
+  --wp--style--global--content-size: var(--global-calc-content-width);
+  --wp--style--global--wide-size: var(--global-content-width);
+
+  --woo-columns-desktop: 4;
+  --woo-columns-tablet: 3;
+  --woo-columns-mobile: 2;
+  --woo-grid-gap: 2rem;
+
+  /* -------------------------------------------------------------
+   * 5. Spacing Scale
+   * ------------------------------------------------------------- */
+  --global-xxs-spacing: 0.25rem; /* 4px */
+  --global-xs-spacing: 0.5rem;   /* 8px */
+  --global-sm-spacing: 0.75rem;  /* 12px */
+  --global-md-spacing: 1rem;     /* 16px */
+  --global-lg-spacing: 1.5rem;   /* 24px */
+  --global-xl-spacing: 2rem;     /* 32px */
+  --global-xxl-spacing: 3rem;    /* 48px */
+  --global-xxxl-spacing: 4rem;   /* 64px */
+
+  /* -------------------------------------------------------------
+   * 6. Elevation, Borders & Transitions
+   * ------------------------------------------------------------- */
+  --global-border-radius: 6px;
+  --global-border-radius-lg: 12px;
+  --global-border-radius-full: 9999px;
+
+  --global-box-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --global-box-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --global-box-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+  --global-box-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  --global-transition-fast: 0.15s ease-in-out;
+  --global-transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --global-transition-slow: 0.35s cubic-bezier(0.77, 0.2, 0.05, 1);
+
+  /* Scrollbar compensation placeholder */
+  --scrollbar-offset: 0px;
+}

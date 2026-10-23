@@ -1,13 +1,13 @@
 <?php
 /**
- * Main Header Template Part (Hybrid Theme) — Kadence Core Layout Architecture
+ * Main Header Template Part (Hybrid Theme) — SureSalez Core Layout Architecture
  *
- * Implements Kadence's 3-column row architecture:
+ * Implements SureSalez's 3-column row architecture:
  * - Left Column: Nav left (Primary Menu)
  * - Center Column: Clamped Logo center (guaranteed never to blow up)
  * - Right Column: Actions (Search, Currency Switcher, Account, Cart Drawer)
  *
- * Provides semantic PHP action hooks (suresalez_header, kadence_header,
+ * Provides semantic PHP action hooks (suresalez_header,
  * suresalez_top_header, suresalez_main_header, suresalez_bottom_header,
  * suresalez_mobile_header) rather than fragile Gutenberg block comments.
  *
@@ -25,10 +25,9 @@ if (!defined('ABSPATH')) {
    * Top Header Semantic Hook
    */
   do_action('suresalez_top_header');
-  do_action('kadence_top_header');
   ?>
 
-  <!-- Desktop Header Layout (>= 768px): Kadence 3-Column Architecture -->
+  <!-- Desktop Header Layout (>= 768px): SureSalez 3-Column Architecture -->
   <div id="main-header" class="site-header-wrap suresalez-header-desktop">
     <div class="site-header-row-container-inner">
       <div class="site-container suresalez-header-container">
@@ -127,16 +126,14 @@ if (!defined('ABSPATH')) {
    * Main Header Hook
    */
   do_action('suresalez_main_header');
-  do_action('kadence_main_header');
 
   /**
    * Bottom Header Hook
    */
   do_action('suresalez_bottom_header');
-  do_action('kadence_bottom_header');
   ?>
 
-  <!-- Mobile Header Layout (< 768px): Kadence Defensive Mobile Header -->
+  <!-- Mobile Header Layout (< 768px): SureSalez Defensive Mobile Header -->
   <div id="mobile-header" class="site-mobile-header-wrap suresalez-header-mobile">
     <div class="site-container">
       <!-- Row 1: Hamburger (left), Clamped Logo (center), Account (right) -->
@@ -181,7 +178,6 @@ if (!defined('ABSPATH')) {
    * Mobile Header Hook
    */
   do_action('suresalez_mobile_header');
-  do_action('kadence_mobile_header');
   ?>
 
   <!-- Mobile Slide-Out Drawer Navigation Panel -->

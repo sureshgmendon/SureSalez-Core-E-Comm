@@ -83,7 +83,7 @@ function suresalez_theme_scripts() {
         SURESALEZ_THEME_VERSION
     );
 
-    // Compile dynamic :root CSS variables (Kadence Core Architecture)
+    // Compile dynamic :root CSS variables (SureSalez Core Architecture)
     $dynamic_css = suresalez_compile_dynamic_root_css();
     if (!empty($dynamic_css)) {
         wp_add_inline_style('suresalez-theme-style', $dynamic_css);
@@ -101,7 +101,7 @@ function suresalez_theme_scripts() {
 add_action('wp_enqueue_scripts', 'suresalez_theme_scripts');
 
 /**
- * Kadence Core Architecture: Dynamic :root Style Compiler
+ * SureSalez Core Architecture: Dynamic :root Style Compiler
  *
  * Dynamically computes and outputs CSS custom properties into <head>
  * so merchants NEVER have to touch or fix CSS in WordPress.
@@ -131,12 +131,12 @@ function suresalez_compile_dynamic_root_css() {
         '--global-palette-btn-hover'           => get_theme_mod('suresalez_btn_color_hover', '#ffffff'),
         '--global-palette-highlight'           => get_theme_mod('suresalez_highlight', '#3b82f6'),
 
-        // Kadence Defensive Container Clamping
+        // SureSalez Defensive Container Clamping
         '--global-content-width'               => get_theme_mod('suresalez_content_width', '1440px'),
         '--global-content-edge-padding'        => get_theme_mod('suresalez_content_edge_padding', '1.5rem'),
         '--global-content-edge-padding-mobile' => get_theme_mod('suresalez_content_edge_padding_mobile', '1rem'),
 
-        // Kadence Defensive Logo Dimensions (Strict Clamps)
+        // SureSalez Defensive Logo Dimensions (Strict Clamps)
         '--header-logo-height'                 => get_theme_mod('suresalez_header_logo_height', '60px'),
         '--header-mobile-logo-height'          => get_theme_mod('suresalez_header_mobile_logo_height', '42px'),
 
@@ -169,8 +169,8 @@ function suresalez_compile_dynamic_root_css() {
 
     $css = ":root {\n" . implode("\n", $css_rules) . "\n}";
 
-    // Kadence compatibility filter hook
-    return apply_filters('kadence_dynamic_css', $css);
+    // SureSalez dynamic CSS filter hook
+    return apply_filters('suresalez_dynamic_css', $css);
 }
 
 /**
@@ -190,11 +190,10 @@ add_action('wp_head', 'suresalez_output_dynamic_root_css', 5);
 /**
  * Default Semantic Header Rendering Hook
  *
- * Hooks into suresalez_header and kadence_header actions to delegate
+ * Hooks into suresalez_header action to delegate
  * to the 3-column header template part.
  */
 function suresalez_render_default_header() {
     get_template_part('parts/headers/header-main');
 }
 add_action('suresalez_header', 'suresalez_render_default_header');
-add_action('kadence_header', 'suresalez_render_default_header');

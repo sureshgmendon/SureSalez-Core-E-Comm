@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kadence Shop Kit & Commerce Suite — REA Interactive Clone</title>
+  
+  <!-- Kadence Design System & Layout Stylesheets -->
+  <link rel="stylesheet" href="tokens.css">
+  <link rel="stylesheet" href="kadence-layout.css">
+  <link rel="stylesheet" href="kadence-components.css">
+
+  <style>
+    /* Inline enhancement for hero banner & quick view modal */
+    .shop-hero-banner {
+      background: linear-gradient(135deg, var(--global-palette8) 0%, var(--global-palette7) 100%);
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--global-palette7);
+      margin-bottom: 2.5rem;
+    }
+    .shop-hero-banner h1 {
+      margin: 0 0 0.5rem;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--global-palette3);
+    }
+    .shop-hero-banner p {
+      margin: 0;
+      color: var(--global-palette5);
+      font-size: 1.1rem;
+    }
+    .shop-catalog-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--global-palette7);
+    }
+    .shop-catalog-toolbar select {
+      padding: 0.5rem 1rem;
+      border-radius: var(--global-border-radius);
+      border: 1px solid var(--global-palette6);
+      font-family: inherit;
+      color: var(--global-palette4);
+      background: var(--global-palette9);
+      outline: none;
+    }
+    .quick-view-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+    .quick-view-grid img {
+      width: 100%;
+      border-radius: var(--global-border-radius);
+    }
+    @media (max-width: 768px) {
+      .quick-view-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="theme-kadence woocommerce-active">
+
+  <!-- ========================================================= -->
+  <!-- 1. MULTI-ROW MASTHEAD HEADER                              -->
+  <!-- ========================================================= -->
+  <header id="masthead" class="site-header">
+    <div id="main-header" class="site-header-wrap">
+      <div class="site-header-inner-wrap kadence-sticky-header" data-shrink="true" data-shrink-height="64">
+        
+        <!-- Top Header Row -->
+        <div class="site-top-header-wrap site-header-row-layout-contained">
+          <div class="site-container">
+            <div class="site-header-row">
+              <div class="site-header-section site-header-section-left">
+                <span>⚡ <strong>Limited Offer:</strong> Free express worldwide shipping on orders over $150</span>
+              </div>
+              <div class="site-header-section site-header-section-right">
+                <a href="#help" style="color: inherit; text-decoration: none; margin-right: 15px;">Support</a>
+                <a href="#currency" style="color: inherit; text-decoration: none; margin-right: 15px;">USD ($)</a>
+                <a href="#account" style="color: inherit; text-decoration: none; font-weight: 600;">Sign In</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Header Row -->
+        <div class="site-main-header-wrap site-header-row-layout-contained">
+          <div class="site-container">
+            <div class="site-header-row site-header-row-center-column">
+              <!-- Left: Branding -->
+              <div class="site-header-section site-header-section-left">
+                <a href="#" class="brand-logo">Kadence<span>Commerce</span></a>
+              </div>
+
+              <!-- Center: Primary Navigation -->
+              <div class="site-header-section site-header-section-center">
+                <nav class="header-navigation nav--toggle-sub" role="navigation" aria-label="Primary Navigation">
+                  <ul class="menu">
+                    <li class="menu-item current-menu-item"><a href="#">Home</a></li>
+                    <li class="menu-item menu-item-has-children">
+                      <a href="#shop">
+                        Shop
+                        <button class="dropdown-nav-special-toggle" aria-expanded="false" aria-label="Toggle Submenu">
+                          <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+                        </button>
+                      </a>
+                      <ul class="sub-menu">
+                        <li><a href="#apparel">Men's Apparel</a></li>
+                        <li><a href="#women">Women's Collection</a></li>
+                        <li><a href="#footwear">Footwear & Boots</a></li>
+                        <li><a href="#accessories">Accessories & Bags</a></li>
+                      </ul>
+                    </li>
+                    <li class="menu-item"><a href="#shop-kit">Shop Kit Features</a></li>
+                    <li class="menu-item"><a href="#collections">Collections</a></li>
+                    <li class="menu-item"><a href="#sale" style="color: var(--global-palette13);">Sale 🔥</a></li>
+                  </ul>
+                </nav>
+              </div>
+
+              <!-- Right: Actions -->
+              <div class="site-header-section site-header-section-right">
+                <!-- Search Modal Trigger -->
+                <button 
+                  class="search-toggle-open drawer-toggle" 
+                  data-toggle-target="#search-drawer" 
+                  data-toggle-body-class="showing-popup-drawer-from-full" 
+                  aria-expanded="false" 
+                  aria-label="Search" 
+                  data-set-focus="#search-input">
+                  <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                </button>
+
+                <!-- Cart Drawer Trigger -->
+                <button 
+                  class="header-cart-button drawer-toggle" 
+                  data-toggle-target="#cart-drawer" 
+                  data-toggle-body-class="showing-popup-drawer-from-right" 
+                  aria-expanded="false" 
+                  aria-label="View Shopping Cart" 
+                  data-set-focus=".cart-toggle-close">
+                  <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                  <span class="header-cart-total">3</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Mobile Masthead (Screens <= 1024px) -->
+    <div id="mobile-header">
+      <div class="site-container">
+        <div class="site-header-row">
+          <button 
+            class="menu-toggle-open drawer-toggle" 
+            data-toggle-target="#mobile-drawer" 
+            data-toggle-body-class="showing-popup-drawer-from-left" 
+            aria-expanded="false" 
+            aria-label="Open Mobile Menu" 
+            data-set-focus=".menu-toggle-close">
+            <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+          </button>
+          
+          <div style="text-align: center;">
+            <a href="#" class="brand-logo" style="justify-content: center;">Kadence<span>Commerce</span></a>
+          </div>
+
+          <button 
+            class="header-cart-button drawer-toggle" 
+            data-toggle-target="#cart-drawer" 
+            data-toggle-body-class="showing-popup-drawer-from-right" 
+            aria-expanded="false" 
+            aria-label="Shopping Cart">
+            <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+            <span class="header-cart-total">3</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================= -->
+  <!-- 2. HERO / ARCHIVE TITLE AREA                              -->
+  <!-- ========================================================= -->
+  <section class="shop-hero-banner">
+    <div class="site-container">
+      <div style="font-size: 0.85rem; color: var(--global-palette6); margin-bottom: 0.5rem;">
+        Home / Shop / Apparel &amp; Gear
+      </div>
+      <h1>Autumn Apparel &amp; Equipment Catalog</h1>
+      <p>Discover high-performance apparel with visual swatches, quick preview, and seamless shopping cart checkout.</p>
+    </div>
+  </section>
+
+  <!-- ========================================================= -->
+  <!-- 3. PRODUCT CATALOG GRID                                   -->
+  <!-- ========================================================= -->
+  <main class="site-container content-container">
+    <div class="shop-catalog-toolbar">
+      <div>Showing <strong>1–4</strong> of <strong>24</strong> results</div>
+      <div>
+        <select aria-label="Sort product catalog">
+          <option>Sort by popularity</option>
+          <option>Sort by average rating</option>
+          <option>Sort by latest</option>
+          <option>Sort by price: low to high</option>
+          <option>Sort by price: high to low</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="woocommerce">
+      <ul class="products columns-4">
+
+        <!-- Product Card 1 -->
+        <li class="product type-product">
+          <div class="product-thumbnail-wrap">
+            <span class="onsale">-25%</span>
+            <a href="#item1">
+              <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600&auto=format&fit=crop&q=80" class="primary-image" alt="Merino Wool Tee">
+              <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?w=600&auto=format&fit=crop&q=80" class="secondary-image" alt="Merino Wool Alternate">
+            </a>
+            <button class="kadence-quick-view-btn drawer-toggle" data-toggle-target="#quick-view-drawer" data-toggle-body-class="showing-popup-drawer-from-full" aria-label="Quick View Merino Wool Tee">Quick View</button>
+          </div>
+          <div class="product-details">
+            <div class="product-category">Apparel</div>
+            <h3 class="woocommerce-loop-product__title"><a href="#item1">Merino Wool Active Tee</a></h3>
+            <div class="star-rating" role="img" aria-label="Rated 5 out of 5">★★★★★</div>
+            <div class="price"><del>$68.00</del> <ins>$51.00</ins></div>
+            <div class="kadence-swatches-wrap">
+              <button class="kadence-swatch is-selected" style="--swatch-color: #2b3a4a;" aria-label="Navy"><span class="kadence-swatch-tooltip">Navy Blue</span></button>
+              <button class="kadence-swatch" style="--swatch-color: #4a5d4e;" aria-label="Olive"><span class="kadence-swatch-tooltip">Alpine Green</span></button>
+              <button class="kadence-swatch" style="--swatch-color: #222222;" aria-label="Black"><span class="kadence-swatch-tooltip">Stealth Black</span></button>
+            </div>
+            <div class="product-action-wrap">
+              <button class="button add_to_cart_button ajax_add_to_cart">Add to Cart</button>
+            </div>
+          </div>
+        </li>
+
+        <!-- Product Card 2 -->
+        <li class="product type-product">
+          <div class="product-thumbnail-wrap">
+            <span class="badge-custom">Featured</span>
+            <a href="#item2">
+              <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&auto=format&fit=crop&q=80" class="primary-image" alt="Trail Running Sneaker">
+              <img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=600&auto=format&fit=crop&q=80" class="secondary-image" alt="Sneaker Alternate">
+            </a>
+            <button class="kadence-quick-view-btn drawer-toggle" data-toggle-target="#quick-view-drawer" data-toggle-body-class="showing-popup-drawer-from-full">Quick View</button>
+          </div>
+          <div class="product-details">
+            <div class="product-category">Footwear</div>
+            <h3 class="woocommerce-loop-product__title"><a href="#item2">AeroGrip Trail Runner</a></h3>
+            <div class="star-rating" role="img" aria-label="Rated 5 out of 5">★★★★★</div>
+            <div class="price"><span>$145.00</span></div>
+            <div class="kadence-swatches-wrap">
+              <button class="kadence-swatch is-selected" style="--swatch-color: #e53e3e;" aria-label="Crimson"><span class="kadence-swatch-tooltip">Crimson Red</span></button>
+              <button class="kadence-swatch" style="--swatch-color: #3182ce;" aria-label="Cobalt"><span class="kadence-swatch-tooltip">Cobalt Blue</span></button>
+            </div>
+            <div class="product-action-wrap">
+              <button class="button add_to_cart_button ajax_add_to_cart">Add to Cart</button>
+            </div>
+          </div>
+        </li>
+
+        <!-- Product Card 3 -->
+        <li class="product type-product">
+          <div class="product-thumbnail-wrap">
+            <span class="onsale">-15%</span>
+            <a href="#item3">
+              <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&auto=format&fit=crop&q=80" class="primary-image" alt="All-Weather Backpack">
+              <img src="https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=600&auto=format&fit=crop&q=80" class="secondary-image" alt="Backpack Alternate">
+            </a>
+            <button class="kadence-quick-view-btn drawer-toggle" data-toggle-target="#quick-view-drawer" data-toggle-body-class="showing-popup-drawer-from-full">Quick View</button>
+          </div>
+          <div class="product-details">
+            <div class="product-category">Gear &amp; Packs</div>
+            <h3 class="woocommerce-loop-product__title"><a href="#item3">Summit Pack 32L</a></h3>
+            <div class="star-rating" role="img" aria-label="Rated 4 out of 5">★★★★☆</div>
+            <div class="price"><del>$180.00</del> <ins>$153.00</ins></div>
+            <div class="kadence-swatches-wrap">
+              <button class="kadence-swatch is-selected" style="--swatch-color: #4a5568;" aria-label="Charcoal"><span class="kadence-swatch-tooltip">Charcoal</span></button>
+              <button class="kadence-swatch" style="--swatch-color: #d69e2e;" aria-label="Mustard"><span class="kadence-swatch-tooltip">Mustard Sand</span></button>
+            </div>
+            <div class="product-action-wrap">
+              <button class="button add_to_cart_button ajax_add_to_cart">Add to Cart</button>
+            </div>
+          </div>
+        </li>
+
+        <!-- Product Card 4 -->
+        <li class="product type-product">
+          <div class="product-thumbnail-wrap">
+            <span class="badge-out-of-stock">Sold Out</span>
+            <a href="#item4">
+              <img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=600&auto=format&fit=crop&q=80" class="primary-image" alt="Executive Tailored Blazer">
+              <img src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&auto=format&fit=crop&q=80" class="secondary-image" alt="Blazer Alternate">
+            </a>
+            <button class="kadence-quick-view-btn drawer-toggle" data-toggle-target="#quick-view-drawer" data-toggle-body-class="showing-popup-drawer-from-full">Quick View</button>
+          </div>
+          <div class="product-details">
+            <div class="product-category">Outerwear</div>
+            <h3 class="woocommerce-loop-product__title"><a href="#item4">Merino Wool Travel Coat</a></h3>
+            <div class="star-rating" role="img" aria-label="Rated 5 out of 5">★★★★★</div>
+            <div class="price"><span>$295.00</span></div>
+            <div class="kadence-swatches-wrap">
+              <button class="kadence-swatch is-selected" style="--swatch-color: #1a202c;" aria-label="Black"><span class="kadence-swatch-tooltip">Midnight Black</span></button>
+            </div>
+            <div class="product-action-wrap">
+              <button class="button button-secondary" disabled>Out of Stock</button>
+            </div>
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </main>
+
+  <!-- ========================================================= -->
+  <!-- 4. MULTI-ROW FOOTER BUILDER                               -->
+  <!-- ========================================================= -->
+  <footer class="site-footer" role="contentinfo">
+    <!-- Top Footer Row -->
+    <div class="site-top-footer-wrap site-footer-row-layout-contained">
+      <div class="site-container">
+        <div class="site-footer-row site-footer-row-columns-2" style="align-items: center;">
+          <div>
+            <h3 style="color: #ffffff; margin: 0 0 0.25rem;">Stay Informed on New Releases</h3>
+            <p style="margin: 0; color: var(--global-palette6);">Subscribe for exclusive access to seasonal drops and VIP promotions.</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem; justify-content: flex-end;">
+            <input type="email" placeholder="Enter your email" style="padding: 0.75rem 1rem; border-radius: var(--global-border-radius); border: 1px solid var(--global-palette6); width: 280px; background: var(--global-palette4); color: #ffffff;" />
+            <button class="button">Subscribe</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Middle Footer Row (4 Columns) -->
+    <div class="site-middle-footer-wrap site-footer-row-layout-contained">
+      <div class="site-container">
+        <div class="site-footer-row site-footer-row-columns-4">
+          <div>
+            <h4 style="color: #ffffff; margin: 0 0 1rem;">Kadence Commerce</h4>
+            <p style="color: var(--global-palette6); line-height: 1.6;">Engineered with clean architectural boundaries, zero-bloat CSS variable tokens, and accessible interactive drawer mechanics.</p>
+          </div>
+          <div>
+            <h4 style="color: #ffffff; margin: 0 0 1rem;">Quick Links</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
+              <li><a href="#" style="color: var(--global-palette6); text-decoration: none;">Shop All Products</a></li>
+              <li><a href="#" style="color: var(--global-palette6); text-decoration: none;">New Arrivals</a></li>
+              <li><a href="#" style="color: var(--global-palette6); text-decoration: none;">Store Locations</a></li>
+              <li><a href="#" style="color: var(--global-palette6); text-decoration: none;">Sustainability</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 style="color: #ffffff; margin: 0 0 1rem;">Customer Care</h4>
+            <ul style="list-style: none; padding: 0; margin: 0; line-height: 2;">
+              <li><a href="#" style="color: var(--global-palette6); text-decoration: none;">Track Your Order</a></li>
+              <li><a href="#" style="color: var(--global-palette6); text-decoration: none;">Returns &amp; RMA Portal</a></li>
+              <li><a href="#" style="color: var(--global-palette6); text-decoration: none;">Shipping Rates &amp; Policies</a></li>
+              <li><a href="#" style="color: var(--global-palette6); text-decoration: none;">Help &amp; FAQ</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 style="color: #ffffff; margin: 0 0 1rem;">Headquarters</h4>
+            <p style="color: var(--global-palette6); line-height: 1.6; margin: 0 0 1rem;">
+              100 Innovation Way<br>
+              San Francisco, CA 94105<br>
+              hello@kadence-commerce.demo
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Footer Row -->
+    <div class="site-bottom-footer-wrap site-footer-row-layout-contained">
+      <div class="site-container">
+        <div class="site-footer-row site-footer-row-columns-2" style="align-items: center;">
+          <div style="color: var(--global-palette6);">
+            &copy; 2026 Kadence WP &amp; REA Architecture Suite. All rights reserved.
+          </div>
+          <div style="text-align: right; color: var(--global-palette6);">
+            SSL 256-Bit Secure Checkout &bull; Visa &bull; Mastercard &bull; Apple Pay
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================= -->
+  <!-- 5. SLIDE-OUT CART DRAWER (#cart-drawer)                   -->
+  <!-- ========================================================= -->
+  <div 
+    id="cart-drawer" 
+    class="popup-drawer popup-drawer-side-right" 
+    data-drawer-target-string="#cart-drawer" 
+    role="dialog" 
+    aria-modal="true" 
+    aria-label="Shopping Cart">
+    
+    <div class="drawer-overlay" data-drawer-target-string="#cart-drawer"></div>
+    
+    <div class="drawer-inner">
+      <div class="drawer-header">
+        <h3>Review Cart</h3>
+        <button 
+          class="cart-toggle-close drawer-toggle" 
+          data-toggle-target="#cart-drawer" 
+          data-toggle-body-class="showing-popup-drawer-from-right" 
+          aria-expanded="false" 
+          aria-label="Close Cart" 
+          data-set-focus=".header-cart-button">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+
+      <div class="drawer-content woocommerce widget_shopping_cart">
+        <div class="mini-cart-container">
+          <ul class="mini-cart-item-list">
+            
+            <li class="mini-cart-item">
+              <div class="mini-cart-thumb">
+                <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=200&auto=format&fit=crop&q=80" alt="Merino Wool Active Tee">
+              </div>
+              <div class="mini-cart-details">
+                <h4>Merino Wool Active Tee</h4>
+                <div class="mini-cart-meta">Color: Navy | Size: L</div>
+                <div class="mini-cart-price">1 &times; $51.00</div>
+              </div>
+              <button class="mini-cart-remove" aria-label="Remove item">&times;</button>
+            </li>
+
+            <li class="mini-cart-item">
+              <div class="mini-cart-thumb">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=200&auto=format&fit=crop&q=80" alt="AeroGrip Trail Runner">
+              </div>
+              <div class="mini-cart-details">
+                <h4>AeroGrip Trail Runner</h4>
+                <div class="mini-cart-meta">Color: Crimson | Size: 10</div>
+                <div class="mini-cart-price">1 &times; $145.00</div>
+              </div>
+              <button class="mini-cart-remove" aria-label="Remove item">&times;</button>
+            </li>
+
+            <li class="mini-cart-item">
+              <div class="mini-cart-thumb">
+                <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=200&auto=format&fit=crop&q=80" alt="Summit Pack 32L">
+              </div>
+              <div class="mini-cart-details">
+                <h4>Summit Pack 32L</h4>
+                <div class="mini-cart-meta">Color: Charcoal | Size: Standard</div>
+                <div class="mini-cart-price">1 &times; $153.00</div>
+              </div>
+              <button class="mini-cart-remove" aria-label="Remove item">&times;</button>
+            </li>
+
+          </ul>
+
+          <div class="mini-cart-footer">
+            <div class="mini-cart-subtotal">
+              <span>Subtotal:</span>
+              <span style="color: var(--global-palette1);">$349.00</span>
+            </div>
+            <a href="#checkout" class="button" style="text-align: center;">Proceed to Checkout</a>
+            <a href="#viewcart" class="button button-secondary" style="text-align: center;">View Shopping Cart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- 6. MOBILE NAVIGATION DRAWER (#mobile-drawer)              -->
+  <!-- ========================================================= -->
+  <div 
+    id="mobile-drawer" 
+    class="popup-drawer popup-drawer-side-left" 
+    data-drawer-target-string="#mobile-drawer" 
+    role="dialog" 
+    aria-modal="true" 
+    aria-label="Mobile Navigation">
+    
+    <div class="drawer-overlay" data-drawer-target-string="#mobile-drawer"></div>
+    
+    <div class="drawer-inner">
+      <div class="drawer-header">
+        <a href="#" class="brand-logo">Kadence<span>Store</span></a>
+        <button 
+          class="menu-toggle-close drawer-toggle" 
+          data-toggle-target="#mobile-drawer" 
+          data-toggle-body-class="showing-popup-drawer-from-left" 
+          aria-expanded="false" 
+          aria-label="Close Menu">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+
+      <div class="drawer-content">
+        <ul style="list-style: none; padding: 0; margin: 0; line-height: 2.5; font-size: 1.1rem; font-weight: 600;">
+          <li><a href="#" style="color: var(--global-palette3); text-decoration: none;">Home</a></li>
+          <li><a href="#apparel" style="color: var(--global-palette3); text-decoration: none;">Apparel &amp; Tops</a></li>
+          <li><a href="#footwear" style="color: var(--global-palette3); text-decoration: none;">Footwear Collection</a></li>
+          <li><a href="#gear" style="color: var(--global-palette3); text-decoration: none;">Equipment &amp; Bags</a></li>
+          <li><a href="#sale" style="color: var(--global-palette13); text-decoration: none;">Sale Specials</a></li>
+          <li><a href="#account" style="color: var(--global-palette5); text-decoration: none;">My Account / Orders</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- 7. FULLSCREEN SEARCH MODAL (#search-drawer)               -->
+  <!-- ========================================================= -->
+  <div 
+    id="search-drawer" 
+    class="popup-drawer popup-drawer-layout-fullwidth" 
+    data-drawer-target-string="#search-drawer" 
+    role="dialog" 
+    aria-modal="true" 
+    aria-label="Search Catalog">
+    
+    <div class="drawer-overlay" data-drawer-target-string="#search-drawer"></div>
+    
+    <div class="drawer-inner">
+      <div class="drawer-header">
+        <button 
+          class="search-toggle-close drawer-toggle" 
+          data-toggle-target="#search-drawer" 
+          data-toggle-body-class="showing-popup-drawer-from-full" 
+          aria-label="Close Search">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+
+      <div class="drawer-content">
+        <form class="search-modal-form" onsubmit="event.preventDefault(); alert('Searching for: ' + document.getElementById('search-input').value);">
+          <input 
+            type="search" 
+            id="search-input" 
+            placeholder="Type your search query and press Enter..." 
+            autocomplete="off" 
+            aria-label="Search products" />
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================= -->
+  <!-- 8. QUICK VIEW MODAL (#quick-view-drawer)                  -->
+  <!-- ========================================================= -->
+  <div 
+    id="quick-view-drawer" 
+    class="popup-drawer popup-drawer-layout-fullwidth" 
+    data-drawer-target-string="#quick-view-drawer" 
+    role="dialog" 
+    aria-modal="true" 
+    aria-label="Product Quick View">
+    
+    <div class="drawer-overlay" data-drawer-target-string="#quick-view-drawer"></div>
+    
+    <div class="drawer-inner" style="max-width: 860px; margin: auto; height: auto; max-height: 90vh; border-radius: 12px; background: #ffffff; color: var(--global-palette3); padding: 2rem;">
+      <div style="display: flex; justify-content: flex-end; margin-bottom: 1rem;">
+        <button 
+          class="drawer-toggle" 
+          data-toggle-target="#quick-view-drawer" 
+          data-toggle-body-class="showing-popup-drawer-from-full" 
+          aria-label="Close Quick View"
+          style="background: none; border: none; cursor: pointer;">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </div>
+
+      <div class="quick-view-grid">
+        <div>
+          <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=800&auto=format&fit=crop&q=80" alt="Product Zoom">
+        </div>
+        <div>
+          <div class="product-category">Apparel / Tops</div>
+          <h2 style="margin: 0.5rem 0; font-size: 1.75rem;">Merino Wool Active Tee</h2>
+          <div class="star-rating">★★★★★ (28 verified reviews)</div>
+          <div class="price" style="font-size: 1.5rem; margin: 1rem 0;"><del>$68.00</del> <ins>$51.00</ins></div>
+          <p style="color: var(--global-palette5); line-height: 1.6;">Ultra-breathable, moisture-wicking organic merino wool tailored for mountain trails and city transit alike.</p>
+          
+          <div style="margin: 1.5rem 0;">
+            <div style="font-size: 0.85rem; font-weight: 600; margin-bottom: 0.5rem;">Select Color:</div>
+            <div class="kadence-swatches-wrap">
+              <button class="kadence-swatch is-selected" style="--swatch-color: #2b3a4a;" aria-label="Navy"><span class="kadence-swatch-tooltip">Navy Blue</span></button>
+              <button class="kadence-swatch" style="--swatch-color: #4a5d4e;" aria-label="Olive"><span class="kadence-swatch-tooltip">Alpine Green</span></button>
+              <button class="kadence-swatch" style="--swatch-color: #222222;" aria-label="Black"><span class="kadence-swatch-tooltip">Stealth Black</span></button>
+            </div>
+          </div>
+
+          <button class="button ajax_add_to_cart" style="width: 100%; padding: 0.85rem;">Add to Cart — $51.00</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Kadence Zero-Dependency Vanilla JS Runtime -->
+  <script src="kadence-runtime.js"></script>
+</body>
+</html>
